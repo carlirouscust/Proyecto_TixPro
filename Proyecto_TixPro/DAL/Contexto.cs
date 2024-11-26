@@ -8,7 +8,7 @@ public class Contexto : DbContext
     public Contexto(DbContextOptions<Contexto> options)
         : base(options) { }
 
-    public DbSet<Usuario> Usuarios { get; set; }
-    public DbSet<Evento> Events { get; set; }
+    public DbSet<Usuario> Usuario { get; set; }
+    public DbSet<Evento> Evento { get; set; }
     public DbSet<Ticket> Ticket { get; set; }
 }
