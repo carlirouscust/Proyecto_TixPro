@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Proyecto_TixPro.Components;
 using Proyecto_TixPro.Components.Account;
 using Proyecto_TixPro.Data;
+using Proyecto_TixPro.Services;
 
 namespace Proyecto_TixPro
 {
@@ -40,6 +41,17 @@ namespace Proyecto_TixPro
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+            //obtener el ConStr para usarlo en el contexto
+            var ConStr = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            //agregamos el contexto al builder con el ConStr
+            builder.Services.AddDbContextFactory<Contexto>(Options => Options.UseSqlServer(ConStr));
+
+            builder.Services.AddScoped<EventosService>();
+            builder.Services.AddScoped<TicketService>();
+            builder.Services.AddScoped<UsuariosService>();
+
 
             var app = builder.Build();
 
