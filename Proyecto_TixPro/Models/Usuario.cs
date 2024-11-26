@@ -18,5 +18,5 @@ public class Usuario
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
     public string? contraseña { get; set; }
 
-    public ICollection<Ticket> Ticket { get; set; }
+    public required ICollection<Ticket> Ticket { get; set; }
 }
