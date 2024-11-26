@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_TixPro.Components;
 using Proyecto_TixPro.Components.Account;
-using Proyecto_TixPro.DAL;
 using Proyecto_TixPro.Data;
 using Proyecto_TixPro.Services;
 
@@ -32,22 +31,15 @@ namespace Proyecto_TixPro
                 .AddIdentityCookies();
 
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            builder.Services.AddDbContextFactory<Contexto>(options => options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<Contexto>()
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-
-            //obtener el ConStr para usarlo en el contexto
-            var ConStr = builder.Configuration.GetConnectionString("DefaultConnection");
-
-            //agregamos el contexto al builder con el ConStr
-            builder.Services.AddDbContextFactory<Contexto>(Options => Options.UseSqlServer(ConStr));
 
             builder.Services.AddScoped<EventosService>();
             builder.Services.AddScoped<TicketService>();
