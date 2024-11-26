@@ -4,11 +4,11 @@ namespace Proyecto_TixPro.Models;
 
 public class Ticket
 {
-         [Key]
-        public int TicketId { get; set; } 
-        public int EventoId { get; set; } 
-        public double Precio { get; set; } 
-        public DateTime FechaCompra { get; set; } 
-        public int UsuarioId { get; set; } 
+        [Key]
+        public int ticketId { get; set; } 
+        public int eventoId { get; set; } 
+        public double precio { get; set; } 
+        public DateTime fechaCompra { get; set; } 
+        public int usuarioId { get; set; } 
     
 }
