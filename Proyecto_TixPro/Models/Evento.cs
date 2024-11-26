@@ -17,5 +17,5 @@ public class Evento
     public string? lugar { get; set; }
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
-    public decimal precio { get; set; }
+    public decimal? precio { get; set; }
 }
