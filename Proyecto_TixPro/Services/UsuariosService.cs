@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.CodeAnalysis.Host;
 using Microsoft.EntityFrameworkCore;
-using Proyecto_TixPro.DAL;
+using Proyecto_TixPro.Data;
 using Proyecto_TixPro.Models;
 namespace Proyecto_TixPro.Services;
 
