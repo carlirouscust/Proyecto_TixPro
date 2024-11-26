@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_TixPro.Components;
 using Proyecto_TixPro.Components.Account;
+using Proyecto_TixPro.DAL;
 using Proyecto_TixPro.Data;
 using Proyecto_TixPro.Services;
 
