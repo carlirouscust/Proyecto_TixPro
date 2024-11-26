@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Proyecto_TixPro.DAL;
+using Proyecto_TixPro.Data;
 using Proyecto_TixPro.Models;
 using System.Linq.Expressions;
 
