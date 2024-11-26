@@ -2,4 +2,5 @@
 
 public class ClientesService
 {
+    public int ID { get; set; }
 }
