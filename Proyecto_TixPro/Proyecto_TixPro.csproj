@@ -15,4 +15,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.11" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4bootstrap_4bootstrap_1min_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>
