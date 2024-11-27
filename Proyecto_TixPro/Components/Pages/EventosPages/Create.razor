@@ -1,20 +1,101 @@
-﻿@page "/Ticket/Create"
+﻿@* @page "/Eventos/Create"
+@using Microsoft.AspNetCore.Components.Forms
 
-<InputFile OnChange="OnChange" />
-<div>
+<h3>Subir Imagen</h3>
 
+<div class="dropzone"
+     @ondragover="HandleDragOver"
+     @ondrop="HandleDrop"
+     @ondragleave="HandleDragLeave">
+    <p>Arrastra y suelta una imagen aquí o haz clic para seleccionar una.</p>
+    <input type="file" @onchange="HandleInputFileChange" accept="image/*" style="display:none;" @ref="fileInput" />
 </div>
 
+@if (imagePreview is not null)
+{
+    <div class="preview">
+        <h4>Vista previa:</h4>
+        <img src="@imagePreview" alt="Imagen cargada" />
+    </div>
+}
 
-@code{
-    private const int tamanoMaximoArchivo = 450 * 300 * 4;
-    private List<string> imagen = new List<string>();
+<button @onclick="UploadImageAsync" class="btn btn-primary">Subir</button>
 
-    async Task OnChange(InputFileChangeEventArgs e)
+<style>
+    .dropzone {
+        border: 2px dashed #cccccc;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .dropzone:hover {
+            background-color: #f8f8f8;
+        }
+
+        .dropzone.dragging {
+            background-color: #e6f7ff;
+        }
+
+    .preview img {
+        max-width: 100%;
+        max-height: 300px;
+        margin-top: 10px;
+    }
+</style>
+
+@code {
+    private string? imagePreview;
+    private ElementReference fileInput;
+
+    private void HandleDragOver(DragEventArgs e)
     {
-        // using var stream = archivo.OpenReadStream(tamanoMaximoArchivo);
-        // using var ms = new MemoryStream();
-        // await stream.CopyToAsync(ms);
-        // imagen.Add($"data:{archivo.ContentType};base64,{Convert.ToBase64String(ms.ToArray())}");
+        e.StopPropagation(); // Prevenir la propagación
+    }
+
+    private void HandleDragLeave(DragEventArgs e)
+    {
+        // Lógica opcional para cuando se sale del área
+    }
+
+    private async Task HandleDrop(DragEventArgs e)
+    {
+        e.StopPropagation();
+
+        if (e.DataTransfer?.Files.Count > 0)
+        {
+            var file = e.DataTransfer.Files[0];
+            await ProcessFileAsync(file);
+        }
+    }
+
+    private async Task HandleInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        await ProcessFileAsync(file);
+    }
+
+    private async Task ProcessFileAsync(IBrowserFile file)
+    {
+        if (file.ContentType.StartsWith("image/"))
+        {
+            using var stream = file.OpenReadStream();
+            var buffer = new byte[file.Size];
+            await stream.ReadAsync(buffer);
+
+            imagePreview = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+        }
+    }
+
+    private async Task UploadImageAsync()
+    {
+        if (!string.IsNullOrEmpty(imagePreview))
+        {
+            await Task.Delay(500); // Simulación de subida
+            Console.WriteLine("Imagen subida con éxito.");
+        }
     }
 }
+ *@
