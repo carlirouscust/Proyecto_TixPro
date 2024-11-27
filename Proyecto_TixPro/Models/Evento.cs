@@ -18,4 +18,7 @@ public class Evento
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
     public decimal? precio { get; set; }
+
+    [Required(ErrorMessage = "Este campo debe ser obligatorio")]
+    public string? imagen { get; set; }
 }
