@@ -45,6 +45,7 @@ namespace Proyecto_TixPro
             builder.Services.AddScoped<TicketService>();
             builder.Services.AddScoped<UsuariosService>();
 
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
 
