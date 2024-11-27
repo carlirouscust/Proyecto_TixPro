@@ -8,16 +8,25 @@
     <main>
        <AuthorizeView>
            <NotAuthorized>
-                <div class="top-row px-4">           
-                    <a href="/Account/Register" class="btn btn-dark bi bi-person" type="button">Sing In</a>
-                    <a href="/Account/Login" class="btn btn-outline-dark bi bi-person-badge" type="button">Log In</a>             
+                <div class="top-row px-4 d-flex align-items-center justify-content-between">
+                    <img class="card-img-top" src="images/tixlogo en png.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" />
+
+                    <div class="ms-auto">
+                        <a href="/Account/Register" class="btn btn-dark bi bi-person rounded-pill" type="button">Sign In</a>
+                        <a href="/Account/Login" class="btn btn-outline-dark bi bi-person-badge rounded-pill" type="button">Log In</a>
+                    </div>
                 </div>
+
             </NotAuthorized>
 
             <Authorized>
-                <div class="top-row px-4">
-                    <a href="/Account/Manage" class="btn btn-warning bi bi-person" type="button">Mi cuenta</a>
-                </div>
+                <div class="top-row px-4 d-flex align-items-center justify-content-between">
+                    <img class="card-img-top" src="images/tixlogo en png.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" />
+
+                    <div class="ms-auto">
+                        <a href="/Account/Manage" class="btn btn-outline-dark bi bi-person rounded-pill" type="button">Mi cuenta</a>
+                    </div>
+                </div>                
             </Authorized>
         </AuthorizeView>
        
