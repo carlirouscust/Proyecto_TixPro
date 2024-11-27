@@ -6,11 +6,21 @@
     </div>
 
     <main>
-        <div class="top-row px-4">
-            <a href="/Account/Register" class="text-black">Sing In</a>
-            <a href="/Account/Login" class="text-black">Log In</a>
-            
-        </div>
+       <AuthorizeView>
+           <NotAuthorized>
+                <div class="top-row px-4">           
+                    <a href="/Account/Register" class="btn btn-warning bi bi-person" type="button">Sing In</a>
+                    <a href="/Account/Login" class="btn btn-outline-warning bi bi-person-badge" type="button">Log In</a>             
+                </div>
+            </NotAuthorized>
+
+            <Authorized>
+                <div class="top-row px-4">
+                    <a href="/Account/Manage" class="btn btn-warning bi bi-person" type="button">Perfil</a>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+       
 
         <article class="content px-4">
             @Body
