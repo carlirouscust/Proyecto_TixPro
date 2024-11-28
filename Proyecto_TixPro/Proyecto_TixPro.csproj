@@ -20,6 +20,7 @@
 
 	<ItemGroup>
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties wwwroot_4bootstrap_4bootstrap_1min_1css_1map__JsonSchema="" /></VisualStudio></ProjectExtensions>
