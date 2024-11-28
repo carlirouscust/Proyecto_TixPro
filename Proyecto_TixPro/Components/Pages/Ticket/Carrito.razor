@@ -1,0 +1,22 @@
+﻿@page "/Ticket/Carrito/{eventoId:int}"
+@inject EventosService eventosService
+@inject NavigationManager navigationManager
+
+<h3>Carrito de Compras</h3>
+
+<p><strong>Evento:</strong> @evento.eventoId</p>
+<p><strong>Cantidad:</strong> @quantity</p>
+<p><strong>Total a pagar:</strong> RD$ @totalPrice</p>
+
+@code {
+    [Parameter]
+    public int eventoId { get; set; }
+    public Evento evento { get; set; } = new Evento();
+    public int quantity { get; set; }
+    public decimal totalPrice { get; set; }
+
+    protected override async void OnInitialized()
+    {
+        evento = await eventosService.Buscar(eventoId);
+    }
+}
