@@ -58,6 +58,7 @@ public class TicketService(IDbContextFactory<Contexto> DbFactory)
         await using var _context = await DbFactory.CreateDbContextAsync();
         return _context.Ticket.
             AsNoTracking()
+            .Include(t => t.evento)
             .Where(criterio)
             .ToList();
     }
