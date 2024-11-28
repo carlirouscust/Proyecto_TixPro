@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Proyecto_TixPro.Migrations
 {
     /// <inheritdoc />
-    public partial class Evento : Migration
+    public partial class eventos : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,10 +56,10 @@ namespace Proyecto_TixPro.Migrations
                 {
                     eventoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    lugar = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    precio = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    lugar = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     imagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
