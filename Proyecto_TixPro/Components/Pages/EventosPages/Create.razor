@@ -1,101 +1,169 @@
-﻿@* @page "/Eventos/Create"
-@using Microsoft.AspNetCore.Components.Forms
+﻿@page "/Eventos/Create"
+@inject NavigationManager NavigationManager
+@inject EventosService EventosService
 
-<h3>Subir Imagen</h3>
-
-<div class="dropzone"
-     @ondragover="HandleDragOver"
-     @ondrop="HandleDrop"
-     @ondragleave="HandleDragLeave">
-    <p>Arrastra y suelta una imagen aquí o haz clic para seleccionar una.</p>
-    <input type="file" @onchange="HandleInputFileChange" accept="image/*" style="display:none;" @ref="fileInput" />
-</div>
-
-@if (imagePreview is not null)
-{
-    <div class="preview">
-        <h4>Vista previa:</h4>
-        <img src="@imagePreview" alt="Imagen cargada" />
-    </div>
-}
-
-<button @onclick="UploadImageAsync" class="btn btn-primary">Subir</button>
+<PageTitle>Crear Evento</PageTitle>
 
 <style>
-    .dropzone {
-        border: 2px dashed #cccccc;
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s;
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 20px); /* Altura casi completa, dejando 20px de margen arriba y abajo */
+        background-color: #fff;
+        padding: 20px; /* Agregamos un padding para que no toque los bordes */
+        box-sizing: border-box; /* Asegura que el padding no afecte la altura total */
     }
 
-        .dropzone:hover {
-            background-color: #f8f8f8;
-        }
+    .card {
+        border-radius: 1.5rem;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        width: 100%; /* Asegura que ocupe todo el espacio disponible */
+        max-width: 900px; /* Límite de anchura para no ser demasiado grande */
+        padding: 4rem;
+    }
 
-        .dropzone.dragging {
-            background-color: #e6f7ff;
-        }
+    .form-floating input {
+        border-radius: 2rem;
+        padding: 1rem;
+        font-size: 1.5rem;
+    }
 
-    .preview img {
+    .btn-primary {
+        background-color: #000;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 1rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    .btn-primary:hover {
+        background-color: #1e40af;
+    }
+
+    .text-center p a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .text-center p a:hover {
+        text-decoration: underline;
+    }
+
+    .form-floating textarea {
+        height: 100px;
+    }
+
+    /* Estilo para la imagen previa */
+    .preview-image {
         max-width: 100%;
         max-height: 300px;
-        margin-top: 10px;
+        margin-top: 20px;
+        object-fit: cover;
     }
 </style>
 
+<div class="login-container">
+    <div class="card">
+        <section>
+            <h1 class="text-center mb-5">Registrar Evento</h1>
+            <StatusMessage Message="@errorMessage" />
+
+            <!-- Formulario con un FormName único -->
+            <EditForm Model="Evento" OnValidSubmit="RegistrarEvento" FormName="eventoForm">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="text-danger" role="alert" />
+
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="Evento.nombre" class="form-control" placeholder="Nombre del evento" />
+                    <label for="nombre">Nombre del Evento</label>
+                    <ValidationMessage For="@(() => Evento.nombre)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputDate @bind-Value="Evento.fecha" class="form-control" placeholder="Fecha del Evento" />
+                    <label for="fecha">Fecha del Evento</label>
+                    <ValidationMessage For="@(() => Evento.fecha)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="Evento.lugar" class="form-control" placeholder="Lugar del Evento" />
+                    <label for="lugar">Lugar del Evento</label>
+                    <ValidationMessage For="@(() => Evento.lugar)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputNumber @bind-Value="Evento.precio" class="form-control" placeholder="Precio del Evento" />
+                    <label for="precio">Precio del Evento</label>
+                    <ValidationMessage For="@(() => Evento.precio)" class="text-danger" />
+                </div>
+
+                <!-- Campo para seleccionar la imagen -->
+                <div class="form-floating mb-3">
+                    <InputFile OnChange="OnImageChange" class="form-control" />
+                    <label for="imagen">Imagen del Evento</label>
+                    <ValidationMessage For="@(() => Evento.imagen)" class="text-danger" />
+                </div>
+
+                <!-- Previsualización de la imagen seleccionada solo si Evento.imagen tiene un valor -->
+                @if (!string.IsNullOrEmpty(imagenPreview))
+                {
+                    <img src="@imagenPreview" class="preview-image" alt="Previsualización de Imagen" />
+                }
+
+                <div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">Registrar Evento</button>
+                </div>
+            </EditForm>
+        </section>
+    </div>    
+</div>
+
 @code {
-    private string? imagePreview;
-    private ElementReference fileInput;
+    private Evento Evento { get; set; } = new Evento();
+    private string? errorMessage;
+    private string? imagenPreview;
 
-    private void HandleDragOver(DragEventArgs e)
-    {
-        e.StopPropagation(); // Prevenir la propagación
-    }
-
-    private void HandleDragLeave(DragEventArgs e)
-    {
-        // Lógica opcional para cuando se sale del área
-    }
-
-    private async Task HandleDrop(DragEventArgs e)
-    {
-        e.StopPropagation();
-
-        if (e.DataTransfer?.Files.Count > 0)
-        {
-            var file = e.DataTransfer.Files[0];
-            await ProcessFileAsync(file);
-        }
-    }
-
-    private async Task HandleInputFileChange(InputFileChangeEventArgs e)
+    private async Task OnImageChange(InputFileChangeEventArgs e)
     {
         var file = e.File;
-        await ProcessFileAsync(file);
-    }
-
-    private async Task ProcessFileAsync(IBrowserFile file)
-    {
-        if (file.ContentType.StartsWith("image/"))
+        if (file != null)
         {
-            using var stream = file.OpenReadStream();
-            var buffer = new byte[file.Size];
-            await stream.ReadAsync(buffer);
+            var stream = file.OpenReadStream();
+            var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var base64Image = Convert.ToBase64String(memoryStream.ToArray());
+            
+            // Actualizar la propiedad Evento.imagen en tiempo real
+            Evento.imagen = $"data:{file.ContentType};base64,{base64Image}";
 
-            imagePreview = $"data:{file.ContentType};base64,{Convert.ToBase64String(buffer)}";
+            // Actualizar la variable imagenPreview para la previsualización
+            imagenPreview = $"data:{file.ContentType};base64,{base64Image}";
+            
+            // Forzar la actualización de la UI
+            StateHasChanged();
         }
     }
 
-    private async Task UploadImageAsync()
+    private async Task RegistrarEvento()
     {
-        if (!string.IsNullOrEmpty(imagePreview))
-        {
-            await Task.Delay(500); // Simulación de subida
-            Console.WriteLine("Imagen subida con éxito.");
-        }
+        
+            var resultado = await EventosService.Guardar(Evento);
+            
+            if (resultado)
+            {
+                NavigationManager.NavigateTo("/Eventos/Success");
+            }
+            else
+            {
+                errorMessage = "Error al registrar el evento.";
+            }
+        
+        // else
+        // {
+        //     errorMessage = "Por favor, complete todos los campos.";
+        // }
     }
 }
- *@
