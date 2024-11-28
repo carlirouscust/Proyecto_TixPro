@@ -72,36 +72,36 @@
             <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Evento</h1>
 
             <!-- Formulario con un FormName único -->
-            <EditForm Model="@evento" OnValidSubmit="Guardar" FormName="eventoForm">
+            <EditForm Model="evento" OnValidSubmit="Guardar" FormName="eventoForm">
                 <DataAnnotationsValidator />
 
                 <div class="form-floating mb-4">
-                    <InputText @bind-Value="@evento.nombre" class="form-control" placeholder="Nombre del evento" style="font-size: 1.1rem;" />
+                    <InputText @bind-Value="evento.nombre" class="form-control" placeholder="Nombre del evento" style="font-size: 1.1rem;" />
                     <label for="nombre" style="font-size: 1rem;">Nombre del Evento</label>
                     <ValidationMessage For="@(() => evento.nombre)" class="text-danger" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <InputDate @bind-Value="@evento.fecha" class="form-control" placeholder="Fecha del Evento" style="font-size: 1.1rem;" />
+                    <InputDate @bind-Value="evento.fecha" class="form-control" placeholder="Fecha del Evento" style="font-size: 1.1rem;" />
                     <label for="fecha" style="font-size: 1rem;">Fecha del Evento</label>
                     <ValidationMessage For="@(() => evento.fecha)" class="text-danger" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <InputText @bind-Value="@evento.lugar" class="form-control" placeholder="Lugar del Evento" style="font-size: 1.1rem;" />
+                    <InputText @bind-Value="evento.lugar" class="form-control" placeholder="Lugar del Evento" style="font-size: 1.1rem;" />
                     <label for="lugar" style="font-size: 1rem;">Lugar del Evento</label>
                     <ValidationMessage For="@(() => evento.lugar)" class="text-danger" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <InputNumber @bind-Value="@evento.precio" class="form-control" placeholder="Precio del Evento" style="font-size: 1.1rem;" />
+                    <InputNumber @bind-Value="evento.precio" class="form-control" placeholder="Precio del Evento" style="font-size: 1.1rem;" />
                     <label for="precio" style="font-size: 1rem;">Precio del Evento</label>
                     <ValidationMessage For="@(() => evento.precio)" class="text-danger" />
                 </div>
 
                 <!-- Campo para seleccionar la imagen -->
                 <div class="form-floating mb-3">
-                    <InputFile OnChange="@OnImageChange" class="form-control" />
+                    <InputFile OnChange="OnImageChange" class="form-control" />
                     <label for="imagen" style="font-size: 1rem;">Imagen del Evento</label>
                     <ValidationMessage For="@(() => evento.imagen)" class="text-danger" />
                 </div>
