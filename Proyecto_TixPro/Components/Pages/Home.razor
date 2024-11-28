@@ -39,25 +39,54 @@
                                 </label>
                             </div>
                             <!-- Filtro -->
+                            <!-- Filtro -->
                             <div class="col-md-4 d-flex align-items-center mb-3 mb-md-0">
                                 <label for="Filtro" class="form-label fw-bold me-3">Filtrar:</label>
                                 <select @bind="filtro" class="form-select form-select-lg">
-                                    <option value="id">ID</option>
                                     <option value="nombre">Nombre</option>
                                     <option value="precio">Precio</option>
+                                    <option value="fecha">Fecha</option>
                                 </select>
                             </div>
 
                             <!-- Barra de Búsqueda -->
                             <div class="col-md-5 d-flex align-items-center mb-3 mb-md-0">
-                                <label for="ValorFiltro" class="form-label fw-bold me-3">Búsqueda:</label>
+                                <label for="ValorFiltro" class="form-label fw-bold me-3"></label>
                                 <div class="input-group input-group-lg">
                                     <input @bind="valorFiltro" class="form-control" placeholder="Buscar..." />
                                     <button @onclick="Buscar" class="btn btn-primary" type="button">
                                         <span class="bi bi-search"></span> Buscar
                                     </button>
                                 </div>
+                                <!-- Restablecer -->
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-outline-secondary bi bi-arrow-counterclockwise" @onclick="Restablecer">
+                                    </button>
+                                </div>
                             </div>
+
+                            
+
+                            <!-- FiltroFecha - Mostrar solo si se selecciona "fecha" en el filtro -->
+                            @if (filtro == "fecha")
+                            {
+                                <div class="row mt-3">
+                                    <!-- Desde -->
+                                    <div class="col-3">
+                                        <label class="col-form-label"><strong>Desde</strong></label>
+                                        <InputDate class="form-control" @bind-Value="Desde"></InputDate>
+                                    </div>
+
+                                    <!-- Hasta -->
+                                    <div class="col-3">
+                                        <label class="col-form-label"><strong>Hasta</strong></label>
+                                        <div class="input-group">
+                                            <InputDate class="form-control" @bind-Value="Hasta"></InputDate>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>
@@ -114,6 +143,8 @@
     public List<Evento> ListaEvento = new List<Evento>();
     private string valorFiltro = "";
     private string filtro = "Id";
+    public DateTime? Desde { get; set; }
+    public DateTime? Hasta { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -137,10 +168,28 @@
             {
                 ListaEvento = await eventosService.Listar(t => t.precio == precio);
             }
+            else if (filtro == "fecha" && DateTime.TryParse(valorFiltro, out DateTime fecha))
+            {
+                ListaEvento = await eventosService.Listar(t => t.fecha == fecha);
+            }
+        }
+        else if (filtro == "fecha" && Desde.HasValue && Hasta.HasValue)
+        {
+            ListaEvento = await eventosService.Listar(t => t.fecha >= Desde.Value && t.fecha <= Hasta.Value);
         }
         else
         {
             ListaEvento = await eventosService.Listar(t => true);
         }
     }
+
+    private async Task Restablecer()
+    {
+        ListaEvento = await eventosService.Listar(t => t.eventoId > 0);
+        filtro = string.Empty;
+        valorFiltro = string.Empty;
+        Desde = null;
+        Hasta = null;
+    }
+
 }
