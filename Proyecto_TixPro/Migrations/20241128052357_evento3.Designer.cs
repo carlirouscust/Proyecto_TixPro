@@ -12,8 +12,8 @@ using Proyecto_TixPro.Data;
 namespace Proyecto_TixPro.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20241128002950_Evento")]
-    partial class Evento
+    [Migration("20241128052357_evento3")]
+    partial class evento3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -238,12 +238,14 @@ namespace Proyecto_TixPro.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("lugar")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("precio")
+                    b.Property<decimal>("precio")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("eventoId");
