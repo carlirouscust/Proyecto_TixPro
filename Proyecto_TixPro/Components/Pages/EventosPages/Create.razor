@@ -73,7 +73,6 @@
             <!-- Formulario con un FormName único -->
             <EditForm Model="Evento" OnValidSubmit="Guardar" FormName="eventoForm">
                 <DataAnnotationsValidator />
-                <ValidationSummary class="text-danger" role="alert" />
 
                 <div class="form-floating mb-4">
                     <InputText @bind-Value="Evento.nombre" class="form-control" placeholder="Nombre del evento" style="font-size: 1.1rem;" />
