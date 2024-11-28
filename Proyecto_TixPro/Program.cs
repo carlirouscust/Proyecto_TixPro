@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Proyecto_TixPro.Components;
 using Proyecto_TixPro.Components.Account;
@@ -18,33 +17,24 @@ namespace Proyecto_TixPro
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
-           
+
             builder.Services.AddCascadingAuthenticationState();
             builder.Services.AddScoped<IdentityUserAccessor>();
             builder.Services.AddScoped<IdentityRedirectManager>();
             builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
             builder.Services.AddAuthentication(options =>
-                {
-                    options.DefaultScheme = IdentityConstants.ApplicationScheme;
-                    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-                })
+            {
+                options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
                 .AddIdentityCookies();
-
-            builder.Services.AddSignalR();
-
-            builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-               .AddRoles<IdentityRole>()
-               .AddEntityFrameworkStores<Contexto>()
-               .AddSignInManager()
-               .AddDefaultTokenProviders();
-
-            builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
-
+           
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContextFactory<Contexto>(options => options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+            // Configura la autenticación y las cookies de Identity.
             builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<Contexto>()
@@ -53,11 +43,14 @@ namespace Proyecto_TixPro
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
+            // Registra IHttpContextAccessor (solo una vez)
+            builder.Services.AddHttpContextAccessor();
+
+            // Servicios adicionales para la aplicación
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<EventosService>();
             builder.Services.AddScoped<TicketService>();
             builder.Services.AddScoped<UsuariosService>();
-
-            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
 
@@ -69,21 +62,18 @@ namespace Proyecto_TixPro
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-
-
             app.UseStaticFiles();
-            app.UseAntiforgery(); 
+            app.UseAntiforgery();
 
+            // Rutas y componentes
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 
-            // Add additional endpoints required by the Identity /Account Razor components.
+            // Endpoint para Identity
             app.MapAdditionalIdentityEndpoints();
-
 
             app.Run();
         }
