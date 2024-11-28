@@ -69,10 +69,9 @@
     <div class="card">
         <section>
             <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Evento</h1>
-            <StatusMessage Message="@errorMessage" />
 
             <!-- Formulario con un FormName único -->
-            <EditForm Model="Evento" OnValidSubmit="RegistrarEvento" FormName="eventoForm">
+            <EditForm Model="Evento" OnValidSubmit="Guardar" FormName="eventoForm">
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger" role="alert" />
 
@@ -123,9 +122,16 @@
 
 
 @code {
-    private Evento Evento { get; set; } = new Evento();
+    [Parameter]
+    public int eventoId { get; set; }
+    public Evento Evento { get; set; } = new Evento();
     private string? errorMessage;
     private string? imagenPreview;
+
+    protected override void OnInitialized()
+    {
+        Evento = new Evento();
+    }
 
     private async Task OnImageChange(InputFileChangeEventArgs e)
     {
@@ -148,25 +154,21 @@
         }
     }
 
-    private async Task RegistrarEvento()
+    public async Task Guardar()
     {
-        // Verifica si los datos son correctos
-        Console.WriteLine($"Evento: {Evento.nombre}, {Evento.fecha}, {Evento.lugar}, {Evento.precio}");
-        
-            var resultado = await EventosService.Guardar(Evento);
-            
-            if (resultado)
-            {
-                NavigationManager.NavigateTo("/Eventos/Success");
-            }
-            else
-            {
-                errorMessage = "Error al registrar el evento.";
-            }
-        
-        // else
-        // {
-        //     errorMessage = "Por favor, complete todos los campos.";
-        // }
+        Console.WriteLine("Se llamó al método Guardar");
+        Console.WriteLine($"Nombre: {Evento.nombre}, Fecha: {Evento.fecha}, Lugar: {Evento.lugar}, Precio: {Evento.precio}, Imagen: {Evento.imagen}");
+
+        var resultado = await EventosService.Guardar(Evento);
+        if (resultado)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = "Error al registrar el evento.";
+            StateHasChanged();
+        }
     }
+
 }
