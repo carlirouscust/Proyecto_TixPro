@@ -3,44 +3,123 @@
 @inject NavigationManager NavigationManager
 @inject SignInManager<ApplicationUser> SignInManager
 
-<ul class="nav nav-pills flex-column">
+
+
+<ul class="nav nav-pills flex-column nav-custom">
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage" Match="NavLinkMatch.All">Profile</NavLink>
+        <NavLink class="nav-link" href="Account/Manage" Match="NavLinkMatch.All">
+            <i class="bi bi-person-circle"></i> Perfil
+        </NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/Email">Email</NavLink>
+        <NavLink class="nav-link" href="Account/Manage/Email">
+            <i class="bi bi-envelope"></i> Correo Electrónico
+        </NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/ChangePassword">Password</NavLink>
+        <NavLink class="nav-link" href="Account/Manage/ChangePassword">
+            <i class="bi bi-lock"></i> Contraseña
+        </NavLink>
     </li>
     @if (hasExternalLogins)
     {
         <li class="nav-item">
-            <NavLink class="nav-link" href="Account/Manage/ExternalLogins">External logins</NavLink>
+            <NavLink class="nav-link" href="Account/Manage/ExternalLogins">
+                <i class="bi bi-box-arrow-in-right"></i> Conexiones externas
+            </NavLink>
         </li>
     }
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/TwoFactorAuthentication">Two-factor authentication</NavLink>
+        <NavLink class="nav-link" href="Account/Manage/TwoFactorAuthentication">
+            <i class="bi bi-shield-lock"></i> Doble autenticación
+        </NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="Account/Manage/PersonalData">Personal data</NavLink>
+        <NavLink class="nav-link" href="Account/Manage/PersonalData">
+            <i class="bi bi-person-lines-fill"></i> Datos personales
+        </NavLink>
     </li>
     <li>
-    <AuthorizeView>
-        <Authorized>
-            <div class="nav-item">
-                <form action="Account/Logout" method="post">
-                    <AntiforgeryToken />
-                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                    <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Cerrar sesión
-                    </button>
-                </form>
-            </div>
-        </Authorized>
-    </AuthorizeView>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item">
+                    <form action="Account/Logout" method="post">
+                        <AntiforgeryToken />
+                        <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                        <button type="submit" class="nav-link logout-btn">
+                            <i class="bi bi-arrow-bar-left"></i> Cerrar sesión
+                        </button>
+                    </form>
+                </div>
+            </Authorized>
+        </AuthorizeView>
     </li>
 </ul>
+
+<style>
+    
+    .nav-custom {
+        padding: 10px;
+        background-color: #f8f9fa;  
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-custom .nav-item {
+        margin-bottom: 12px;  
+    }
+
+    .nav-custom .nav-link {
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        color: #333;
+        padding: 12px 15px;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        font-weight: 500;
+    }
+
+    .nav-custom .nav-link:hover {
+                background-color: #1e40af;
+        color: #fff;
+    }
+
+    .nav-custom .nav-link i {
+        margin-right: 10px;
+        font-size: 1.3rem;
+    }
+
+    .nav-custom .nav-link.active {
+        background-color: black;
+        color: #fff;
+    }
+
+    .nav-custom .nav-link.logout-btn {
+        background-color: #dc3545;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .nav-custom .nav-link.logout-btn:hover {
+        background-color: black;
+    }
+
+    .nav-custom .nav-link.logout-btn i {
+        margin-right: 8px;
+    }
+
+    .nav-custom .nav-item:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    .nav-custom .nav-item:last-child {
+        margin-bottom: 0;
+    }
+</style>
+
 
 @code {
     private bool hasExternalLogins;
