@@ -1,0 +1,84 @@
+﻿/* Botón primario */
+.btn-primary {
+    background-color: #1e40af; /* Color más suave */
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+    .btn-primary:hover {
+        background-color: #2c5282; /* Un tono de azul más oscuro */
+        transform: translateY(-2px);
+    }
+
+/* Grupo de botones */
+.btn-group .btn {
+    background-color: #1e40af;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: white;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+    .btn-group .btn:hover {
+        background-color: #2c5282;
+        transform: translateY(-2px);
+    }
+
+/* Caja de cantidad */
+.quantity-box input {
+    text-align: center;
+    font-size: 1.5rem; /* Aumenta el tamaño de la fuente */
+    padding: 0.75rem;
+    width: 70px;
+    border: 2px solid #ccc; /* Borde más suave */
+    border-radius: 0.5rem; /* Bordes redondeados */
+    transition: border-color 0.3s;
+}
+
+    .quantity-box input:focus {
+        border-color: #1e40af; /* Color de borde cuando está enfocado */
+    }
+
+/* Estilo de los controles de cantidad */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem; /* Espacio entre controles */
+}
+
+/* Botón de compra */
+.btn-outline-success {
+    background-color: #000; /* Fondo negro */
+    border-color: #000; /* Borde negro */
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+    .btn-outline-success:hover {
+        background-color: #1e40af; /* Fondo azul */
+        color: white; /* Texto blanco */
+        border-color: #1e40af;
+    }
+
+    .btn-outline-success .total-price {
+        margin-left: 1rem;
+        font-size: 1.1rem;
+        font-weight: normal;
+        color: #fff;
+    }

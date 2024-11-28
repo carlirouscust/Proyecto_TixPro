@@ -1,108 +1,100 @@
-﻿@page "/Ticket/Compra/"
+﻿@page "/Ticket/Compra/{eventoId:int}"
+@inject TicketService ticketService
+@inject EventosService eventosService
+@rendermode InteractiveServer
+@inject NavigationManager navigationManager
 
-<!DOCTYPE html>
-<html lang="en">
-<body>
-    
 
-    <!-- Product section-->
-    <section class="py-5" id="productSection">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="row gx-4 gx-lg-5 align-items-center">
-                <div class="col-md-6">
-                    <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="Product Image" />
-                </div>
-                <div class="col-md-6">
-                    <h1 class="display-5 fw-bolder" id="productName">Shop Item Template</h1>
-                    <div class="fs-5 mb-5">
-                        <span class="text-decoration-line-through">$45.00</span>
-                        <span id="productPrice">$40.00</span>
-                    </div>
-                    <p class="lead" id="productDescription">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi...</p>
-                    <div class="d-flex">
-                        <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" min="1" />
-                        <button class="btn btn-outline-dark flex-shrink-0" id="addToCartButton" type="button">
-                            <i class="bi-cart-fill me-1"></i>
-                            Add to cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<EditForm Model="evento">
 
-    <!-- Related items section-->
-    <section class="py-5 bg-light" id="relatedItemsSection">
+
+
+    <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
-            <h2 class="fw-bolder mb-4">Related products</h2>
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="relatedItemsContainer">
-                <!-- Related items will be injected here -->
+            <div class="row align-items-center">
+                <!-- Imagen -->
+                <div class="col-md-6">
+                    <img class="card-img" src="@evento.imagen" alt="Imagen del Evento">
+                </div>
+                <!-- Contenido de Texto -->
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h5 class="fw-bold">@evento.nombre</h5>
+                        <p class="text-muted">
+                            <span class="text-decoration-line-through">RD$ 1000.00</span>
+                            <span class="text-dark fw-bold">RD$ @evento.precio</span>
+                        </p>
+                        <p><i class="bi bi-calendar4-week"></i> @evento.lugar</p>
+                        <p><i class="bi bi-geo-alt"></i> @evento.fecha</p>
+
+                        <div class="quantity-controls d-flex align-items-center">
+                            <div class="btn-group" role="group" aria-label="Cantidad">
+                                <button type="button" class="btn btn-outline-primary" @onclick="DecreaseQuantity">
+                                    <i class="bi bi-dash"></i>
+                                </button>
+                                <div class="quantity-box">
+                                    <input type="text" class="quantity-number" @bind="quantity" readonly>
+                                </div>
+                                <button type="button" class="btn btn-outline-primary" @onclick="IncreaseQuantity">
+                                    <i class="bi bi-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <!-- Botón de Comprar con Precio Total -->
+                        <div class="mb-3">
+                            <button class="btn btn-outline-success d-flex align-items-center justify-content-center bi bi-ticket" @onclick="NavigateToCart">
+                            Comprar Tickets
+                            <div class="total-price me-2">
+                                 RD$ @totalPrice.ToString("F2")
+                            </div>
+                        </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer-->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-
-    <script>
-        // Event handler function for 'Add to Cart'
-        function addToCartHandler() {
-            let cartCount = parseInt(document.getElementById('cartCount').textContent);
-            let quantity = parseInt(document.getElementById('inputQuantity').value);
-            cartCount += quantity;
-            document.getElementById('cartCount').textContent = cartCount;
-        }
-
-        // Dynamically add related items
-        function addRelatedItems() {
-            const relatedItems = [
-                { name: "Fancy Product", price: "$40.00", image: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg" },
-                { name: "Special Item", price: "$18.00", image: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg" },
-                { name: "Sale Item", price: "$25.00", image: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg" },
-                { name: "Popular Item", price: "$40.00", image: "https://dummyimage.com/450x300/dee2e6/6c757d.jpg" }
-            ];
-
-            let container = document.getElementById('relatedItemsContainer');
-            relatedItems.forEach(item => {
-                let col = document.createElement('div');
-                col.classList.add('col', 'mb-5');
-                col.innerHTML = `
-                            <div class="card h-100">
-                                <img class="card-img-top" src="${item.image}" alt="..." />
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <h5 class="fw-bolder">${item.name}</h5>
-                                        <span>${item.price}</span>
-                                    </div>
-                                </div>
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                                </div>
-                            </div>
-                        `;
-                container.appendChild(col);
-            });
-        }
-
-        // Attach event listeners to elements
-        document.getElementById('addToCartButton').addEventListener('click', addToCartHandler);
-
-        // Initialize dynamic content
-        addRelatedItems();
-    </script>
-</body>
-</html>
-
+</EditForm>
 
 @code {
+    [Parameter]
+    public int eventoId { get; set; }
+    public Evento evento { get; set; } = new Evento();
+    private int quantity = 0;
+    private decimal totalPrice = 0.00m;
 
+
+    protected override async Task OnInitializedAsync()
+    {
+        evento = await eventosService.Buscar(eventoId);
+        UpdateTotalPrice();
+    }
+
+    private void IncreaseQuantity()
+    {
+        quantity++;
+        UpdateTotalPrice();
+    }
+
+    private void DecreaseQuantity()
+    {
+        if (quantity > 0)
+        {
+            quantity--;
+            UpdateTotalPrice();
+        }
+    }
+
+    private void UpdateTotalPrice()
+    {
+        totalPrice = quantity * evento.precio;
+    }
+
+    private void NavigateToCart()
+    {
+        
+        navigationManager.NavigateTo($"/Ticket/Carrito/{eventoId}");
+    }
 }
