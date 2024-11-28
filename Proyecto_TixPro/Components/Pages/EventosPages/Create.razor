@@ -68,7 +68,7 @@
 <div class="login-container">
     <div class="card">
         <section>
-            <h1 class="text-center mb-5">Registrar Evento</h1>
+            <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Evento</h1>
             <StatusMessage Message="@errorMessage" />
 
             <!-- Formulario con un FormName único -->
@@ -76,50 +76,51 @@
                 <DataAnnotationsValidator />
                 <ValidationSummary class="text-danger" role="alert" />
 
-                <div class="form-floating mb-3">
-                    <InputText @bind-Value="Evento.nombre" class="form-control" placeholder="Nombre del evento" />
-                    <label for="nombre">Nombre del Evento</label>
+                <div class="form-floating mb-4">
+                    <InputText @bind-Value="Evento.nombre" class="form-control" placeholder="Nombre del evento" style="font-size: 1.1rem;" />
+                    <label for="nombre" style="font-size: 1rem;">Nombre del Evento</label>
                     <ValidationMessage For="@(() => Evento.nombre)" class="text-danger" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <InputDate @bind-Value="Evento.fecha" class="form-control" placeholder="Fecha del Evento" />
-                    <label for="fecha">Fecha del Evento</label>
+                    <InputDate @bind-Value="Evento.fecha" class="form-control" placeholder="Fecha del Evento" style="font-size: 1.1rem;" />
+                    <label for="fecha" style="font-size: 1rem;">Fecha del Evento</label>
                     <ValidationMessage For="@(() => Evento.fecha)" class="text-danger" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <InputText @bind-Value="Evento.lugar" class="form-control" placeholder="Lugar del Evento" />
-                    <label for="lugar">Lugar del Evento</label>
+                    <InputText @bind-Value="Evento.lugar" class="form-control" placeholder="Lugar del Evento" style="font-size: 1.1rem;" />
+                    <label for="lugar" style="font-size: 1rem;">Lugar del Evento</label>
                     <ValidationMessage For="@(() => Evento.lugar)" class="text-danger" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <InputNumber @bind-Value="Evento.precio" class="form-control" placeholder="Precio del Evento" />
-                    <label for="precio">Precio del Evento</label>
+                    <InputNumber @bind-Value="Evento.precio" class="form-control" placeholder="Precio del Evento" style="font-size: 1.1rem;" />
+                    <label for="precio" style="font-size: 1rem;">Precio del Evento</label>
                     <ValidationMessage For="@(() => Evento.precio)" class="text-danger" />
                 </div>
 
                 <!-- Campo para seleccionar la imagen -->
                 <div class="form-floating mb-3">
                     <InputFile OnChange="OnImageChange" class="form-control" />
-                    <label for="imagen">Imagen del Evento</label>
+                    <label for="imagen" style="font-size: 1rem;">Imagen del Evento</label>
                     <ValidationMessage For="@(() => Evento.imagen)" class="text-danger" />
                 </div>
 
                 <!-- Previsualización de la imagen seleccionada solo si Evento.imagen tiene un valor -->
                 @if (!string.IsNullOrEmpty(imagenPreview))
                 {
-                    <img src="@imagenPreview" class="preview-image" alt="Previsualización de Imagen" />
+                    <img src="@imagenPreview" class="preview-image" alt="Previsualización de Imagen" style="max-width: 100%; max-height: 200px; object-fit: cover;" />
                 }
 
                 <div>
-                    <button type="submit" class="w-100 btn btn-lg btn-primary">Registrar Evento</button>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Registrar Evento</button>
                 </div>
             </EditForm>
         </section>
     </div>    
 </div>
+
 
 @code {
     private Evento Evento { get; set; } = new Evento();
@@ -149,6 +150,8 @@
 
     private async Task RegistrarEvento()
     {
+        // Verifica si los datos son correctos
+        Console.WriteLine($"Evento: {Evento.nombre}, {Evento.fecha}, {Evento.lugar}, {Evento.precio}");
         
             var resultado = await EventosService.Guardar(Evento);
             
