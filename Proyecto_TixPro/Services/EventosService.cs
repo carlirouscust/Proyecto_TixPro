@@ -30,11 +30,17 @@ public class EventosService(IDbContextFactory<Contexto> DbFactory)
 
     public async Task<bool> Guardar(Evento _evento)
     {
+        if (string.IsNullOrEmpty(_evento.lugar))
+        {
+            throw new ArgumentException("El campo lugar es obligatorio.");
+        }
+
         if (!await Existe(_evento.eventoId))
             return await Insertar(_evento);
         else
             return await Modificar(_evento);
     }
+
 
     public async Task<bool> Eliminar(int id)
     {
