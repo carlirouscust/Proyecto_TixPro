@@ -2,6 +2,8 @@
 @inject TicketService ticketService
 @inject EventosService eventosService
 @rendermode InteractiveServer
+@inject NavigationManager navigationManager
+
 
 <EditForm Model="evento">
 
@@ -42,7 +44,7 @@
 
                         <!-- Botón de Comprar con Precio Total -->
                         <div class="mb-3">
-                            <button class="btn btn-outline-success d-flex align-items-center justify-content-center bi bi-ticket" @onclick="UpdatePurchaseUrl">
+                            <button class="btn btn-outline-success d-flex align-items-center justify-content-center bi bi-ticket" @onclick="NavigateToCart">
                             Comprar Tickets
                             <div class="total-price me-2">
                                  RD$ @totalPrice.ToString("F2")
@@ -62,12 +64,12 @@
     public Evento evento { get; set; } = new Evento();
     private int quantity = 0;
     private decimal totalPrice = 0.00m;
-    private string purchaseUrl = "#";
+
 
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
-        UpdatePurchaseUrl();
+        UpdateTotalPrice();
     }
 
     private void IncreaseQuantity()
@@ -88,11 +90,11 @@
     private void UpdateTotalPrice()
     {
         totalPrice = quantity * evento.precio;
-        UpdatePurchaseUrl();
     }
 
-    private void UpdatePurchaseUrl()
+    private void NavigateToCart()
     {
-        purchaseUrl = $"/Ticket/Compra/{eventoId}?cantidad={quantity}&total={totalPrice:F2}";
+        
+        navigationManager.NavigateTo($"/Ticket/Carrito/{eventoId}");
     }
 }
