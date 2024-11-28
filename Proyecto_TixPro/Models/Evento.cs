@@ -8,17 +8,18 @@ public class Evento
     public int eventoId { get; set; }
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
-    public string? nombre { get; set; }
+    public string nombre { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
     public DateTime fecha { get; set; } = DateTime.Now;
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
-    public string? lugar { get; set; }
+    public string lugar { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
-    public decimal? precio { get; set; }
+    [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor a 0.")]
+    public decimal precio { get; set; }
 
-    [Required(ErrorMessage = "Este campo debe ser obligatorio")]
     public string? imagen { get; set; }
 }
+
