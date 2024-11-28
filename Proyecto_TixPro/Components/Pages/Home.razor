@@ -1,7 +1,10 @@
 ﻿@page "/"
+@inject TicketService ticketService
+@inject EventosService eventosService
+@rendermode InteractiveServer
 
-<html lang="en">
-<head>
+<EditForm Model="ListaEvento">
+    <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -14,7 +17,6 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
 </head>
-<body>
     <!-- Header-->
     <header class="bg-dark py-5" style="width: 100%; height: 500px; margin: 0; padding: 0; border-radius: 20px;">
         <div class="container px-4 px-lg-5 my-5">
@@ -24,180 +26,121 @@
             </div>
         </div>
     </header>
-    <!-- Section-->
-    <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/tempo tropico.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Tempo Trópico presenta PABELS</h5>
-                                <!-- Product price-->
-                                RD$1,000
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <!-- Icono de Evento -->
+                            <div class="col-md-3 text-center text-md-end mb-3 mb-md-0">
+                                <label class="d-inline-block fs-4 fw-bold text-black">
+                                    Buscar Evento <span class="bi bi-ticket"></span>
+                                </label>
                             </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"></div>
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/archie hamilton.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">ARCHIE HAMILTON  SOLES - PUNTA CANA</h5>                              
-                                <!-- Product price-->
-                                RD$1,500
+                            <!-- Filtro -->
+                            <div class="col-md-4 d-flex align-items-center mb-3 mb-md-0">
+                                <label for="Filtro" class="form-label fw-bold me-3">Filtrar:</label>
+                                <select @bind="filtro" class="form-select form-select-lg">
+                                    <option value="id">ID</option>
+                                    <option value="nombre">Nombre</option>
+                                    <option value="precio">Precio</option>
+                                </select>
                             </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"></div>
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/marrena.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">MANERRA LIVE</h5>
-                                <!-- Product price-->
-                                RD$2,500
+
+                            <!-- Barra de Búsqueda -->
+                            <div class="col-md-5 d-flex align-items-center mb-3 mb-md-0">
+                                <label for="ValorFiltro" class="form-label fw-bold me-3">Búsqueda:</label>
+                                <div class="input-group input-group-lg">
+                                    <input @bind="valorFiltro" class="form-control" placeholder="Buscar..." />
+                                    <button @onclick="Buscar" class="btn btn-primary" type="button">
+                                        <span class="bi bi-search"></span> Buscar
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/groovy.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Groovy Sunset Fest</h5>
-                                <!-- Product price-->
-                                RD$800
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"></div>
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/badir.jpg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">BADIR | DE TU A TU</h5>
-                                <!-- Product price-->
-                                RD$1,000
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/noche cruel.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Noche Cruel</h5>
-                                <!-- Product price-->
-                                RD$800
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Sale badge-->
-                        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"></div>
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/carlos sanchez.jpeg" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Carlos Sanchez: En Blanco</h5>
-                                <!-- Product price-->
-                                RD$1,500
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col mb-5">
-                    <div class="card shadow h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="images/duo humor.png" alt="..." />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">Duo Humor - Eduardo y Thomas</h5>
-                                <!-- Product price-->
-                                RD$999
-                            </div>
-                        </div>
-                        <!-- Product actions-->
-                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                            <div class="text-center"><a class="btn btn-outline-dark mt-auto rounded-pill" href="#">Tickets</a></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Footer-->
-    <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
-        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2024</p></div>
-    </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-</body>
-</html>
+    </div>
+
+
+
+
+
+  @* Tarjetas para Tickets *@
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center">
+                @foreach (var evento in ListaEvento)
+                {
+                    <div class="col mb-5">
+                        <div class="card shadow h-100">
+                            <!-- Imagen del Técnico (puedes agregarla si es necesario) -->
+                            <!-- Imagen del Evento -->
+                            <img class="card-img-top" src="@evento.imagen" alt="Imagen del Evento" />
+                            <!-- Detalles del Técnico -->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <p class="mb-0">RD$ @evento.precio</p>
+                                    <!-- Nombre del Técnico -->
+                                    <h5 class="fw-bolder">@evento.nombre</h5>
+                                    <!-- Información adicional -->
+                                    <p class="mb-0 bi bi-calendar4-week">  @evento.lugar</p>
+                                    <p class="mb-0 bi bi-geo-alt"> @evento.fecha</p>
+                                </div>
+                                @* Botón Ticket *@
+                                <div class="text-center">
+                                    <a href="/Ticket/Compra/" class="btn btn-outline-dark mt-auto rounded-pill" type="button">
+                                        <span class="bi bi-ticket"></span> Tickets
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section> 
+
+    <div class="card-footer text-start">
+        <p>Total de Evento: @ListaEvento.Count</p>
+    </div>
+</EditForm>
+
+@code {
+    public Evento evento { get; set; } = new Evento();
+    public List<Evento> ListaEvento = new List<Evento>();
+    private string valorFiltro = "";
+    private string filtro = "Id";
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaEvento = await eventosService.Listar(c => true);
+    }
+
+    public async Task Buscar()
+    {
+        if (!string.IsNullOrWhiteSpace(valorFiltro))
+        {
+            if (filtro == "id" && int.TryParse(valorFiltro, out int eventoId))
+            {
+                ListaEvento = await eventosService.Listar(t => t.eventoId == eventoId);
+            }
+            else if (filtro == "nombre")
+            {
+                string filtroMinuscula = valorFiltro.ToLower();
+                ListaEvento = await eventosService.Listar(t => t.nombre.ToLower().Contains(filtroMinuscula));
+            }
+            else if (filtro == "precio" && decimal.TryParse(valorFiltro, out decimal precio))
+            {
+                ListaEvento = await eventosService.Listar(t => t.precio == precio);
+            }
+        }
+        else
+        {
+            ListaEvento = await eventosService.Listar(t => true);
+        }
+    }
+}
