@@ -1,7 +1,10 @@
 ﻿@page "/Eventos/Create"
+@using Microsoft.AspNetCore.Authorization
 @inject NavigationManager NavigationManager
 @inject EventosService EventosService
 @rendermode InteractiveServer
+
+@attribute [Authorize]
 
 <PageTitle>Crear Evento</PageTitle>
 
