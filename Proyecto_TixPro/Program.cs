@@ -47,7 +47,6 @@ namespace Proyecto_TixPro
             builder.Services.AddHttpContextAccessor();
 
             // Servicios adicionales para la aplicación
-            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<EventosService>();
             builder.Services.AddScoped<TicketService>();
             builder.Services.AddScoped<UsuariosService>();
