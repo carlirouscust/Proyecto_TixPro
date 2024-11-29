@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +7,8 @@ namespace Proyecto_TixPro.Models;
 
 public class Ticket
 {
+    private static readonly Random random = new Random();
+
     [Key]
     public int ticketId { get; set; }
 
@@ -16,10 +19,7 @@ public class Ticket
     public decimal monto { get; set; }
     public int cantidad { get; set; }
 
-    public int codigoTicket { get; set; } 
+    public int? codigoTicket { get; set; } = random.Next(1000, 10000);
 
-    public Usuario? usuario { get; set; }
-    [ForeignKey("usuario")]
-    public int usuarioId { get; set; } 
     
 }
