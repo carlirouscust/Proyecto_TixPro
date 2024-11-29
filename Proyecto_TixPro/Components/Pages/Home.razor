@@ -124,6 +124,21 @@
                                         <span class="bi bi-ticket"></span> Tickets
                                     </a>
                                 </div>
+
+                                @* Botón Edit *@
+                                <div class="text-center">
+                                    <a href="/Eventos/Edit/@evento.eventoId" class="btn btn-outline-dark mt-auto rounded-pill" type="button">
+                                        <span class="bi bi-ticket"></span> Edit Evento
+                                    </a>
+                                </div>
+
+                                @* Botón Delete *@
+                                <div class="text-center">
+                                    <a href="/Eventos/Delete/@evento.eventoId" class="btn btn-outline-dark mt-auto rounded-pill" type="button">
+                                        <span class="bi bi-ticket"></span> Eliminar Evento
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -135,6 +150,12 @@
     <div class="card-footer text-start">
         <p>Total de Evento: @ListaEvento.Count</p>
     </div>
+
+     <!-- Footer-->
+    <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+        <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
+    </footer>
+
 </EditForm>
 
 @code {
