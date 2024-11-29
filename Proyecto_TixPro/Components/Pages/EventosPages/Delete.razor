@@ -3,6 +3,8 @@
 @inject EventosService eventosService
 @rendermode InteractiveServer
 @inject NavigationManager navigationManager
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
 
 <EditForm Model="evento">
     <style>
