@@ -17,32 +17,32 @@
                 <!-- Contenido de Texto -->
                 <div class="col-md-6">
                     <div class="card-body">
-                        <h5 class="fw-bold">@evento.nombre</h5>
-                        <p class="text-muted">
-                            <span class="text-decoration-line-through">RD$ 1000.00</span>
+                        <h4 class="fw-bold">@evento.nombre</h4>
+                        <p class="text-muted">                           
                             <span class="text-dark fw-bold">RD$ @evento.precio</span>
                         </p>
                         <p><i class="bi bi-calendar4-week"></i> @evento.lugar</p>
                         <p><i class="bi bi-geo-alt"></i> @evento.fecha</p>
 
-                        <div class="quantity-controls d-flex align-items-center">
-                            <div class="btn-group" role="group" aria-label="Cantidad">
-                                <button type="button" class="btn btn-outline-primary rounded-pill" @onclick="DecreaseQuantity">
-                                    <i class="bi bi-dash"></i>
-                                </button>
-                                <div class="quantity-box">
-                                    <input type="text" class="quantity-number" @bind="quantity" readonly>
+                        <div class="add-ticket-type d-flex gap-2 align-items-center">
+                            <div class="bg-white border border-dark  rounded rounded-pill shadow" style="width: auto;">
+                                <div class="btn-group" role="group" aria-label="Cantidad">
+                                    <button type="button" class="btn btn-outline-primary rounded-pill" @onclick="DecreaseQuantity">
+                                        <span class="bi bi-dash"></span>
+                                    </button>
+                                    <div class="quantity-box">
+                                        <input type="text" class="quantity-number" @bind="quantity" readonly>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary rounded-pill" @onclick="IncreaseQuantity">
+                                        <span class="bi bi-plus"></span>
+                                    </button>
                                 </div>
-                                <button type="button" class="btn btn-outline-primary rounded-pill" @onclick="IncreaseQuantity">
-                                    <i class="bi bi-plus"></i>
-                                </button>
                             </div>
                         </div>
 
-
                         <!-- Botón de Comprar con Precio Total -->
                         <div class="mb-2" style="padding: 30px;">
-                            <button class="btn btn-outline-success rounded-pill d-flex align-items-center justify-content-center bi bi-ticket" @onclick="NavigateToCart">
+                            <button class="btn btn-outline-success rounded-pill d-flex align-items-center justify-content-center bi bi-ticket shadow" @onclick="NavigateToCart">
                             Comprar Tickets
                             <div class="total-price me-2">
                                  RD$ @totalPrice.ToString("F2")

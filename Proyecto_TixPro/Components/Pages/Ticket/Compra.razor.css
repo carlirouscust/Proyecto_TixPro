@@ -29,8 +29,8 @@
 
     .btn-group .btn:hover {
         background-color: #1e40af;
-        transform: translateY(-2px);
     }
+
 
 /* Caja de cantidad */
 .quantity-box input {
@@ -38,9 +38,9 @@
     font-size: 1.5rem; /* Aumenta el tamaño de la fuente */
     padding: 0.75rem;
     height: 50px;
-    width: 100px;
-    border-top: 2px solid #ccc; /* Borde superior más largo */
-    border-bottom: 2px solid #ccc; /* Borde inferior más largo */
+    width: 70px;
+    border-top: 2px solid transparent; /* Borde superior más largo */
+    border-bottom: 2px solid transparent; /* Borde inferior más largo */
     border-left: 2px solid transparent; /* Borde lateral izquierdo transparente */
     border-right: 2px solid transparent; /* Borde lateral derecho transparente */
     transition: border-color 0.3s;
