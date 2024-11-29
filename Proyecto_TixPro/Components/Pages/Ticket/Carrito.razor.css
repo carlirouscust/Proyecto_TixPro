@@ -1,0 +1,53 @@
+﻿<style>
+    .main-container {
+        display: flex;
+        justify-content: space-between;
+        height: 80vh;
+        padding: 20px;
+    }
+
+    .left-container, .right-container {
+        width: 45%; /* Cada contenedor ocupa el 45% del ancho de la pantalla */
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .left-container {
+        background-color: #e0f7fa; /* Color suave para el contenedor izquierdo */
+    }
+
+    .right-container {
+        background-color: #ffe0b2; /* Color suave para el contenedor derecho */
+    }
+
+    h4 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .btn {
+        padding: 8px 12px;
+        margin-top: 10px;
+    }
+
+    p {
+        font-size: 14px;
+        margin-top: 10px;
+        color: #333;
+    }
+    .custom-input {
+        max-width: 400px; 
+        width: 100%; 
+    }
+</style>
+
