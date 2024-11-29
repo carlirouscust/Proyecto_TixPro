@@ -9,6 +9,7 @@ public class Contexto(DbContextOptions<Contexto> options) : IdentityDbContext<Ap
     public DbSet<Usuario> Usuario { get; set; }
     public DbSet<Evento> Evento { get; set; }
     public DbSet<Ticket> Ticket { get; set; }
+    public DbSet<Cobros> Cobros { get; set; }
 
     //protected override void OnModelCreating(ModelBuilder modelBuilder)
     //{
