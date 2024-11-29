@@ -13,11 +13,10 @@ public class Ticket
     [ForeignKey("evento")]
     public int eventoId { get; set; }
 
-    [Required (ErrorMessage = "Este Campo debe de ser Obligatorio")]
-    public double precio { get; set; }
+    public decimal monto { get; set; }
+    public int cantidad { get; set; }
 
-    [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
-    public DateTime fechaCompra { get; set; } 
+    public int codigoTicket { get; set; } 
 
     public Usuario? usuario { get; set; }
     [ForeignKey("usuario")]
