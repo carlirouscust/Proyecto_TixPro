@@ -1,4 +1,4 @@
-﻿@page "/Ticket/Carrito/{eventoId:int}&{ticketId:int}"
+﻿@page "/Ticket/Carrito/{eventoId:int}&{cantidad:int}&{monto:decimal}"
 @inject EventosService eventosService
 @inject UsuariosService usuarioService
 @inject TicketService ticketSercive
@@ -58,11 +58,11 @@
                             <span class="text-dark fw-bold">Precio: RD$ @evento.precio</span>                           
                         </p>
                         <p class="text-muted">
-                            <span class="text-dark fw-bold">Cantidad: @ticket.cantidad</span>
+                            <span class="text-dark fw-bold">Cantidad: @cantidad</span>
                         </p>                       
                     <hr />
-                        <h6>Sub Total: RD$ @montoTemporal</h6>
-                    <h6>Cargo de Servicio: RD$ @(cargo * ticket.cantidad)</h6>
+                        <h6>Sub Total: RD$ @monto</h6>
+                    <h6>Cargo de Servicio: RD$ @(cargo * cantidad)</h6>
                     <hr />
                         <h6>Total a Pagar: RD$ @ticket.monto </h6>
                 </div>
@@ -81,19 +81,21 @@
 @code {
     [Parameter]
     public int eventoId { get; set; }
-    [Parameter]
     public int ticketId { get; set; }
     public Evento evento { get; set; } = new Evento();
     public int usuarioId { get; set; }
     public Usuario usuario { get; set; } = new Usuario();
     public Ticket ticket { get; set; } = new Ticket();
+    [Parameter]
+    public int cantidad { get; set; }
+    [Parameter]
+    public decimal monto { get; set; }
     public decimal cargo = 10;
     public decimal montoTemporal;
 
     protected override async Task OnInitializedAsync()
     {
-        evento = await eventosService.Buscar(eventoId);       
-        ticket = await ticketSercive.Buscar(ticketId);       
+        evento = await eventosService.Buscar(eventoId);              
         CalcularTotal();
     }
 
@@ -101,8 +103,21 @@
 
     private void CalcularTotal()
     {   
-        montoTemporal = ticket.monto;
-        ticket.monto += (cargo * ticket.cantidad);   
+        ticket.monto = evento.precio + (cargo * cantidad);
+    }
+
+    public async void Guardar()
+    {
+
+        ticket.eventoId = eventoId;
+        ticket.cantidad = cantidad;
+
+
+        var resultado = await ticketSercive.Guardar(ticket);
+        if (resultado)
+        {
+           
+        }
     }
 
 }
