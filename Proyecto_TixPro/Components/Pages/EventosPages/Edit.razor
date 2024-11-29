@@ -1,6 +1,6 @@
-﻿@page "/Eventos/Edit/"
+﻿@page "/Eventos/Edit/{eventoId:int}"
 @inject NavigationManager NavigationManager
-@inject EventosService EventosService
+@inject EventosService eventosService
 @rendermode InteractiveServer
 
 <PageTitle>Editar Evento</PageTitle>
@@ -12,7 +12,7 @@
         align-items: center;
         height: calc(100vh - 20px); /* Altura casi completa, dejando 20px de margen arriba y abajo */
         background-color: #fff;
-        padding: 20px; /* Agregamos un padding para que no toque los bordes */
+        padding: 50px; /* Agregamos un padding para que no toque los bordes */
         box-sizing: border-box; /* Asegura que el padding no afecte la altura total */
     }
 
@@ -69,7 +69,7 @@
 <div class="login-container">
     <div class="card">
         <section>
-            <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Evento</h1>
+            <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Editar Evento</h1>
 
             <!-- Formulario con un FormName único -->
             <EditForm Model="evento" OnValidSubmit="Guardar" FormName="eventoForm">
@@ -119,8 +119,18 @@
     [Parameter]
     public int eventoId { get; set; }
     public Evento evento { get; set; } = new Evento();
+    public List<Evento> ListaEvento { get; set; } = new List<Evento>();
+    public bool Existe { get; set; } = false;
     private string? errorMessage;
     private string? imagenPreview;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (eventoId != 0)
+        {
+            await Buscar();
+        }
+    }
 
     private async Task OnImageChange(InputFileChangeEventArgs e)
     {
@@ -132,13 +142,9 @@
             await stream.CopyToAsync(memoryStream);
             var base64Image = Convert.ToBase64String(memoryStream.ToArray());
 
-            // Actualizar la propiedad Evento.imagen en tiempo real
             evento.imagen = $"data:{file.ContentType};base64,{base64Image}";
 
-            // Actualizar la variable imagenPreview para la previsualización
             imagenPreview = $"data:{file.ContentType};base64,{base64Image}";
-
-            // Forzar la actualización de la UI
             StateHasChanged();
         }
     }
@@ -148,7 +154,7 @@
         Console.WriteLine("Se llamó al método Guardar");
         Console.WriteLine($"Nombre: {evento.nombre}, Fecha: {evento.fecha}, Lugar: {evento.lugar}, Precio: {evento.precio}, Imagen: {evento.imagen}");
 
-        var resultado = await EventosService.Guardar(evento);
+        var resultado = await eventosService.Guardar(evento);
         if (resultado)
         {
             NavigationManager.NavigateTo("/");
@@ -160,4 +166,23 @@
         }
     }
 
+    public async Task Buscar()
+    {
+        Existe = false;
+        var encontro = await eventosService.Buscar(eventoId);
+
+        if (encontro != null)
+        {
+            evento = encontro;
+        }
+        else
+        {
+            Nuevo();
+        }
+    }
+    public void Nuevo()
+    {
+        evento = new Evento();
+        Existe = false;
+    }
 }
