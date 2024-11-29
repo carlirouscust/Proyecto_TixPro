@@ -188,6 +188,33 @@ namespace Proyecto_TixPro.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Cobros",
+                columns: table => new
+                {
+                    cobrosId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    totalPagado = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    usuarioId = table.Column<int>(type: "int", nullable: false),
+                    eventoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cobros", x => x.cobrosId);
+                    table.ForeignKey(
+                        name: "FK_Cobros_Evento_eventoId",
+                        column: x => x.eventoId,
+                        principalTable: "Evento",
+                        principalColumn: "eventoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Cobros_Usuario_usuarioId",
+                        column: x => x.usuarioId,
+                        principalTable: "Usuario",
+                        principalColumn: "usuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ticket",
                 columns: table => new
                 {
@@ -196,8 +223,8 @@ namespace Proyecto_TixPro.Data.Migrations
                     eventoId = table.Column<int>(type: "int", nullable: false),
                     monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     cantidad = table.Column<int>(type: "int", nullable: false),
-                    codigoTicket = table.Column<int>(type: "int", nullable: false),
-                    usuarioId = table.Column<int>(type: "int", nullable: false)
+                    codigoTicket = table.Column<int>(type: "int", nullable: true),
+                    usuarioId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,8 +239,7 @@ namespace Proyecto_TixPro.Data.Migrations
                         name: "FK_Ticket_Usuario_usuarioId",
                         column: x => x.usuarioId,
                         principalTable: "Usuario",
-                        principalColumn: "usuarioId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "usuarioId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -256,6 +282,16 @@ namespace Proyecto_TixPro.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cobros_eventoId",
+                table: "Cobros",
+                column: "eventoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cobros_usuarioId",
+                table: "Cobros",
+                column: "usuarioId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ticket_eventoId",
                 table: "Ticket",
                 column: "eventoId");
@@ -283,6 +319,9 @@ namespace Proyecto_TixPro.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Cobros");
 
             migrationBuilder.DropTable(
                 name: "Ticket");
