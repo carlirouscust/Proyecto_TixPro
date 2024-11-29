@@ -1,5 +1,4 @@
-﻿@page "/Ticket/Compra/"
-@page "/Ticket/Compra/{eventoId:int}"
+﻿@page "/Ticket/Compra/{eventoId:int}"
 @inject TicketService ticketService
 @inject EventosService eventosService
 @rendermode InteractiveServer
@@ -7,6 +6,9 @@
 
 
 <EditForm Model="evento">
+
+
+
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row align-items-center">
