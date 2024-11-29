@@ -5,15 +5,25 @@
        <AuthorizeView>
            <NotAuthorized>
                 <div class="top-row px-4 d-flex align-items-center justify-content-between">
+                    <!-- Logo a la izquierda -->
                     <a href="/">
                         <img class="card-img-top" src="images/tixlogo en png.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" />
                     </a>
 
+                    <!-- Contenedor centrado para los botones de Eventos y Crear Evento -->
+                    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+                        <a href="/" class="nav-link link-dark fw-bold">Eventos</a>
+                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">Crear Evento</a>
+                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">Contacto</a>
+                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">About Us</a>
+                    </div>
+
+                    <!-- Contenedor para botones de cuenta y crear evento a la derecha -->
                     <div class="ms-auto">
                         <a href="/Account/Login" class="btn btn-outline-dark bi bi-person-badge rounded-pill" type="button"> Mi cuenta</a>
-                        <a href="/Eventos/Create" class="btn btn-dark bi bi-file-earmark-plus-fill rounded-pill" type="button"> Crear Evento</a>
                     </div>
                 </div>
+
 
             </NotAuthorized>
 
@@ -23,14 +33,15 @@
                         <img class="card-img-top" src="images/tixlogo en png.png" alt="Logo" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;" />
                     </a>
 
+                    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+                        <a href="/" class="nav-link link-dark fw-bold">Eventos</a>
+                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">Crear Evento</a>
+                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">Contacto</a>
+                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">About Us</a>
+                    </div>
+
                     <div class="ms-auto">
-                        <a href="/Account/Manage" class="btn btn-outline-dark bi bi-person rounded-pill" type="button"> Mi cuenta</a>  
-                        <a href="/Eventos/Create" class="btn btn-dark bi bi-file-earmark-plus-fill rounded-pill" type="button"> Crear Evento</a>
-                        @* <AuthorizeView Roles="Admin"> 
-                            <ChildContent Context="adminContext">
-                                <a href="/Eventos/Create" class="btn btn-dark bi bi-file-earmark-plus-fill rounded-pill" type="button"> Crear Evento</a>
-                            </ChildContent>                         
-                        </AuthorizeView> *@
+                        <a href="/Account/Manage" class="btn btn-outline-dark bi bi-person rounded-pill" type="button"> Mi cuenta</a>                        
                     </div>
                 </div>                
             </Authorized>
@@ -48,3 +59,10 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+
+@* <AuthorizeView Roles="Admin">
+                            <ChildContent Context="adminContext">
+                                <a href="/Eventos/Create" class="btn btn-dark bi bi-file-earmark-plus-fill rounded-pill" type="button"> Crear Evento</a>
+                            </ChildContent>
+                        </AuthorizeView> *@
