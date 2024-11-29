@@ -39,9 +39,13 @@
     padding: 0.75rem;
     height: 50px;
     width: 100px;
-    border: 2px solid #ccc; /* Borde más suave */
+    border-top: 2px solid #ccc; /* Borde superior más largo */
+    border-bottom: 2px solid #ccc; /* Borde inferior más largo */
+    border-left: 2px solid transparent; /* Borde lateral izquierdo transparente */
+    border-right: 2px solid transparent; /* Borde lateral derecho transparente */
     transition: border-color 0.3s;
 }
+
 
     .quantity-box input:focus {
         border-color: #1e40af; /* Color de borde cuando está enfocado */
