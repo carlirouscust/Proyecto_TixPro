@@ -7,7 +7,7 @@
     }
 
     .left-container, .right-container {
-        width: 45%; /* Cada contenedor ocupa el 45% del ancho de la pantalla */
+        width: 49%; /* Cada contenedor ocupa el 45% del ancho de la pantalla */
         padding: 20px;
         border: 1px solid #ddd;
         border-radius: 8px;

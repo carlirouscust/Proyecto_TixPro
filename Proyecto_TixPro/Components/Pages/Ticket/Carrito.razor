@@ -6,6 +6,13 @@
 @inject NavigationManager navigationManager
 
 <PageTitle>TixPro - Carrito</PageTitle>
+<style>
+    .form-floating input {
+        border-radius: 2rem;
+        padding: 1rem;
+        font-size: 1.5rem;
+    }
+</style>
 
 <h3>Carrito de Compras</h3>
 <EditForm Model="evento">
@@ -14,16 +21,18 @@
         <!-- Contenedor Izquierdo: Detalles del Evento -->
         <div class="left-container col-md-6">
             <h4>Datos de contacto</h4>
-                <div class="form-floating mb-3">
-                    <label for="Nombres" style="font-size: 1rem;">Nombre completo:</label>
+
+                <div class="form-floating mb-4">
+                    <label for="Nombre" style="font-size: 1rem;">Nombre completo:</label>
                     <InputText @bind-Value="usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
                 <ValidationMessage For="@(() => usuario.nombre)" />
-            </div>
-                <div class="form-floating mb-3">
-                    <label for="Correo" style="font-size: 1rem;">Correo electrónico:</label>
-                    <InputText @bind-Value="evento.nombre" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
-                <ValidationMessage For="@(() => usuario.nombre)" />
-            </div>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <label for="Correo" style="font-size: 1rem;">Whatsapp:</label>
+                    <InputText @bind-Value="usuario.whatsapp" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
+                <ValidationMessage For="@(() => usuario.whatsapp)" />
+                </div>
 
             <h4>Información de pago</h4>
         </div>
@@ -63,10 +72,12 @@
     </div>
 </EditForm>
 
-<!-- Footer-->
+@* <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
     <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
-</footer>
+</footer> *@
+
+
 @code {
     [Parameter]
     public int eventoId { get; set; }
