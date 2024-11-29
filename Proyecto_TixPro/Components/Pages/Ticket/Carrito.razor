@@ -1,10 +1,14 @@
 ﻿@page "/Ticket/Carrito/{eventoId:int}&{cantidad:int}&{monto:decimal}"
+
+@using Microsoft.AspNetCore.Authorization
+
 @inject EventosService eventosService
 @inject UsuariosService usuarioService
 @inject TicketService ticketSercive
 @rendermode InteractiveServer
 @inject NavigationManager navigationManager
 
+@attribute [Authorize]
 <PageTitle>TixPro - Carrito</PageTitle>
 <style>
     .form-floating input {
@@ -19,25 +23,23 @@
     <div class="main-container">
         <div class="row">
         <!-- Contenedor Izquierdo: Detalles del Evento -->
-        <div class="left-container col-md-6">
-            <h4>Datos de contacto</h4>
+                <div class="left-container col-md-6">
+                    <h4>Datos de contacto</h4>
 
-                <div class="form-floating mb-4">
-                    <label for="Nombre" style="font-size: 1rem;">Nombre completo:</label>
-                    <InputText @bind-Value="usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
-                <ValidationMessage For="@(() => usuario.nombre)" />
-                </div>
+                    <div class="form-floating mb-4">
+                        <label for="Nombre" style="font-size: 1rem;">Nombre completo:</label>
+                        <InputText @bind-Value="usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
+                        <ValidationMessage For="@(() => usuario.nombre)" />
+                    </div>
 
-                <div class="form-floating mb-4">
-                    <label for="Correo" style="font-size: 1rem;">Whatsapp:</label>
-                    <InputText @bind-Value="usuario.whatsapp" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
-                <ValidationMessage For="@(() => usuario.whatsapp)" />
-                </div>
+                    <div class="form-floating mb-4">
+                        <label for="Correo" style="font-size: 1rem;">Whatsapp:</label>
+                        <InputText @bind-Value="usuario.whatsapp" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
+                        <ValidationMessage For="@(() => usuario.whatsapp)" />
+                    </div>
 
-            <h4>Información de pago</h4>
-        </div>
-
-
+                    <h4>Información de pago</h4>
+                </div>            
         <!-- Contenedor Derecho: Carrito de Compras -->
         <div class="right-container col-md-6">
             <!-- Fila (row) para contener la imagen y el contenido de texto -->
@@ -103,7 +105,7 @@
 
     private void CalcularTotal()
     {   
-        ticket.monto = evento.precio + (cargo * cantidad);
+        ticket.monto = (evento.precio * cantidad) + (cargo * cantidad);
     }
 
     public async void Guardar()
