@@ -1,5 +1,5 @@
 ﻿@page "/Ticket/Compra/"
-@page "/Ticket/Compra/{eventoId:int}"
+@page "/Ticket/Compra/{eventoId:int}/"
 @inject TicketService ticketService
 @inject EventosService eventosService
 @rendermode InteractiveServer
@@ -8,7 +8,7 @@
 <PageTitle>TixPro - Compra de ticket</PageTitle>
 <EditForm Model="evento">
     <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
+        <div class="container px-4 px-lg-5 mt-5 shadow rounded-pill">
             <div class="row align-items-center">
                 <!-- Imagen -->
                 <div class="col-md-6">
@@ -55,7 +55,7 @@
                         else
                         {
                             <div class="mb-2" style="padding: 30px;">
-                                <button class="btn btn-outline-success rounded-pill d-flex align-items-center justify-content-center bi bi-ticket shadow" @onclick="NavigateToCart">
+                                <button class="btn btn-outline-success rounded-pill d-flex align-items-center justify-content-center bi bi-ticket shadow" @onclick="Guardar">
                                     Comprar Tickets
                                     <div class="total-price me-2">
                                         RD$ @ticket.monto.ToString("F2")
@@ -78,6 +78,8 @@
 @code {
     [Parameter]
     public int eventoId { get; set; }
+    [Parameter]
+    public int ticketId { get; set; }
     public Evento evento { get; set; } = new Evento();
     public Ticket ticket { get; set; } = new Ticket();
 
@@ -109,8 +111,19 @@
     }
 
     private void NavigateToCart()
+    {        
+        navigationManager.NavigateTo($"/Ticket/Carrito/{evento.eventoId}&{ticket.ticketId}");
+    }
+
+    public async void Guardar()
     {
-        
-        navigationManager.NavigateTo($"/Ticket/Carrito/{evento.eventoId}");
+
+        ticket.eventoId = eventoId;
+
+        var resultado = await ticketService.Guardar(ticket);
+        if (resultado)
+        {
+            NavigateToCart();        
+        }
     }
 }
