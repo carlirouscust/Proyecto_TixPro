@@ -107,20 +107,17 @@
                     <ValidationMessage For="@(() => evento.imagen)" class="text-danger" />
                 </div>
 
-                @* <!-- Previsualización de la imagen seleccionada solo si Evento.imagen tiene un valor -->
-                @if (!string.IsNullOrEmpty(imagenPreview))
-                {
-                    <img src="@imagenPreview" class="preview-image" alt="Previsualización de Imagen" style="max-width: 100%; max-height: 200px; object-fit: cover;" />
-                } *@
-
                 <div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Registrar Evento</button>
                 </div>
             </EditForm>
         </section>
-    </div>    
+    </div>
 </div>
-
+<!-- Footer-->
+<footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+    <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
+</footer>
 
 @code {
     [Parameter]
