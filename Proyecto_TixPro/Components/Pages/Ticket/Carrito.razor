@@ -4,22 +4,24 @@
 @rendermode InteractiveServer
 @inject NavigationManager navigationManager
 
+<PageTitle>TixPro - Carrito</PageTitle>
+
 <h3>Carrito de Compras</h3>
-<EditForm Model="evento"> 
+<EditForm Model="evento">
     <div class="main-container">
         <div class="row">
         <!-- Contenedor Izquierdo: Detalles del Evento -->
         <div class="left-container col-md-6">
             <h4>Datos de contacto</h4>
-            <div class="mb-2">
-                <label for="Nombres" class="form-label">Nombre completo:</label>
-                <InputText @bind-Value="evento.nombre" class="form-control col-md-6" />
+                <div class="form-floating mb-3">
+                    <label for="Nombres" style="font-size: 1rem;">Nombre completo:</label>
+                    <InputText @bind-Value="usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
                 <ValidationMessage For="@(() => usuario.nombre)" />
             </div>
-            <div class="mb-2">
-                <label for="Correo" class="form-label">Correo electrónico:</label>
-                <InputText @bind-Value="evento.nombre" class="form-control col-md-6" />
-                <ValidationMessage For="@(() => usuario.email)" />
+                <div class="form-floating mb-3">
+                    <label for="Correo" style="font-size: 1rem;">Correo electrónico:</label>
+                    <InputText @bind-Value="evento.nombre" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
+                <ValidationMessage For="@(() => usuario.nombre)" />
             </div>
 
             <h4>Información de pago</h4>
@@ -47,7 +49,7 @@
                         </p>
                     <hr />
                     <h6>Sub Total</h6>
-                    <h6>Crago de Servicio</h6>
+                    <h6>Cargo de Servicio</h6>
                     <hr />
                     <h6>Total a Pagar</h6>
                 </div>
@@ -61,7 +63,7 @@
     public int eventoId { get; set; }
     public Evento evento { get; set; } = new Evento();
     public int usuarioId { get; set; }
-    public Usuario usuario { get; set; }// = new Usuario();
+    public Usuario usuario { get; set; } = new Usuario();
     public int quantity { get; set; }
     public decimal totalPrice { get; set; }
 
