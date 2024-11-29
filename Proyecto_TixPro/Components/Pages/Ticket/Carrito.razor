@@ -1,13 +1,50 @@
 ﻿@page "/Ticket/Carrito/{eventoId:int}"
 @inject EventosService eventosService
+@inject TicketService ticketService
+@rendermode InteractiveServer
 @inject NavigationManager navigationManager
 
 <h3>Carrito de Compras</h3>
+<EditForm Model="evento"> 
+    <div class="main-container">
+        <!-- Contenedor Izquierdo: Detalles del Evento -->
+        <div class="left-container">
+            <h4>Datos de contacto</h4>
+            <div class="mb-2">
+                <label for="Nombres" class="form-label">Nombre completo:</label>
+                <InputText @bind-Value="evento.nombre" class="form-control col-md-6" />
+                <ValidationMessage For="@(() => evento.nombre)" />
+            </div>
+            <div class="mb-2">
+                <label for="Correo" class="form-label">Correo electrónico:</label>
+                <InputText @bind-Value="evento.nombre" class="form-control col-md-6" />
+                <ValidationMessage For="@(() => evento.nombre)" />
+            </div>
 
-<p><strong>Evento:</strong> @evento.eventoId</p>
-<p><strong>Cantidad:</strong> @quantity</p>
-<p><strong>Total a pagar:</strong> RD$ @totalPrice</p>
+            <h4>Información de pago</h4>
+        </div>
 
+
+        <!-- Contenedor Derecho: Carrito de Compras -->
+        <div class="right-container">
+            <h4>Carrito de Compras</h4>
+            <div class="col-md-6">
+                <img class="card-img" src="@evento.imagen" alt="Imagen del Evento">
+            </div>
+            <!-- Contenido de Texto -->
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h5 class="fw-bold">@evento.nombre</h5>
+                    <p class="text-muted">
+                        <span class="text-dark fw-bold">RD$ @evento.precio</span>
+                    </p>
+                    <p><i class="bi bi-calendar4-week"></i> @evento.lugar</p>
+                    <p><i class="bi bi-geo-alt"></i> @evento.fecha</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
 @code {
     [Parameter]
     public int eventoId { get; set; }
@@ -15,8 +52,20 @@
     public int quantity { get; set; }
     public decimal totalPrice { get; set; }
 
-    protected override async void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
+        CalcularTotal();
     }
+
+
+
+    private void CalcularTotal()
+    {
+        if (evento != null && quantity > 0)
+        {
+            totalPrice = evento.precio * quantity;
+        }
+    }
+
 }
