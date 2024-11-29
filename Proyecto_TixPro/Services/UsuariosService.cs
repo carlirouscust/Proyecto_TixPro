@@ -55,8 +55,8 @@ public class UsuariosService(IDbContextFactory<Contexto> DbFactory)
     public async Task<List<Usuario>> Listar(Expression<Func<Usuario, bool>> criterio)
     {
         await using var _context = await DbFactory.CreateDbContextAsync();
-        return _context.Usuario.
-            AsNoTracking()
+        return _context.Usuario
+            .AsNoTracking()
             .Where(criterio)
             .ToList();
     }
