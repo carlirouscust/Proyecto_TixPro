@@ -126,18 +126,27 @@
                                 </div>
 
                                 @* Botón Edit *@
-                                <div class="text-center">
-                                    <a href="/Eventos/Edit/@evento.eventoId" class="btn btn-outline-dark mt-auto rounded-pill" type="button">
-                                        <span class="bi bi-ticket"></span> Edit Evento
-                                    </a>
-                                </div>
+                                <AuthorizeView Roles="Admin">
+                                    <ChildContent Context="adminContext">
+                                        <div class="text-center">
+                                            <a href="/Eventos/Edit/@evento.eventoId" class="btn btn-outline-dark mt-auto rounded-pill" type="button">
+                                                <span class="bi bi-ticket"></span> Edit Evento
+                                            </a>
+                                        </div>
+                                    </ChildContent>
+                                </AuthorizeView>                                
 
                                 @* Botón Delete *@
-                                <div class="text-center">
-                                    <a href="/Eventos/Delete/@evento.eventoId" class="btn btn-outline-dark mt-auto rounded-pill" type="button">
-                                        <span class="bi bi-ticket"></span> Eliminar Evento
-                                    </a>
-                                </div>
+                                <AuthorizeView Roles="Admin">
+                                    <ChildContent Context="adminContext">
+                                        <div class="text-center">
+                                            <a href="/Eventos/Delete/@evento.eventoId" class="btn btn-outline-dark mt-auto rounded-pill" type="button">
+                                                <span class="bi bi-ticket"></span> Eliminar Evento
+                                            </a>
+                                        </div>
+                                    </ChildContent>
+                                </AuthorizeView>
+                                
 
                             </div>
                         </div>
