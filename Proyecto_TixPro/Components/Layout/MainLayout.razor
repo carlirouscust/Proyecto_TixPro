@@ -5,27 +5,27 @@
        <AuthorizeView>
            <NotAuthorized>
                 <div class="top-row px-4 d-flex align-items-center justify-content-between">
-                    <!-- Logo a la izquierda -->
-                    <a href="/">
-                        <img class="card-img-top" src="images/TixProLogo.png" alt="Logo" style="width: 30%; height: 30%;  object-fit: cover;" />
-                    </a>
+                    <!-- Contenedor para el logo alineado a la izquierda -->
+                    <div class="logo-container me-3">
+                        <a href="/">
+                            <img class="card-img-top" src="images/TixProLogo.png" alt="Logo" style="width: 30%; height: 30%; object-fit: cover;" />
+                        </a>
+                    </div>
 
-                    <!-- Contenedor centrado para los botones de Eventos y Crear Evento -->
-                    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+                    <!-- Contenedor centrado para los botones de Eventos, Crear Evento, Contacto, About Us -->
+                    <div class="d-flex justify-content-center align-items-center">
                         <a href="/" class="nav-link link-dark fw-bold">Eventos</a>
                         <a href="/Eventos/Create" class="nav-link link-dark fw-bold">Crear Evento</a>
-                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">Contacto</a>
-                        <a href="/Eventos/Create" class="nav-link link-dark fw-bold">About Us</a>
+                        <a href="/Eventos/Contacto" class="nav-link link-dark fw-bold">Contacto</a>
+                        <a href="/Eventos/About" class="nav-link link-dark fw-bold">About Us</a>
                     </div>
 
-                    <!-- Contenedor para botones de cuenta y crear evento a la derecha -->
+                    <!-- Contenedor para el botón de cuenta a la derecha -->
                     <div class="ms-auto">
-                        <a href="/Account/Login" class="btn btn-outline-dark bi bi-person-badge rounded-pill" type="button"> Mi cuenta</a>
+                        <a href="/Account/Login" class="btn btn-outline-dark bi bi-person-badge rounded-pill" type="button">Mi cuenta</a>
                     </div>
                 </div>
-
-
-            </NotAuthorized>
+           </NotAuthorized>
 
             <Authorized>
                 <div class="top-row px-4 d-flex align-items-center justify-content-between">
