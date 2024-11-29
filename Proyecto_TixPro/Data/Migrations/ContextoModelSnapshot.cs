@@ -258,14 +258,17 @@ namespace Proyecto_TixPro.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ticketId"));
 
+                    b.Property<int>("cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("codigoTicket")
+                        .HasColumnType("int");
+
                     b.Property<int>("eventoId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("fechaCompra")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("precio")
-                        .HasColumnType("float");
+                    b.Property<decimal>("monto")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("usuarioId")
                         .HasColumnType("int");
@@ -287,15 +290,11 @@ namespace Proyecto_TixPro.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("usuarioId"));
 
-                    b.Property<string>("contraseña")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("whatsapp")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

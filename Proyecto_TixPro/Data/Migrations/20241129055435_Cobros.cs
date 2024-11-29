@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Proyecto_TixPro.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class login : Migration
+    public partial class Cobros : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -74,8 +74,7 @@ namespace Proyecto_TixPro.Data.Migrations
                     usuarioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    contraseña = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    whatsapp = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -195,8 +194,9 @@ namespace Proyecto_TixPro.Data.Migrations
                     ticketId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     eventoId = table.Column<int>(type: "int", nullable: false),
-                    precio = table.Column<double>(type: "float", nullable: false),
-                    fechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    cantidad = table.Column<int>(type: "int", nullable: false),
+                    codigoTicket = table.Column<int>(type: "int", nullable: false),
                     usuarioId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
