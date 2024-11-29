@@ -1,5 +1,163 @@
-﻿<h3>Edit</h3>
+﻿@page "/Eventos/Edit/"
+@inject NavigationManager NavigationManager
+@inject EventosService EventosService
+@rendermode InteractiveServer
+
+<PageTitle>Editar Evento</PageTitle>
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 20px); /* Altura casi completa, dejando 20px de margen arriba y abajo */
+        background-color: #fff;
+        padding: 20px; /* Agregamos un padding para que no toque los bordes */
+        box-sizing: border-box; /* Asegura que el padding no afecte la altura total */
+    }
+
+    .card {
+        border-radius: 1.5rem;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        width: 100%; /* Asegura que ocupe todo el espacio disponible */
+        max-width: 900px; /* Límite de anchura para no ser demasiado grande */
+        padding: 4rem;
+    }
+
+    .form-floating input {
+        border-radius: 2rem;
+        padding: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .btn-primary {
+        background-color: #000;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 1rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+
+    .text-center p a {
+        color: black;
+        text-decoration: none;
+    }
+
+        .text-center p a:hover {
+            text-decoration: underline;
+        }
+
+    .form-floating textarea {
+        height: 100px;
+    }
+
+    /* Estilo para la imagen previa */
+    .preview-image {
+        max-width: 100%;
+        max-height: 300px;
+        margin-top: 20px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="login-container">
+    <div class="card">
+        <section>
+            <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Evento</h1>
+
+            <!-- Formulario con un FormName único -->
+            <EditForm Model="evento" OnValidSubmit="Guardar" FormName="eventoForm">
+                <DataAnnotationsValidator />
+
+                <div class="form-floating mb-4">
+                    <InputText @bind-Value="evento.nombre" class="form-control" placeholder="Nombre del evento" style="font-size: 1.1rem;" />
+                    <label for="nombre" style="font-size: 1rem;">Nombre del Evento</label>
+                    <ValidationMessage For="@(() => evento.nombre)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputDate @bind-Value="evento.fecha" class="form-control" placeholder="Fecha del Evento" style="font-size: 1.1rem;" />
+                    <label for="fecha" style="font-size: 1rem;">Fecha del Evento</label>
+                    <ValidationMessage For="@(() => evento.fecha)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="evento.lugar" class="form-control" placeholder="Lugar del Evento" style="font-size: 1.1rem;" />
+                    <label for="lugar" style="font-size: 1rem;">Lugar del Evento</label>
+                    <ValidationMessage For="@(() => evento.lugar)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputNumber @bind-Value="evento.precio" class="form-control" placeholder="Precio del Evento" style="font-size: 1.1rem;" />
+                    <label for="precio" style="font-size: 1rem;">Precio del Evento</label>
+                    <ValidationMessage For="@(() => evento.precio)" class="text-danger" />
+                </div>
+
+                <!-- Campo para seleccionar la imagen -->
+                <div class="form-floating mb-3">
+                    <InputFile OnChange="OnImageChange" class="form-control" />
+                    <label for="imagen" style="font-size: 1rem;">Imagen del Evento</label>
+                    <ValidationMessage For="@(() => evento.imagen)" class="text-danger" />
+                </div>
+
+                <div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Guardar</button>
+                </div>
+            </EditForm>
+        </section>
+    </div>
+</div>
+
 
 @code {
+    [Parameter]
+    public int eventoId { get; set; }
+    public Evento evento { get; set; } = new Evento();
+    private string? errorMessage;
+    private string? imagenPreview;
+
+    private async Task OnImageChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            var stream = file.OpenReadStream();
+            var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var base64Image = Convert.ToBase64String(memoryStream.ToArray());
+
+            // Actualizar la propiedad Evento.imagen en tiempo real
+            evento.imagen = $"data:{file.ContentType};base64,{base64Image}";
+
+            // Actualizar la variable imagenPreview para la previsualización
+            imagenPreview = $"data:{file.ContentType};base64,{base64Image}";
+
+            // Forzar la actualización de la UI
+            StateHasChanged();
+        }
+    }
+
+    public async Task Guardar()
+    {
+        Console.WriteLine("Se llamó al método Guardar");
+        Console.WriteLine($"Nombre: {evento.nombre}, Fecha: {evento.fecha}, Lugar: {evento.lugar}, Precio: {evento.precio}, Imagen: {evento.imagen}");
+
+        var resultado = await EventosService.Guardar(evento);
+        if (resultado)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = "Error al registrar el evento.";
+            StateHasChanged();
+        }
+    }
 
 }
