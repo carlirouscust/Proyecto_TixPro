@@ -52,6 +52,7 @@ namespace Proyecto_TixPro
             builder.Services.AddScoped<TicketService>();
             builder.Services.AddScoped<UsuariosService>();
             builder.Services.AddScoped<CobrosService>();
+            builder.Services.AddScoped<TarjetaService>();
 
             var app = builder.Build();
 
