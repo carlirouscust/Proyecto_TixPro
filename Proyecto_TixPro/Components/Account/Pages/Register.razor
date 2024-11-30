@@ -91,13 +91,13 @@
             <!--Boton registrar-->
             <button type="submit" class="w-100 btn btn-lg btn-primary">Registrar</button>
 
-             <div class="text-center mt-5">
-                    <div class="d-flex justify-content-center">
-                        <p style="margin-left: 20px;">
+            <div class="text-center mt-5">
+                <div class="d-flex justify-content-center">
+                    <p style="margin-left: 20px;">
                         <a href="@(NavigationManager.GetUriWithQueryParameters("/Account/Login", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">¿Tienes una cuenta?</a>
-                        </p>
-                    </div>
-             </div>
+                    </p>
+                </div>
+            </div>
         </EditForm>
     </div>
 </div>
@@ -178,7 +178,7 @@
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = "";
-        
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
