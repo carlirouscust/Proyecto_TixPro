@@ -4,95 +4,47 @@
 @rendermode InteractiveServer
 
 <EditForm Model="usuario">
-    <style>
-        /* Estilo común para los botones */
-        .btn-custom {
-            border: none;
-            padding: 0.5rem 1rem;
-            padding-left: -1rem;
-            border-radius: 0.75rem;
-            font-weight: bold;
-            font-size: 1.25rem;
-            color: white;
-            transition: background-color 0.3s, transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Estilo para el botón Eliminar (rojo) */
-        .btn-danger {
-            background-color: red;
-        }
-
-        .btn-danger:hover {
-            background-color: darkred;
-            transform: translateY(-2px);
-        }
-
-        /* Alineación de botones uno al lado del otro */
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-        }
-
-        /* Estilo para el botón Volver (negro) */
-        .btn-black {
-            background-color: black;
-        }
-
-        .btn-black:hover {
-            background-color: #1e40af;
-            transform: translateY(-2px);
-        }
-
-        /* Iconos en los botones */
-        .bi {
-            margin-right: 0.5rem;
-        }
-
-        .custom-container {
-            width: 70%; /* Ajusta este valor según el tamaño deseado */
-            margin: 50px auto; /* Centrar horizontalmente */
-            padding: 30px; /* Añade algo de espacio interno */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-            border-radius: 20px; /* Haz los bordes más cuadrados */
-            background-color: #fff; /* Fondo blanco */
-            text-align: center; /* Centrar contenido dentro */
-        }
-
-        .btn-custom {
-            margin: 5px; /* Espaciado entre botones */
-        }
-
-        h4, p {
-            margin-bottom: 15px; /* Espaciado entre líneas de texto */
-        }
-    </style>
-    <section class="py-5">
-        <div class="custom-container rounded-pill">
-            <div class="card-body">
-                <h4 class="fw-bold">@usuario.nombre</h4>
-                <p class="text-muted">
-                    <span class="text-dark fw-bold">@usuario.whatsapp</span>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Eliminar este Contacto</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    </head>
+    <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #fff;">
+        <div style="background-color: #f8f9fa; border-radius: 20px; padding: 30px; width: 100%; max-width: 600px; margin: 50px auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+            <div style="text-align: center; margin-bottom: 20px; font-size: 1.5rem; font-weight: bold; color: #2c3e50;">
+                ¿Estas seguro que deseas eliminar este contacto?
+            </div>
+            <div>
+                <h4 style="font-size: 1.1rem;">Nombre: <span>@usuario.nombre</span></h4>
+                <p>
+                    <span style="font-size: 1.1rem;">WhatsApp: </span>@usuario.whatsapp
                 </p>
-                <p>@usuario.asunto</p>
-                <p>@usuario.comentario</p>
+                <p style="font-size: 1.1rem;">Asunto: <span>@usuario.asunto</span></p>
+                <p style="font-size: 1.1rem;">Comentario: <span style="font-style: italic;">@usuario.comentario</span></p>
 
-                <div class="btn-group">
-                    <button class="btn btn-custom btn-danger bi bi-trash" @onclick="Eliminar">Eliminar</button>
-                    <button class="btn btn-custom btn-black bi bi-box-arrow-left" @onclick="Volver">Volver</button>
+                <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+                    <button style="background-color: red; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-weight: bold; cursor: pointer;" @onclick="Eliminar">
+                        <i class="bi bi-trash"></i> Eliminar
+                    </button>
+                    <button style="background-color: black; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-weight: bold; cursor: pointer;" @onclick="Volver">
+                        <i class="bi bi-arrow-left-circle"></i> Volver
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
-    <div style="height: 280px;"></div>
+    </body>
+    <div style="height: 160px;"></div>
+</html>
+ 
 </EditForm>
-
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Ozcudi-Studios</p></div>
 </footer>
+
 
 @code {
     [Parameter]
