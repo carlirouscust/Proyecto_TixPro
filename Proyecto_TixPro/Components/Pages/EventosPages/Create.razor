@@ -3,8 +3,18 @@
 @inject NavigationManager NavigationManager
 @inject EventosService EventosService
 @rendermode InteractiveServer
+@* @inject HttpContextService HttpContextService *@
 
 @attribute [Authorize]
+@* 
+@if (HttpContextService.HttpContext?.Request.Path == "/Eventos/Create")
+{
+    <p>Se está accediendo a la página de Eventos create.</p>
+}
+else
+{
+    <p>No estás en la página de Eventos create.</p>
+} *@
 
 <PageTitle>TixPro - Crear Evento</PageTitle>
 
