@@ -5,8 +5,8 @@ namespace Proyecto_TixPro.Models;
 
 public class Evento
 {
-    [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]    
     public int eventoId { get; set; }
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
