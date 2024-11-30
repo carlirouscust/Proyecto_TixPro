@@ -1,0 +1,129 @@
+﻿@page "/Contacto/Create"
+@inject NavigationManager NavigationManager
+@inject UsuariosService usuariosService
+@rendermode InteractiveServer
+
+<PageTitle>TixPro - Crear Contacto</PageTitle>
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 20px); /* Altura casi completa, dejando 20px de margen arriba y abajo */
+        background-color: #f4f4f4;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .card {
+        border-radius: 1.5rem;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        width: 100%;
+        max-width: 900px;
+        padding: 4rem;
+    }
+
+    .form-floating input,
+    .form-floating textarea {
+        border-radius: 2rem;
+        padding: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .btn-primary {
+        background-color: #000;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 1rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+
+    .text-center p a {
+        color: black;
+        text-decoration: none;
+    }
+
+        .text-center p a:hover {
+            text-decoration: underline;
+        }
+
+    .preview-image {
+        max-width: 100%;
+        max-height: 300px;
+        margin-top: 20px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="login-container">
+    <div class="card">
+        <section>
+            <h1 class="text-center mb-10" style="font-size: 2rem; font-weight: bold; color: #333;">CONTACTO</h1>
+
+            <!-- Formulario con un FormName único -->
+            <EditForm Model="usuario"  FormName="contactoForm">
+                <DataAnnotationsValidator />
+                <h4 style="font-size: 1.5rem; color: #333;">Datos del Contacto</h4>
+                <div class="form-floating mb-4">
+                    <InputText @bind-Value="usuario.nombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" />
+                    <label for="nombre" style="font-size: 1rem;">Nombre</label>
+                    <ValidationMessage For="@(() => usuario.nombre)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="usuario.whatsapp" class="form-control" placeholder="Número de WhatsApp" style="font-size: 1.1rem;" />
+                    <label for="whatsapp" style="font-size: 1rem;">WhatsApp</label>
+                    <ValidationMessage For="@(() => usuario.whatsapp)" class="text-danger" />
+                </div>
+
+                <hr />
+                <h4>Mensaje</h4>
+
+                <div class="form-floating mb-3">
+                    <InputText @bind-Value="usuario.asunto" class="form-control" placeholder="Asunto" style="font-size: 1.1rem;" />
+                    <label for="asunto" style="font-size: 1rem;">Asunto</label>
+                    <ValidationMessage For="@(() => usuario.asunto)" class="text-danger" />
+                </div>
+
+                <!-- Comentario (cuadro más grande) -->
+                <div class="form-floating mb-4">
+                    <InputTextArea @bind-Value="usuario.comentario" class="form-control" rows="5" placeholder="Comentario" style="font-size: 1.1rem;  height: 150px;" />
+                    <label for="comentario" style="font-size: 1rem;">Comentario</label>
+                    <ValidationMessage For="@(() => usuario.comentario)" class="text-danger" />
+                </div>
+
+                <div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Enviar</button>
+                </div>
+
+                <div>
+                    <button type="submit" class="w-100 btn btn-lg btn-success rounded-pill" style="font-size: 1.1rem;">Ver Mensajes</button>
+                </div>
+            </EditForm>
+        </section>
+    </div>
+</div>
+
+@code {
+    public int usuarioId { get; set; }
+    public Usuario usuario { get; set; } = new Usuario();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (usuarioId != 0)
+        {
+            usuario = await usuariosService.Buscar(usuarioId) ?? new Usuario();
+        }
+        else
+        {
+            usuario = new Usuario();
+        }
+    }
+}
+
