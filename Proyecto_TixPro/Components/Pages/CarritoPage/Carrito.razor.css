@@ -1,9 +1,5 @@
 ﻿<style>
-    .main-container {
-        display: flex;
-        justify-content: space-between;
-        height: 80vh;
-        padding: 20px;
+
     }
 
     .left-container, .right-container {
