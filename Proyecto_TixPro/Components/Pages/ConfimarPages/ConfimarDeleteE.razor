@@ -119,12 +119,12 @@
     public async Task EliminarEvento()
     {
         var eliminado = await eventosService.Eliminar(evento.eventoId);
-        Volver();
+        navigationManager.NavigateTo("/");
     }
 
 
     public void Volver()
     {
-        navigationManager.NavigateTo("/Eventos/Delete/");
+        navigationManager.NavigateTo($"/Eventos/Delete/{evento.eventoId}");
     }
 }
