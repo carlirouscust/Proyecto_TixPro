@@ -12,7 +12,7 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @rendermode InteractiveServer
 
-<PageTitle>Iniciar Sesión</PageTitle>
+<PageTitle>TixPro - LogIn</PageTitle>
 <style>
     .login-container {
         display: flex;
@@ -98,7 +98,7 @@
                             <a href="Account/ForgotPassword">¿Olvidaste tu contraseña?</a>
                         </p>
                         <p style="margin-left: 20px;">
-                            <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Registrar nuevo usuario</a>
+                            <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Registrate</a>
                         </p>
                     </div>
                     </div>
