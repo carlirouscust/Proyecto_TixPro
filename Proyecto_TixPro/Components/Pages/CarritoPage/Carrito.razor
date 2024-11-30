@@ -18,26 +18,26 @@
     }
 </style>
 
-<h3>Carrito de Compras</h3>
 <EditForm Model="evento">
     <div class="main-container">
         <div class="row">
         <!-- Contenedor Izquierdo: Detalles del Evento -->
                 <div class="left-container col-md-6">
-                    <h4>Datos de contacto</h4>
+                    <h4 class="fw-bold">Datos de contacto</h4>
 
-                    <div class="form-floating mb-4">
-                        <label for="Nombre" style="font-size: 1rem;">Nombre completo:</label>
+                    <div class="form-floating mb-2">                        
                         <InputText @bind-Value="usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
+                        <label for="Nombre" class="form-label">Nombre completo:</label>
                         <ValidationMessage For="@(() => usuario.nombre)" />
                     </div>
 
-                    <div class="form-floating mb-4">
-                        <label for="Correo" style="font-size: 1rem;">Whatsapp:</label>
+                    <div class="form-floating mb-2">                        
                         <InputText @bind-Value="usuario.whatsapp" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
+                        <label for="Correo" class="form-label">Whatsapp:</label>
                         <ValidationMessage For="@(() => usuario.whatsapp)" />
                     </div>
-                  <h5> Información de pago</h5>
+                    <!--Informacion de pago-->
+                <h4 class ="fw-bold"> Información de pago</h4>
                 <div class="card border-success mb-4">
                         <div class="card-header">
                              <h5 class="mb-0">Pago seguro con Tarjeta</h5>
@@ -77,7 +77,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center gap-3 mt-3">
-                    <a href="/Eventos/Edit/@tarjeta.tarjetaId" class="btn btn-secondary rounded-pill" type="button">
+                    <a href="/Ticket/Compra/@evento.eventoId" class="btn btn-outline-dark rounded-pill" type="button">
                         Regresar
                     </a>
                     <a href="/Carrito/Confirmar/@evento.eventoId" class="btn btn-success rounded-pill" type="button">
