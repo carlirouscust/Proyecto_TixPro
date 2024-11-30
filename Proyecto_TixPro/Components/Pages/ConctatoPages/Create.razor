@@ -3,6 +3,8 @@
 @inject UsuariosService usuariosService
 @rendermode InteractiveServer
 
+@using Microsoft.AspNetCore.Authorization
+
 <PageTitle>TixPro - Crear Contacto</PageTitle>
 <style>
     .login-container {
@@ -101,10 +103,14 @@
                 <div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Enviar</button>
                 </div>
-
-                <div>
-                    <button type="submit" class="w-100 btn btn-lg btn-success rounded-pill" style="font-size: 1.1rem;">Ver Mensajes</button>
-                </div>
+                <AuthorizeView Roles="Admin">
+                    <ChildContent Context="adminContext">
+                        <div>
+                            <button type="submit" class="w-100 btn btn-lg btn-success rounded-pill" style="font-size: 1.1rem;">Ver Mensajes</button>
+                        </div>
+                    </ChildContent>
+                </AuthorizeView>
+                
             </EditForm>
         </section>
     </div>
