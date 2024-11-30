@@ -70,7 +70,9 @@
                         <p><i class="bi bi-geo-alt"></i> @evento.fecha</p>
 
                         <div class="btn-group">
-                            <button class="btn btn-custom btn-danger" @onclick="EliminarEvento">Eliminar</button>
+                            <a href="/Delete/Confirmar/@evento.eventoId" class="btn btn-custom btn-danger">
+                                Eliminar Evento
+                            </a>
                             <button class="btn btn-custom btn-black bi bi-box-arrow-left" @onclick="Volver">Volver</button>
                         </div>
                     </div>
@@ -92,12 +94,6 @@
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
-    }
-
-    public async Task EliminarEvento()
-    {
-        var eliminado = await eventosService.Eliminar(evento.eventoId);
-        Volver();
     }
 
     public void Volver()

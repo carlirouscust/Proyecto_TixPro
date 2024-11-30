@@ -15,5 +15,8 @@ public class Usuario
     [Required(ErrorMessage = "El Whatsapp es obligatorio")]
     public string? whatsapp { get; set; }
 
+     public string? asunto { get; set; }
+
+    public string? comentario { get; set; }
     public  ICollection<Ticket> Ticket { get; set; } = new List<Ticket>();
 }

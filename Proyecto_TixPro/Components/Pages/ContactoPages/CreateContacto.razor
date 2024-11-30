@@ -1,8 +1,39 @@
 ﻿@page "/Contacto/Create"
-@using Microsoft.AspNetCore.Authorization
 @inject NavigationManager NavigationManager
 @inject UsuariosService usuariosService
 @rendermode InteractiveServer
+
+<EditForm Model="usuario">
+    <div class="main-container">
+        <div class="row">
+        <!-- Contenedor Izquierdo: Detalles del Evento -->
+                <div class="left-container col-md-6">
+                    <h4>Datos de contacto</h4>
+
+                    <div class="form-floating mb-4">
+                        <label for="Nombre" style="font-size: 1rem;">Nombre completo:</label>
+                        <InputText @bind-Value="usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
+                        <ValidationMessage For="@(() => usuario.nombre)" />
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <label for="Correo" style="font-size: 1rem;">Whatsapp:</label>
+                        <InputText @bind-Value="usuario.whatsapp" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
+                        <ValidationMessage For="@(() => usuario.whatsapp)" />
+                    </div>
+                   
+                </div>
+        </div>
+    </div>
+</EditForm>
+
 @code {
+        public int usuarioId { get; set; }
+        public Usuario usuario { get; set; } = new Usuario();
+
+    protected override async Task OnInitializedAsync()
+    {
+        NavigationManager.NavigateTo("/Contacto/Create");
+    }
 
 }
