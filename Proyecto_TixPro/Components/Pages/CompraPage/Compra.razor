@@ -1,4 +1,4 @@
-﻿@page "/Ticket/Compra{eventoId:int}/"
+﻿@page "/Ticket/Compra/{eventoId:int}"
 @inject TicketService ticketService
 @inject EventosService eventosService
 @rendermode InteractiveServer
@@ -75,44 +75,45 @@
 </EditForm>
 
 @code {
-    [Parameter]
-    public int eventoId { get; set; }
-    public Evento evento { get; set; } = new Evento();
-    [Parameter]
-    public int cantidad { get; set; }
-    [Parameter]
-    public decimal monto { get; set; }
+    @code {
+        [Parameter]
+        public int eventoId { get; set; }
+        public Evento evento { get; set; } = new Evento();
+        private int cantidad { get; set; } = 0;
+        private decimal monto { get; set; } = 0;
 
-
-    protected override async Task OnInitializedAsync()
-    {
-        evento = await eventosService.Buscar(eventoId);
-        UpdateTotalPrice();
-    }
-
-    private void IncreaseQuantity()
-    {
-        cantidad++;
-        UpdateTotalPrice();
-    }
-
-    private void DecreaseQuantity()
-    {
-        if (cantidad > 0)
+        protected override async Task OnInitializedAsync()
         {
-            cantidad--;
+            evento = await eventosService.Buscar(eventoId);
             UpdateTotalPrice();
+        }
+
+        private void IncreaseQuantity()
+        {
+            cantidad++;
+            UpdateTotalPrice();
+        }
+
+        private void DecreaseQuantity()
+        {
+            if (cantidad > 0)
+            {
+                cantidad--;
+                UpdateTotalPrice();
+            }
+        }
+
+        private void UpdateTotalPrice()
+        {
+            monto = cantidad * evento.precio;
+        }
+
+        private void NavigateToCart()
+        {
+            navigationManager.NavigateTo($"/Ticket/Carrito/{evento.eventoId}&{cantidad}&{monto}");
         }
     }
 
-    private void UpdateTotalPrice()
-    {
-        monto = cantidad * evento.precio;
-    }
 
-    private void NavigateToCart()
-    {        
-        navigationManager.NavigateTo($"/Ticket/Carrito/{evento.eventoId}&{cantidad}&{monto}");
-    }
 
 }
