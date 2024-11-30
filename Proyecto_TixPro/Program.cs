@@ -14,6 +14,12 @@ namespace Proyecto_TixPro
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Registra el IHttpContextAccessor
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            // Registra tu servicio que maneja HttpContext
+            builder.Services.AddScoped<HttpContextService>();
+
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents()
@@ -54,6 +60,9 @@ namespace Proyecto_TixPro
             builder.Services.AddScoped<CobrosService>();
 
             var app = builder.Build();
+
+            app.MapBlazorHub();
+            //app.MapFallbackToPage("/Components/Pages");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
