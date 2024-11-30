@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Proyecto_TixPro.Services;
 
-public class TicketService(IDbContextFactory<Contexto> DbFactory)
+public class TicketService(IDbContextFactory<ApplicationDbContext> DbFactory)
 {
 
     public async Task<bool> Existe(int _ticketId)

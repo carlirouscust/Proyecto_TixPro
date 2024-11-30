@@ -5,7 +5,7 @@ using Proyecto_TixPro.Models;
 
 namespace Proyecto_TixPro.Services;
 
-public class CobrosService(IDbContextFactory<Contexto> DbFactory)
+public class CobrosService(IDbContextFactory<ApplicationDbContext> DbFactory)
 {
     public async Task<bool> Existe(int _cobroId)
     {

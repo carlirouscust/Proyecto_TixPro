@@ -5,7 +5,7 @@ using Proyecto_TixPro.Data;
 using Proyecto_TixPro.Models;
 namespace Proyecto_TixPro.Services;
 
-public class UsuariosService(IDbContextFactory<Contexto> DbFactory)
+public class UsuariosService(IDbContextFactory<ApplicationDbContext> DbFactory)
 {
     public async Task<bool> Existe(int _usuarioId)
     {

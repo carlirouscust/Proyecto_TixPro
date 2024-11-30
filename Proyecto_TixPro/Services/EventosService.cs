@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Proyecto_TixPro.Services;
 
-public class EventosService(IDbContextFactory<Contexto> DbFactory)
+public class EventosService(IDbContextFactory<ApplicationDbContext> DbFactory)
 {
     public async Task<bool> Existe(int _eventoId)
     {
