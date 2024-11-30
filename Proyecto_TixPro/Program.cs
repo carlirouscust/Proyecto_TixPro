@@ -16,8 +16,7 @@ namespace Proyecto_TixPro
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
-                .AddInteractiveServerComponents()
-                .AddCircuitOptions(options => options.DetailedErrors = true);
+                .AddInteractiveServerComponents();
 
             builder.Services.AddCascadingAuthenticationState();
             builder.Services.AddScoped<IdentityUserAccessor>();
@@ -25,29 +24,24 @@ namespace Proyecto_TixPro
             builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
             builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = IdentityConstants.ApplicationScheme;
-                options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-            })
+                {
+                    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+                    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+                })
                 .AddIdentityCookies();
-           
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContextFactory<Contexto>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDbContextFactory<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // Configura la autenticación y las cookies de Identity.
             builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<Contexto>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
             builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-            // Registra IHttpContextAccessor (solo una vez)
-            builder.Services.AddHttpContextAccessor();
-
-            // Servicios adicionales para la aplicación
             builder.Services.AddScoped<EventosService>();
             builder.Services.AddScoped<TicketService>();
             builder.Services.AddScoped<UsuariosService>();
@@ -64,17 +58,19 @@ namespace Proyecto_TixPro
             else
             {
                 app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseAntiforgery();
 
-            // Rutas y componentes
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 
-            // Endpoint para Identity
+            // Add additional endpoints required by the Identity /Account Razor components.
             app.MapAdditionalIdentityEndpoints();
 
             app.Run();
