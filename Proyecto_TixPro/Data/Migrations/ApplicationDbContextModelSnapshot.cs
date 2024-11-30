@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proyecto_TixPro.Data;
 
@@ -11,12 +10,10 @@ using Proyecto_TixPro.Data;
 
 namespace Proyecto_TixPro.Data.Migrations
 {
-    [DbContext(typeof(Contexto))]
-    [Migration("20241129071824_Cobros")]
-    partial class Cobros
+    [DbContext(typeof(ApplicationDbContext))]
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,6 +276,32 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.ToTable("Evento");
                 });
 
+            modelBuilder.Entity("Proyecto_TixPro.Models.Tarjeta", b =>
+                {
+                    b.Property<int>("tarjetaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("tarjetaId"));
+
+                    b.Property<string>("codigoSeguridad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("fechaExpiracion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombreTitular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("numeroTarjeta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("tarjetaId");
+
+                    b.ToTable("Tarjeta");
+                });
+
             modelBuilder.Entity("Proyecto_TixPro.Models.Ticket", b =>
                 {
                     b.Property<int>("ticketId")
@@ -318,6 +341,14 @@ namespace Proyecto_TixPro.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("usuarioId"));
+
+                    b.Property<string>("asunto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("comentario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombre")
                         .IsRequired()

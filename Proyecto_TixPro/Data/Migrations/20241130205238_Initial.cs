@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Proyecto_TixPro.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Cobros : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -68,13 +68,31 @@ namespace Proyecto_TixPro.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tarjeta",
+                columns: table => new
+                {
+                    tarjetaId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombreTitular = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    numeroTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    fechaExpiracion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    codigoSeguridad = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tarjeta", x => x.tarjetaId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
                     usuarioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    whatsapp = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    whatsapp = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    asunto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    comentario = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -322,6 +340,9 @@ namespace Proyecto_TixPro.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cobros");
+
+            migrationBuilder.DropTable(
+                name: "Tarjeta");
 
             migrationBuilder.DropTable(
                 name: "Ticket");

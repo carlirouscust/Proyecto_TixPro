@@ -11,9 +11,9 @@ using Proyecto_TixPro.Data;
 
 namespace Proyecto_TixPro.Data.Migrations
 {
-    [DbContext(typeof(Contexto))]
-    [Migration("20241130074857_usuario")]
-    partial class usuario
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20241130205238_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
