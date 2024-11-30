@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Components\Pages\Ticket\Compra.razor.css" />
+    <None Remove="Components\Pages\CarritoPage\Compra.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Components\Pages\Ticket\Compra.razor.css" />
+    <Content Include="Components\Pages\CompraPage\Compra.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
