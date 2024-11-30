@@ -1,10 +1,124 @@
-﻿@page "/Contacto/Delete"
+﻿@page "/Contacto/Delete/{usuarioId:int}"
 @inject NavigationManager NavigationManager
 @inject UsuariosService usuariosService
 @rendermode InteractiveServer
 
-<h3>Delete</h3>
+<EditForm Model="usuario">
+    <style>
+        /* Estilo común para los botones */
+        .btn-custom {
+            border: none;
+            padding: 0.5rem 1rem;
+            padding-left: -1rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: white;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Estilo para el botón Eliminar (rojo) */
+        .btn-danger {
+            background-color: red;
+        }
+
+        .btn-danger:hover {
+            background-color: darkred;
+            transform: translateY(-2px);
+        }
+
+        /* Alineación de botones uno al lado del otro */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Estilo para el botón Volver (negro) */
+        .btn-black {
+            background-color: black;
+        }
+
+        .btn-black:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+        }
+
+        /* Iconos en los botones */
+        .bi {
+            margin-right: 0.5rem;
+        }
+
+        .custom-container {
+            width: 70%; /* Ajusta este valor según el tamaño deseado */
+            margin: 50px auto; /* Centrar horizontalmente */
+            padding: 30px; /* Añade algo de espacio interno */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            border-radius: 20px; /* Haz los bordes más cuadrados */
+            background-color: #fff; /* Fondo blanco */
+            text-align: center; /* Centrar contenido dentro */
+        }
+
+        .btn-custom {
+            margin: 5px; /* Espaciado entre botones */
+        }
+
+        h4, p {
+            margin-bottom: 15px; /* Espaciado entre líneas de texto */
+        }
+    </style>
+    <section class="py-5">
+        <div class="custom-container rounded-pill">
+            <div class="card-body">
+                <h4 class="fw-bold">@usuario.nombre</h4>
+                <p class="text-muted">
+                    <span class="text-dark fw-bold">@usuario.whatsapp</span>
+                </p>
+                <p>@usuario.asunto</p>
+                <p>@usuario.comentario</p>
+
+                <div class="btn-group">
+                    <button class="btn btn-custom btn-danger bi bi-trash" @onclick="Eliminar">Eliminar</button>
+                    <button class="btn btn-custom btn-black bi bi-box-arrow-left" @onclick="Volver">Volver</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div style="height: 280px;"></div>
+</EditForm>
+
+<!-- Footer-->
+<footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Ozcudi-Studios</p></div>
+</footer>
 
 @code {
+    [Parameter]
+    public int usuarioId { get; set; }
+    public Usuario usuario { get; set; } = new Usuario();
 
+    protected override async Task OnInitializedAsync()
+    {
+        usuario = await usuariosService.Buscar(usuarioId);
+    }
+
+    public void Volver()
+    {
+        NavigationManager.NavigateTo("/Contacto/Index");
+    }
+
+    public async Task Eliminar()
+    {
+        bool eliminado = await usuariosService.Eliminar(usuarioId);
+        if (eliminado)
+        {
+            NavigationManager.NavigateTo("/Contacto/Index");
+        }
+        else
+        {
+            Console.WriteLine("Error al eliminar el usuario.");
+        }
+    }
 }
