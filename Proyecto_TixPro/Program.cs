@@ -16,7 +16,8 @@ namespace Proyecto_TixPro
 
             // Add services to the container.
             builder.Services.AddRazorComponents()
-                .AddInteractiveServerComponents();
+                .AddInteractiveServerComponents()
+                .AddCircuitOptions(options => options.DetailedErrors = true);
 
             builder.Services.AddCascadingAuthenticationState();
             builder.Services.AddScoped<IdentityUserAccessor>();
