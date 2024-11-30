@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Components\Pages\CarritoPage\Compra.razor.css" />
+    <None Remove="Components\Pages\CompraPage\Compra.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
