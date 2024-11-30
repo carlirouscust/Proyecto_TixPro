@@ -133,7 +133,7 @@
         // Validar campos requeridos
         if (string.IsNullOrEmpty(Input.Email) || string.IsNullOrEmpty(Input.Password))
         {
-            errorMessage = "Error: Email and Password are required.";
+            errorMessage = "Error: email y contraseña son requeridos";
             return;
         }
 
@@ -156,7 +156,7 @@
         }
         else
         {
-            errorMessage = "Error: Invalid login attempt.";
+            errorMessage = "Error: Usuario o Contraseña incorrectas";
         }
     }
 
@@ -171,7 +171,6 @@
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 
-        [Required]
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
