@@ -3,18 +3,8 @@
 @inject NavigationManager NavigationManager
 @inject EventosService EventosService
 @rendermode InteractiveServer
-@* @inject HttpContextService HttpContextService *@
 
 @attribute [Authorize]
-@* 
-@if (HttpContextService.HttpContext?.Request.Path == "/Eventos/Create")
-{
-    <p>Se está accediendo a la página de Eventos create.</p>
-}
-else
-{
-    <p>No estás en la página de Eventos create.</p>
-} *@
 
 <PageTitle>TixPro - Crear Evento</PageTitle>
 
@@ -23,18 +13,18 @@ else
         display: flex;
         justify-content: center;
         align-items: center;
-        height: calc(100vh - 20px); /* Altura casi completa, dejando 20px de margen arriba y abajo */
+        height: calc(100vh - 20px); 
         background-color: #fff;
-        padding: 20px; /* Agregamos un padding para que no toque los bordes */
-        box-sizing: border-box; /* Asegura que el padding no afecte la altura total */
+        padding: 20px; 
+        box-sizing: border-box; 
     }
 
     .card {
         border-radius: 1.5rem;
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
         background-color: #fff;
-        width: 100%; /* Asegura que ocupe todo el espacio disponible */
-        max-width: 900px; /* Límite de anchura para no ser demasiado grande */
+        width: 100%;
+        max-width: 900px; 
         padding: 4rem;
     }
 
@@ -68,7 +58,7 @@ else
 
  
 
-    /* Estilo para la imagen previa */
+    
     .preview-image {
         max-width: 100%;
         max-height: 300px;
@@ -112,7 +102,7 @@ else
 
                 <!-- Campo para seleccionar la imagen -->
                 <div class="form-floating mb-3">
-                    <InputFile OnChange="OnImageChange" class="form-control" />
+					<InputFile OnChange="OnImageChange" class="form-control" />
                     <label for="imagen" style="font-size: 1rem;">Imagen del Evento</label>
                     <ValidationMessage For="@(() => evento.imagen)" class="text-danger" />
                 </div>
@@ -146,13 +136,10 @@ else
             await stream.CopyToAsync(memoryStream);
             var base64Image = Convert.ToBase64String(memoryStream.ToArray());
             
-            // Actualizar la propiedad Evento.imagen en tiempo real
             evento.imagen = $"data:{file.ContentType};base64,{base64Image}";
 
-            // Actualizar la variable imagenPreview para la previsualización
             imagenPreview = $"data:{file.ContentType};base64,{base64Image}";
             
-            // Forzar la actualización de la UI
             StateHasChanged();
         }
     }

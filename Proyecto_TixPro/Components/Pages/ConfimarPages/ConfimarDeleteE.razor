@@ -102,7 +102,7 @@
         }
         <div class="d-flex justify-content-center gap-3 mt-3">
             <button class="btn btn-custom btn-danger rounded-pill" @onclick="EliminarEvento">Si</button>
-            <button class="btn btn-custom btn-dark rounded-pill" @onclick="Volver">No</button>
+            <a class="btn btn-custom btn-dark rounded-pill" href="/Eventos/Delete/@evento.eventoId">No</a>
         </div>
     </div>
 </div>
@@ -122,9 +122,4 @@
         navigationManager.NavigateTo("/");
     }
 
-
-    public void Volver()
-    {
-        navigationManager.NavigateTo($"/Eventos/Delete/{evento.eventoId}");
-    }
 }
