@@ -18,14 +18,48 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
     <!-- Header-->
-    <header class="bg-dark py-5" style="width: 100%; height: 500px; margin: 0; padding: 0; border-radius: 20px;">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+    <div class="d-flex justify-content-center align-items-center">
+        <header class="bg-transparent py-5" style="width: 80%; height: auto; margin: 0; padding: 0; border-radius: 20px; overflow: hidden; padding-left: 50px; padding-right: 50px;">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="border-radius: 20px; overflow: hidden;">
+                <!-- Indicadores -->
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                </div>
+                <!-- Contenido del carrusel -->
+                <div class="carousel-inner" style="border-radius: 20px; overflow: hidden;">
+                    <div class="carousel-item active">
+                        <img src="https://tix-events.s3.amazonaws.com/tix_main_cover_Desktop_Banner_TIX_1_266_x_560_18_1_6bc00702ce.png" class="d-block w-100" alt="Imagen 1" style="width: 1500px; height: 450px; object-fit: cover;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://tix-events.s3.amazonaws.com/tix_main_cover_1266x560_BFF_2024_3_c03ada7b85.png" class="d-block w-100" alt="Imagen 2" style="width: 1500px; height: 450px; object-fit: cover;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i0.wp.com/ticketmax.com.do/wp-content/uploads/IMG_8969-1.jpg?w=1500&ssl=1" class="d-block w-100" alt="Imagen 3" style="width: 1500px; height: 450px; object-fit: cover;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i0.wp.com/ticketmax.com.do/wp-content/uploads/IMG_8755.png?resize=1536%2C461&ssl=1" class="d-block w-100" alt="Imagen 4" style="width: 1500px; height: 450px; object-fit: cover;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://i0.wp.com/ticketmax.com.do/wp-content/uploads/IMG_8786.jpg?w=1500&ssl=1" class="d-block w-100" alt="Imagen 5" style="width: 1500px; height: 450px; object-fit: cover;">
+                    </div>
+                </div>
+                <!-- Controles de navegación -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
             </div>
-        </div>
-    </header>
+        </header>
+    </div>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-auto">
@@ -115,8 +149,8 @@
                                     <!-- Nombre del Técnico -->
                                     <h5 class="fw-bolder">@evento.nombre</h5>
                                     <!-- Información adicional -->
-                                    <p class="mb-0 bi bi-calendar4-week">  @evento.lugar</p>
-                                    <p class="mb-0 bi bi-geo-alt"> @evento.fecha</p>
+                                    <p class="mb-0 bi bi-geo-alt">  @evento.lugar</p>
+                                    <p class="mb-0 bi bi-calendar4-week"> @evento.fecha.ToString("dd/MM/yyyy")</p>
                                 </div>
                                 @* Botón Ticket *@
                                 <div class="text-center">
