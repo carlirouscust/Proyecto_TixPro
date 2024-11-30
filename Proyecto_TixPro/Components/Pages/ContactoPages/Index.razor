@@ -72,10 +72,11 @@
                         </a>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-sm" @onclick="() => Eliminar(usuario.usuarioId)">
+                        <a href="/Contacto/Delete/@usuario.usuarioId" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i>
-                        </button>
+                        </a>
                     </td>
+ 
                 </tr>
             }
         </tbody>
@@ -121,11 +122,5 @@
         {
             ListaContacto = await usuariosService.Listar(u => true);
         }
-    }
-
-    private async Task Eliminar(int id)
-    {
-        await usuariosService.Eliminar(id);
-        ListaContacto = await usuariosService.Listar(u => true);
     }
 }
