@@ -17,6 +17,11 @@ public class Ticket
     [ForeignKey("evento")]
     public int eventoId { get; set; }
 
+    public Usuario? usuario { get; set; }
+
+    [ForeignKey("usuario")]
+    public int usuarioId { get; set; }
+
     public decimal monto { get; set; }
 
     public int cantidad { get; set; }
