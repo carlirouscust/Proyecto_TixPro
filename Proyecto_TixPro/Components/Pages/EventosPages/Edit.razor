@@ -89,6 +89,12 @@
                 </div>
 
                 <div class="form-floating mb-3">
+                    <InputText @bind-Value="evento.hora" class="form-control" placeholder="Hora del Evento" style="font-size: 1.1rem;" type="time" />
+                    <label for="hora" style="font-size: 1rem;">Hora del Evento</label>
+                    <ValidationMessage For="@(() => evento.hora)" class="text-danger" />
+                </div>
+
+                <div class="form-floating mb-3">
                     <InputText @bind-Value="evento.lugar" class="form-control" placeholder="Lugar del Evento" style="font-size: 1.1rem;" />
                     <label for="lugar" style="font-size: 1rem;">Lugar del Evento</label>
                     <ValidationMessage For="@(() => evento.lugar)" class="text-danger" />
