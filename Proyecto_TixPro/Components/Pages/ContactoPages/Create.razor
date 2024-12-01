@@ -1,6 +1,7 @@
 ﻿@page "/Contacto/Create"
 @inject NavigationManager NavigationManager
 @inject UsuariosService usuariosService
+@inject ContactoService contactoService
 @rendermode InteractiveServer
 
 @using Microsoft.AspNetCore.Authorization
@@ -69,35 +70,35 @@
             <h1 class="text-center mb-10" style="font-size: 2rem; font-weight: bold; color: #333;">CONTACTO</h1>
 
             <!-- Formulario con un FormName único -->
-            <EditForm Model="usuario" FormName="submit" OnValidSubmit="HandleSubmit">
+            <EditForm Model="contacto" FormName="submit" OnValidSubmit="HandleSubmit">
                 <DataAnnotationsValidator />
                 <h4 style="font-size: 1.5rem; color: #333;">Datos del Contacto</h4>
                 <div class="form-floating mb-4">
-                    <InputText @bind-Value="usuario.nombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" />
+                    <InputText @bind-Value="contacto.nombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" />
                     <label for="nombre" style="font-size: 1rem;">Nombre</label>
-                    <ValidationMessage For="@(() => usuario.nombre)" class="text-danger" />
+                    <ValidationMessage For="@(() => contacto.nombre)" class="text-danger" />
                 </div>
 
                 <div class="form-floating mb-3">
-                    <InputText @bind-Value="usuario.whatsapp" class="form-control" placeholder="Número de WhatsApp" style="font-size: 1.1rem;" />
+                    <InputText @bind-Value="contacto.whatsapp" class="form-control" placeholder="Número de WhatsApp" style="font-size: 1.1rem;" />
                     <label for="whatsapp" style="font-size: 1rem;">WhatsApp</label>
-                    <ValidationMessage For="@(() => usuario.whatsapp)" class="text-danger" />
+                    <ValidationMessage For="@(() => contacto.whatsapp)" class="text-danger" />
                 </div>
 
                 <hr />
                 <h4>Mensaje</h4>
 
                 <div class="form-floating mb-3">
-                    <InputText @bind-Value="usuario.asunto" class="form-control" placeholder="Asunto" style="font-size: 1.1rem;" />
+                    <InputText @bind-Value="contacto.asunto" class="form-control" placeholder="Asunto" style="font-size: 1.1rem;" />
                     <label for="asunto" style="font-size: 1rem;">Asunto</label>
-                    <ValidationMessage For="@(() => usuario.asunto)" class="text-danger" />
+                    <ValidationMessage For="@(() => contacto.asunto)" class="text-danger" />
                 </div>
 
                 <!-- Comentario (cuadro más grande) -->
                 <div class="form-floating mb-4">
-                    <InputTextArea @bind-Value="usuario.comentario" class="form-control" rows="5" placeholder="Comentario" style="font-size: 1.1rem;  height: 150px;" />
+                    <InputTextArea @bind-Value="contacto.comentario" class="form-control" rows="5" placeholder="Comentario" style="font-size: 1.1rem;  height: 150px;" />
                     <label for="comentario" style="font-size: 1rem;">Comentario</label>
-                    <ValidationMessage For="@(() => usuario.comentario)" class="text-danger" />
+                    <ValidationMessage For="@(() => contacto.comentario)" class="text-danger" />
                 </div>
 
                 <div>
@@ -125,27 +126,17 @@
 @code {
     public int usuarioId { get; set; }
     public Usuario usuario { get; set; } = new Usuario();
+    public Contacto contacto { get; set; } = new Contacto();
     private bool isSuccessMessageVisible { get; set; } = false;
 
-    protected override async Task OnInitializedAsync()
-    {
-        if (usuarioId != 0)
-        {
-            usuario = await usuariosService.Buscar(usuarioId) ?? new Usuario();
-        }
-        else
-        {
-            usuario = new Usuario();
-        }
-    }
 
     private async Task HandleSubmit()
     {
         isSuccessMessageVisible = true;
-        var resultado = await usuariosService.Guardar(usuario);
+        var resultado = await contactoService.Guardar(contacto);
         if (resultado)
         {
-            usuario = new Usuario();
+            contacto = new Contacto();
         }
 
         await Task.Delay(3000);
