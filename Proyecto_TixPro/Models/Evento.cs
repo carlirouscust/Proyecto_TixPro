@@ -16,6 +16,9 @@ public class Evento
     public DateTime fecha { get; set; } = DateTime.Now;
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
+    public string? hora { get; set; }
+
+    [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
     public string lugar { get; set; } 
 
     [Required(ErrorMessage = "Este Campo debe de ser Obligatorio")]
