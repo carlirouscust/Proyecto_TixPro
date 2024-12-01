@@ -1,9 +1,9 @@
-﻿@page "/Contacto/Details/{usuarioId:int}"
+﻿@page "/Contacto/Details/{contactoId:int}"
 @inject NavigationManager NavigationManager
-@inject UsuariosService usuariosService
+@inject ContactoService contactoService
 @rendermode InteractiveServer
 
-<EditForm Model="usuario">
+<EditForm Model="contacto">
 
     <!DOCTYPE html>
     <html lang="en">
@@ -19,12 +19,12 @@
                 Detalle de contacto
             </div>
             <div>
-                <h4 style="font-size: 1.1rem;">Nombre: <span>@usuario.nombre</span></h4>
+                <h4 style="font-size: 1.1rem;">Nombre: <span>@contacto.nombre</span></h4>
                 <p>
-                    <span style="font-size: 1.1rem;">WhatsApp: </span>@usuario.whatsapp
+                    <span style="font-size: 1.1rem;">WhatsApp: </span>@contacto.whatsapp
                 </p>
-                <p style="font-size: 1.1rem;">Asunto: <span>@usuario.asunto</span></p>
-                <p style="font-size: 1.1rem;">Comentario: <span style="font-style: italic;">@usuario.comentario</span></p>
+                <p style="font-size: 1.1rem;">Asunto: <span>@contacto.asunto</span></p>
+                <p style="font-size: 1.1rem;">Comentario: <span style="font-style: italic;">@contacto.comentario</span></p>
 
                 <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
                     <button style="background-color: black; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-weight: bold; cursor: pointer;" @onclick="Volver">
@@ -46,12 +46,12 @@
 
 @code {
     [Parameter]
-    public int usuarioId { get; set; }
-    public Usuario usuario { get; set; } = new Usuario();
+    public int contactoId { get; set; }
+    public Contacto contacto { get; set; } = new Contacto();
 
     protected override async Task OnInitializedAsync()
     {
-        usuario = await usuariosService.Buscar(usuarioId);
+        contacto = await contactoService.Buscar(contactoId);
     }
 
     public void Volver()
