@@ -11,4 +11,16 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Ticket> Ticket { get; set; }
     public DbSet<Cobros> Cobros { get; set; }
     public DbSet<Tarjeta> Tarjeta { get; set; }
+    public DbSet<Contacto> Contacto { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Usuario>()
+            .HasOne(u => u.tarjeta)
+            .WithOne(t => t.usuario)
+            .HasForeignKey<Usuario>(u => u.tarjetaId);
+    }
+
 }
