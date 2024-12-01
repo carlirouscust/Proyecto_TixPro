@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,13 +13,25 @@ public class Ticket
     public int ticketId { get; set; }
 
     public Evento? evento { get; set; }
+
     [ForeignKey("evento")]
     public int eventoId { get; set; }
 
     public decimal monto { get; set; }
+
     public int cantidad { get; set; }
 
-    public int? codigoTicket { get; set; } = random.Next(1000, 10000);
+    [NotMapped] // Indica que esta propiedad no será mapeada en la base de datos
+    public List<int> codigosTickets { get; set; } = new List<int>();
 
-    
+    // Constructor o método para generar los códigos
+    public void GenerarCodigos()
+    {
+        codigosTickets.Clear(); // Asegúrate de limpiar la lista antes de generar nuevos códigos
+        for (int i = 0; i < cantidad; i++)
+        {
+            codigosTickets.Add(random.Next(1000, 10000)); // Genera códigos aleatorios
+        }
+    }
 }
+
