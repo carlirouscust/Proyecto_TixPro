@@ -1,5 +1,131 @@
-﻿<h3>IndexVentas</h3>
+﻿@page "/Ventas/Index/"
+@inject NavigationManager NavigationManager
+@inject UsuariosService usuariosService
+@inject EventosService eventosService
+@rendermode InteractiveServer
+
+<PageTitle>TixPro - Consulta de Ventas</PageTitle>
+
+<EditForm Model="ListaVentas" class="border shadow-lg p-3 rounded">
+    <!-- Encabezado -->
+    <div class="card-header bg-black text-white text-center py-2 rounded-3">
+        <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Consulta de Eventos</h3>
+    </div>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-auto">
+                <div class="card  border-0 rounded-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <!-- Icono de Usuario -->
+                            <div class="col-md-3 text-center text-md-end mb-3 mb-md-0">
+                                <label class="d-inline-block fs-4 fw-bold text-black">
+                                    Buscar Eventos
+                                </label>
+                            </div>
+                            <!-- Filtro -->
+                            <div class="col-md-4 d-flex align-items-center mb-3 mb-md-0">
+                                <label for="Filtro" class="form-label fw-bold me-3">Filtrar:</label>
+                                <select @bind="filtro" class="form-select form-select-lg">
+                                    <option value="nombre">Nombre</option>
+                                </select>
+                            </div>
+                            <!-- Barra de Búsqueda -->
+                            <div class="col-md-5 d-flex align-items-center mb-3 mb-md-0">
+                                <div class="input-group input-group-lg">
+                                    <input @bind="valorFiltro" class="form-control" placeholder="Buscar..." />
+                                    <button @onclick="Buscar" class="btn btn-primary" type="button">
+                                        <span class="bi bi-search"></span> Buscar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Tabla -->
+    <table class="table table-striped table-hover table-bordered text-center align-middle">
+        <thead class="bg-dark text-white">
+            <tr>
+                <th>Imagen del evento</th>
+                <th style="width: 650px;">Nombre</th>
+                <th>Ver</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody class="text-white">
+            @foreach (var evento in ListaVentas)
+            {
+                <tr>
+                    <td class="text-black">
+                        <img src="@evento.imagen"  class="img-thumbnail" width="100" />
+                    </td>
+                    <td class="text-black">@evento.nombre</td>
+                    <td>
+                        <a href="/Ventas/Detail/@evento.eventoId" class="btn btn-info btn-sm ">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/Eventos/Delete/@evento.eventoId" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="card-footer text-start">
+        <p>Total de Contacto: @ListaVentas.Count</p>
+    </div>
+    <div style="height: 415px;"></div>
+</EditForm>
+<!-- Estilo personalizado -->
+<style>
+    .table th, .table td {
+        color: white !important;
+    }
+
+
+        .table td.text-black {
+            color: black !important;
+        }
+
+</style>
+<!-- Footer-->
+<footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+    <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
+</footer>
+
 
 @code {
+    public int eventoId { get; set; }
+    public Evento evento { get; set; } = new Evento();
+    public List<Evento> ListaVentas { get; set; } = new List<Evento>();
+    private string valorFiltro = "";
+    private string filtro = "id";
+
+    protected override async Task OnInitializedAsync()
+    {
+        ListaVentas = await eventosService.Listar(u => true);
+    }
+
+    public async Task Buscar()
+    {
+        if (!string.IsNullOrWhiteSpace(valorFiltro))
+        {
+            if (filtro == "nombre")
+            {
+                ListaVentas = await eventosService.Listar(u => u.nombre != null && u.nombre.Contains(valorFiltro));
+            }
+        }
+        else
+        {
+            ListaVentas = await eventosService.Listar(u => true);
+        }
+    }
 
 }
