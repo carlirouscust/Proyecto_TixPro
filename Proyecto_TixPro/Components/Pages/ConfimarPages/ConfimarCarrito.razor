@@ -128,7 +128,7 @@
         DateTime horaActual = DateTime.Now;
         string hora = horaActual.ToString("hh:mm:ss tt");
 
-        string Mensaje = $"¡Gracias por su compra! Su ticket para el evento '{evento.nombre}' ha sido confirmado. El evento se llevará a cabo el {evento.fecha.ToString("dd 'de' MMMM 'de' yyyy")} en {evento.lugar}, a las {evento.hora}. El monto total de su compra es RD${evento.precio:N2}. ¡Nos vemos pronto!";
+        string Mensaje = $"¡Gracias por su compra! Su ticket para el evento '{evento.nombre}' ha sido confirmado. El evento se llevará a cabo el {evento.fecha.ToString("dd 'de' MMMM 'de' yyyy")} en {evento.lugar}, a las  El monto total de su compra es RD${evento.precio:N2}. ¡Nos vemos pronto!";
 
         return Mensaje;
     }
