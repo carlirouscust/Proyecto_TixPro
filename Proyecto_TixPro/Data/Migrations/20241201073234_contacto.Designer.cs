@@ -12,8 +12,8 @@ using Proyecto_TixPro.Data;
 namespace Proyecto_TixPro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241201003847_Evento-hora")]
-    partial class Eventohora
+    [Migration("20241201073234_contacto")]
+    partial class contacto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -249,6 +249,35 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.ToTable("Cobros");
                 });
 
+            modelBuilder.Entity("Proyecto_TixPro.Models.Contacto", b =>
+                {
+                    b.Property<int>("contactoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("contactoId"));
+
+                    b.Property<string>("asunto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("comentario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("whatsapp")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("contactoId");
+
+                    b.ToTable("Contacto");
+                });
+
             modelBuilder.Entity("Proyecto_TixPro.Models.Evento", b =>
                 {
                     b.Property<int>("eventoId")
@@ -292,6 +321,7 @@ namespace Proyecto_TixPro.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("tarjetaId"));
 
                     b.Property<string>("codigoSeguridad")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("fechaExpiracion")
@@ -299,9 +329,11 @@ namespace Proyecto_TixPro.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombreTitular")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("numeroTarjeta")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("tarjetaId");
@@ -326,7 +358,7 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.Property<decimal>("monto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("usuarioId")
+                    b.Property<int>("usuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("ticketId");
@@ -346,14 +378,6 @@ namespace Proyecto_TixPro.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("usuarioId"));
 
-                    b.Property<string>("asunto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("comentario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -367,7 +391,8 @@ namespace Proyecto_TixPro.Data.Migrations
 
                     b.HasKey("usuarioId");
 
-                    b.HasIndex("tarjetaId");
+                    b.HasIndex("tarjetaId")
+                        .IsUnique();
 
                     b.ToTable("Usuario");
                 });
@@ -450,22 +475,31 @@ namespace Proyecto_TixPro.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Proyecto_TixPro.Models.Usuario", null)
+                    b.HasOne("Proyecto_TixPro.Models.Usuario", "usuario")
                         .WithMany("Ticket")
-                        .HasForeignKey("usuarioId");
+                        .HasForeignKey("usuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("evento");
+
+                    b.Navigation("usuario");
                 });
 
             modelBuilder.Entity("Proyecto_TixPro.Models.Usuario", b =>
                 {
                     b.HasOne("Proyecto_TixPro.Models.Tarjeta", "tarjeta")
-                        .WithMany()
-                        .HasForeignKey("tarjetaId")
+                        .WithOne("usuario")
+                        .HasForeignKey("Proyecto_TixPro.Models.Usuario", "tarjetaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("tarjeta");
+                });
+
+            modelBuilder.Entity("Proyecto_TixPro.Models.Tarjeta", b =>
+                {
+                    b.Navigation("usuario");
                 });
 
             modelBuilder.Entity("Proyecto_TixPro.Models.Usuario", b =>

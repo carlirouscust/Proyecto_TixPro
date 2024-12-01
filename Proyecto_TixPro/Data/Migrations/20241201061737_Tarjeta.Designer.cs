@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proyecto_TixPro.Data;
 
@@ -11,9 +12,11 @@ using Proyecto_TixPro.Data;
 namespace Proyecto_TixPro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241201061737_Tarjeta")]
+    partial class Tarjeta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,35 +249,6 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.ToTable("Cobros");
                 });
 
-            modelBuilder.Entity("Proyecto_TixPro.Models.Contacto", b =>
-                {
-                    b.Property<int>("contactoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("contactoId"));
-
-                    b.Property<string>("asunto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("comentario")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("whatsapp")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("contactoId");
-
-                    b.ToTable("Contacto");
-                });
-
             modelBuilder.Entity("Proyecto_TixPro.Models.Evento", b =>
                 {
                     b.Property<int>("eventoId")
@@ -374,6 +348,14 @@ namespace Proyecto_TixPro.Data.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("usuarioId"));
+
+                    b.Property<string>("asunto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("comentario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nombre")
                         .IsRequired()

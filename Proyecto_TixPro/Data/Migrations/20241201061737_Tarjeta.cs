@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Proyecto_TixPro.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Eventohora : Migration
+    public partial class Tarjeta : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -74,10 +74,10 @@ namespace Proyecto_TixPro.Data.Migrations
                 {
                     tarjetaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nombreTitular = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    numeroTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    nombreTitular = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    numeroTarjeta = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fechaExpiracion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    codigoSeguridad = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    codigoSeguridad = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -247,9 +247,9 @@ namespace Proyecto_TixPro.Data.Migrations
                     ticketId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     eventoId = table.Column<int>(type: "int", nullable: false),
+                    usuarioId = table.Column<int>(type: "int", nullable: false),
                     monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    cantidad = table.Column<int>(type: "int", nullable: false),
-                    usuarioId = table.Column<int>(type: "int", nullable: true)
+                    cantidad = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -264,7 +264,8 @@ namespace Proyecto_TixPro.Data.Migrations
                         name: "FK_Ticket_Usuario_usuarioId",
                         column: x => x.usuarioId,
                         principalTable: "Usuario",
-                        principalColumn: "usuarioId");
+                        principalColumn: "usuarioId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -329,7 +330,8 @@ namespace Proyecto_TixPro.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Usuario_tarjetaId",
                 table: "Usuario",
-                column: "tarjetaId");
+                column: "tarjetaId",
+                unique: true);
         }
 
         /// <inheritdoc />
