@@ -12,8 +12,8 @@ using Proyecto_TixPro.Data;
 namespace Proyecto_TixPro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241130205238_Initial")]
-    partial class Initial
+    [Migration("20241201003847_Evento-hora")]
+    partial class Eventohora
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -260,6 +260,10 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.Property<DateTime>("fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("hora")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("imagen")
                         .HasColumnType("nvarchar(max)");
 
@@ -316,9 +320,6 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.Property<int>("cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int?>("codigoTicket")
-                        .HasColumnType("int");
-
                     b.Property<int>("eventoId")
                         .HasColumnType("int");
 
@@ -357,11 +358,16 @@ namespace Proyecto_TixPro.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("tarjetaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("whatsapp")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("usuarioId");
+
+                    b.HasIndex("tarjetaId");
 
                     b.ToTable("Usuario");
                 });
@@ -449,6 +455,17 @@ namespace Proyecto_TixPro.Data.Migrations
                         .HasForeignKey("usuarioId");
 
                     b.Navigation("evento");
+                });
+
+            modelBuilder.Entity("Proyecto_TixPro.Models.Usuario", b =>
+                {
+                    b.HasOne("Proyecto_TixPro.Models.Tarjeta", "tarjeta")
+                        .WithMany()
+                        .HasForeignKey("tarjetaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tarjeta");
                 });
 
             modelBuilder.Entity("Proyecto_TixPro.Models.Usuario", b =>

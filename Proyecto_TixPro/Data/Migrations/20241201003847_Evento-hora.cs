@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Proyecto_TixPro.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Eventohora : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,6 +58,7 @@ namespace Proyecto_TixPro.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    hora = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     lugar = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     imagen = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -81,22 +82,6 @@ namespace Proyecto_TixPro.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tarjeta", x => x.tarjetaId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuario",
-                columns: table => new
-                {
-                    usuarioId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    whatsapp = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    asunto = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    comentario = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuario", x => x.usuarioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -206,6 +191,29 @@ namespace Proyecto_TixPro.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuario",
+                columns: table => new
+                {
+                    usuarioId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    whatsapp = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    asunto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    comentario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    tarjetaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuario", x => x.usuarioId);
+                    table.ForeignKey(
+                        name: "FK_Usuario_Tarjeta_tarjetaId",
+                        column: x => x.tarjetaId,
+                        principalTable: "Tarjeta",
+                        principalColumn: "tarjetaId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cobros",
                 columns: table => new
                 {
@@ -241,7 +249,6 @@ namespace Proyecto_TixPro.Data.Migrations
                     eventoId = table.Column<int>(type: "int", nullable: false),
                     monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     cantidad = table.Column<int>(type: "int", nullable: false),
-                    codigoTicket = table.Column<int>(type: "int", nullable: true),
                     usuarioId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -318,6 +325,11 @@ namespace Proyecto_TixPro.Data.Migrations
                 name: "IX_Ticket_usuarioId",
                 table: "Ticket",
                 column: "usuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_tarjetaId",
+                table: "Usuario",
+                column: "tarjetaId");
         }
 
         /// <inheritdoc />
@@ -342,9 +354,6 @@ namespace Proyecto_TixPro.Data.Migrations
                 name: "Cobros");
 
             migrationBuilder.DropTable(
-                name: "Tarjeta");
-
-            migrationBuilder.DropTable(
                 name: "Ticket");
 
             migrationBuilder.DropTable(
@@ -358,6 +367,9 @@ namespace Proyecto_TixPro.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Usuario");
+
+            migrationBuilder.DropTable(
+                name: "Tarjeta");
         }
     }
 }
