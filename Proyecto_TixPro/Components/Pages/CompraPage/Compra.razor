@@ -133,9 +133,9 @@
 
                         <!-- Botón de Comprar con Precio Total -->
                         @if (cantidad < 1)
-                        {                           
-                            <div class="mb-2" style="padding: 30px;">
-                                <button class="btn btn-outline-success rounded-pill d-flex align-items-center justify-content-center bi bi-ticket shadow"  @onclick="NavigateToCart" disabled>
+                        {
+                            <div class="mb-2 " style="padding: 30px;">
+                                <button class="btn btn-outline-success rounded-pill d-flex align-items-center justify-content-center bi bi-ticket shadow" disabled @onclick="NavigateToCart">
                                     Comprar Tickets
                                     <div class="total-price me-2">
                                         RD$ @monto.ToString("F2")
