@@ -83,22 +83,22 @@
                             </div>
 
                             <!-- Barra de Búsqueda -->
-                            <div class="col-md-5 d-flex align-items-center mb-3 mb-md-0">
+                            <div class="col-md-5 col-12 d-flex align-items-center mb-3 mb-md-0">
                                 <label for="ValorFiltro" class="form-label fw-bold me-3"></label>
-                                <div class="input-group input-group-lg">
+                                <div class="input-group input-group-lg w-100">
                                     <input @bind="valorFiltro" class="form-control" placeholder="Buscar..." />
                                     <button @onclick="Buscar" class="btn btn-primary" type="button">
                                         <span class="bi bi-search"></span> Buscar
                                     </button>
                                 </div>
                                 <!-- Restablecer -->
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-outline-secondary bi bi-arrow-counterclockwise" @onclick="Restablecer">
+                                <div class="col-md-2 d-flex align-items-center  ms-3">
+                                    <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" @onclick="Restablecer">
+                                        <span class="bi bi-arrow-counterclockwise"></span> 
                                     </button>
                                 </div>
                             </div>
-
-                            
+                          
 
                             <!-- FiltroFecha - Mostrar solo si se selecciona "fecha" en el filtro -->
                             @if (filtro == "fecha")
@@ -188,12 +188,12 @@
                 }
             </div>
         </div>
-    </section> 
+    </section>
+
 
     <div class="card-footer text-start">
         <p>Total de Evento: @ListaEvento.Count</p>
     </div>
-
      <!-- Footer-->
     <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
         <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
@@ -208,6 +208,7 @@
     private string filtro = "Id";
     public DateTime? Desde { get; set; }
     public DateTime? Hasta { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -242,7 +243,7 @@
         }
         else
         {
-            ListaEvento = await eventosService.Listar(t => true);
+            ListaEvento = await eventosService.Listar(t => true); 
         }
     }
 
@@ -254,5 +255,6 @@
         Desde = null;
         Hasta = null;
     }
+
 
 }
