@@ -49,6 +49,8 @@ public class UsuariosService(IDbContextFactory<ApplicationDbContext> DbFactory)
         await using var _context = await DbFactory.CreateDbContextAsync();
         return await _context.Usuario.
             AsNoTracking()
+            .Include(t => t.tarjeta)
+            .Include(t => t.Ticket)
             .FirstOrDefaultAsync(T => T.usuarioId == id);
     }
 
@@ -57,6 +59,8 @@ public class UsuariosService(IDbContextFactory<ApplicationDbContext> DbFactory)
         await using var _context = await DbFactory.CreateDbContextAsync();
         return _context.Usuario
             .AsNoTracking()
+            .Include(t => t.tarjeta)
+            .Include(t => t.Ticket)
             .Where(criterio)
             .ToList();
     }
