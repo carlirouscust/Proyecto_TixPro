@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Proyecto_TixPro.Models;
 
@@ -20,5 +21,10 @@ public class Usuario
 
     [Required(ErrorMessage = "El Comentario es obligatorio")]
     public string? comentario { get; set; }
+
+    public Tarjeta? tarjeta { get; set; }
+    [ForeignKey("tarjeta")]
+    public int tarjetaId { get; set; }
+
     public  ICollection<Ticket> Ticket { get; set; } = new List<Ticket>();
 }
