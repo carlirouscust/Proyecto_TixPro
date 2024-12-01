@@ -18,7 +18,6 @@
     }
 </style>
 
-<EditForm Model="evento">
     <div class="main-container">
         <div class="row">
         <!-- Contenedor Izquierdo: Detalles del Evento -->
@@ -26,13 +25,13 @@
                     <h4 class="fw-bold">Datos de contacto</h4>
 
                     <div class="form-floating mb-2">                        
-                        <InputText @bind-Value="usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
+                        <InputText @bind-Value="@usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
                         <label for="Nombre" class="form-label">Nombre completo:</label>
                         <ValidationMessage For="@(() => usuario.nombre)" />
                     </div>
 
                     <div class="form-floating mb-2">                        
-                        <InputText @bind-Value="usuario.whatsapp" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
+                        <InputText @bind-Value="@usuario.whatsapp" class="form-control col-md-6" placeholder="Correo electrónico:" style="font-size: 1.1rem;" />
                         <label for="Correo" class="form-label">Whatsapp:</label>
                         <ValidationMessage For="@(() => usuario.whatsapp)" />
                     </div>
@@ -45,13 +44,13 @@
 
                     <div class="card-body mt-3">
                         <div class="form-floating mb-2">
-                            <InputText @bind-Value="tarjeta.nombreTitular" class="form-control" autocomplete="Nombre titular tarjeta" />
+                            <InputText @bind-Value="@tarjeta.nombreTitular" class="form-control" autocomplete="Nombre titular tarjeta" />
                             <label for="nombreTarjeta" class="form-label">Nombre titular tarjeta</label>
                             <ValidationMessage For="() => tarjeta.nombreTitular" class="text-danger" />
                         </div>
 
                         <div class="form-floating mb-2">
-                            <InputText @bind-Value="tarjeta.numeroTarjeta" class="form-control" autocomplete="Numero de tarjeta" />
+                            <InputText @bind-Value="@tarjeta.numeroTarjeta" class="form-control" autocomplete="Numero de tarjeta" />
                             <label for="numeroTarjeta" class="form-label">Numero de tarjeta</label>
                             <ValidationMessage For="() => tarjeta.numeroTarjeta" class="text-danger" />
                         </div>
@@ -59,7 +58,7 @@
                         <div class="row g-3">
                             <div class="col-md-6 col-12">
                                 <div class="form-floating">
-                                    <InputText @bind-Value="tarjeta.fechaExpiracion" class="form-control" autocomplete="off" id="fecha" />
+                                    <InputText @bind-Value="@tarjeta.fechaExpiracion" class="form-control" autocomplete="off" id="fecha" />
                                     <label for="fecha" class="form-label">Fecha de expiración (MM/AA)</label>
                                     <ValidationMessage For="() => tarjeta.fechaExpiracion" class="text-danger" />
                                 </div>
@@ -67,7 +66,7 @@
 
                             <div class="col-md-6 col-12">
                                 <div class="form-floating">
-                                    <InputText @bind-Value="tarjeta.codigoSeguridad" class="form-control" autocomplete="Código de seguridad" />
+                                    <InputText @bind-Value="@tarjeta.codigoSeguridad" class="form-control" autocomplete="Código de seguridad" />
                                     <label for="codigo" class="form-label">(CVV) Código de seguridad</label>
                                     <ValidationMessage For="() => tarjeta.codigoSeguridad" class="text-danger" />
                                 </div>
@@ -121,7 +120,6 @@
         </div>
         <div style="height: 190px;"></div>
     </div>
-</EditForm>
 
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
@@ -165,8 +163,9 @@
         ticket.eventoId = eventoId;
         ticket.cantidad = cantidad;
 
-
+        
         var resultado = await ticketSercive.Guardar(ticket);
+        var resul = await usuarioService.Guardar(usuario);
         if (resultado)
         {
            
