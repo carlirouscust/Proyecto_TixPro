@@ -1,6 +1,6 @@
 ﻿@page "/Contacto/Index"
 @inject NavigationManager NavigationManager
-@inject UsuariosService usuariosService
+@inject ContactoService contactoService
 @rendermode InteractiveServer
 
 
@@ -60,19 +60,19 @@
             </tr>
         </thead>
         <tbody class="text-white">
-            @foreach (var usuario in ListaContacto)
+            @foreach (var contacto in ListaContacto)
             {
                 <tr>
-                    <td class="text-black">@usuario.nombre</td>
-                    <td class="text-black">@usuario.whatsapp</td>
-                    <td class ="text-black">@usuario.asunto</td>
+                    <td class="text-black">@contacto.nombre</td>
+                    <td class="text-black">@contacto.whatsapp</td>
+                    <td class ="text-black">@contacto.asunto</td>
                     <td>
-                        <a href="/Contacto/Details/@usuario.usuarioId" class="btn btn-info btn-sm">
+                        <a href="/Contacto/Details/@contacto.contactoId" class="btn btn-info btn-sm">
                             <i class="bi bi-eye"></i>
                         </a>
                     </td>
                     <td>
-                        <a href="/Contacto/Delete/@usuario.usuarioId" class="btn btn-danger btn-sm">
+                        <a href="/Contacto/Delete/@contacto.contactoId" class="btn btn-danger btn-sm">
                             <i class="bi bi-trash"></i>
                         </a>
                     </td>
@@ -104,13 +104,13 @@
 </footer>
 
 @code {
-    public List<Usuario> ListaContacto { get; set; } = new List<Usuario>();
+    public List<Contacto> ListaContacto { get; set; } = new List<Contacto>();
     private string valorFiltro = "";
     private string filtro = "id";
 
     protected override async Task OnInitializedAsync()
     {
-        ListaContacto = await usuariosService.Listar(u => true);
+        ListaContacto = await contactoService.Listar(u => true);
     }
 
     public async Task Buscar()
@@ -119,20 +119,20 @@
         {
             if (filtro == "nombre")
             {
-                ListaContacto = await usuariosService.Listar(u => u.nombre != null && u.nombre.Contains(valorFiltro));
+                ListaContacto = await contactoService.Listar(u => u.nombre != null && u.nombre.Contains(valorFiltro));
             }
             else if (filtro == "whatsapp")
             {
-                ListaContacto = await usuariosService.Listar(u => u.whatsapp != null && u.whatsapp.Contains(valorFiltro));
+                ListaContacto = await contactoService.Listar(u => u.whatsapp != null && u.whatsapp.Contains(valorFiltro));
             }
             else if (filtro == "asunto")
             {
-                ListaContacto = await usuariosService.Listar(u => u.asunto != null && u.asunto.Contains(valorFiltro));
+                ListaContacto = await contactoService.Listar(u => u.asunto != null && u.asunto.Contains(valorFiltro));
             }
         }
         else
         {
-            ListaContacto = await usuariosService.Listar(u => true);
+            ListaContacto = await contactoService.Listar(u => true);
         }
     }
 }
