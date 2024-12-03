@@ -1,6 +1,7 @@
 ﻿@page "/Ventas/Details/{eventoId:int}"
 @inject NavigationManager navigationManager
 @inject UsuariosService usuariosService
+@inject TicketService ticketService
 @inject EventosService eventosService
 @rendermode InteractiveServer
 
@@ -24,8 +25,8 @@
                         </p>
                         <p><i class="bi bi-calendar4-week"></i> @evento.lugar</p>
                         <p><i class="bi bi-geo-alt"></i> @evento.fecha</p>
-                        <p>Ticket vendidos:</p>
-                        <p>Dinero recaudado:</p>
+                        <p><strong>Tickets vendidos:</strong> @totalTickets</p>
+                        <p><strong>Dinero recaudado:</strong> RD$ @totalRevenue</p>
                    
                     </div>
                 </div>
@@ -43,12 +44,17 @@
     [Parameter]
     public int eventoId { get; set; }
     public Evento evento { get; set; } = new Evento();
+    private int totalTickets { get; set; } = 0;
+    private decimal totalRevenue { get; set; } = 0;
     private int cantidad { get; set; } = 0;
     private decimal monto { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
+        // Obtener el total de tickets vendidos y dinero recaudado
+        totalTickets = await ticketService.GetTotalTicketsSold(eventoId);
+        totalRevenue = await ticketService.GetTotalRevenue(eventoId);
         UpdateTotalPrice();
     }
 
