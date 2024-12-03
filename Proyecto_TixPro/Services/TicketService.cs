@@ -62,4 +62,21 @@ public class TicketService(IDbContextFactory<ApplicationDbContext> DbFactory)
             .Where(criterio)
             .ToList();
     }
+
+    public async Task<int> GetTotalTicketsSold(int eventoId)
+    {
+        await using var _context = await DbFactory.CreateDbContextAsync();
+        return await _context.Ticket
+                             .Where(t => t.eventoId == eventoId)
+                             .SumAsync(t => t.cantidad); // Sumar la cantidad de tickets vendidos
+    }
+
+    public async Task<decimal> GetTotalRevenue(int eventoId)
+    {
+        await using var _context = await DbFactory.CreateDbContextAsync();
+        return await _context.Ticket
+                             .Where(t => t.eventoId == eventoId)
+                             .SumAsync(t => t.monto); // Sumar el monto total recaudado
+    }
+
 }
