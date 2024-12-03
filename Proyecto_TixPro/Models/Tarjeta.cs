@@ -14,7 +14,8 @@ public class Tarjeta
     [Required(ErrorMessage = "El Numero de tarjeta es Obligatorio")]
     public string? numeroTarjeta { get; set; }
 
-    [Required(ErrorMessage = "La Fecha de expiracion es Obligatoria")]
+    [Required(ErrorMessage = "La Fecha de expiración es Obligatoria")]
+    [DataType(DataType.Date)]
     public string? fechaExpiracion { get; set; }
 
     [Required(ErrorMessage = "El Codigo de seguridad es Obligatorio")]
