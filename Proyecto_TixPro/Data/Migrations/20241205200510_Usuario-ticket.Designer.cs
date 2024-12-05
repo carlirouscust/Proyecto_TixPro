@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proyecto_TixPro.Data;
 
@@ -11,9 +12,11 @@ using Proyecto_TixPro.Data;
 namespace Proyecto_TixPro.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241205200510_Usuario-ticket")]
+    partial class Usuarioticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,6 +341,36 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.ToTable("Tarjeta");
                 });
 
+            modelBuilder.Entity("Proyecto_TixPro.Models.Ticket", b =>
+                {
+                    b.Property<int>("ticketId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ticketId"));
+
+                    b.Property<int>("cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("eventoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("monto")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("usuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ticketId");
+
+                    b.HasIndex("eventoId");
+
+                    b.HasIndex("usuarioId")
+                        .IsUnique();
+
+                    b.ToTable("Ticket");
+                });
+
             modelBuilder.Entity("Proyecto_TixPro.Models.Usuario", b =>
                 {
                     b.Property<int>("usuarioId")
@@ -363,39 +396,6 @@ namespace Proyecto_TixPro.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Usuario");
-                });
-
-            modelBuilder.Entity("Ticket", b =>
-                {
-                    b.Property<int>("ticketId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ticketId"));
-
-                    b.Property<int>("cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<string>("codigosTickets")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("eventoId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("monto")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("usuarioId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ticketId");
-
-                    b.HasIndex("eventoId");
-
-                    b.HasIndex("usuarioId")
-                        .IsUnique();
-
-                    b.ToTable("Ticket");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -468,18 +468,7 @@ namespace Proyecto_TixPro.Data.Migrations
                     b.Navigation("usuario");
                 });
 
-            modelBuilder.Entity("Proyecto_TixPro.Models.Usuario", b =>
-                {
-                    b.HasOne("Proyecto_TixPro.Models.Tarjeta", "tarjeta")
-                        .WithOne("usuario")
-                        .HasForeignKey("Proyecto_TixPro.Models.Usuario", "tarjetaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("tarjeta");
-                });
-
-            modelBuilder.Entity("Ticket", b =>
+            modelBuilder.Entity("Proyecto_TixPro.Models.Ticket", b =>
                 {
                     b.HasOne("Proyecto_TixPro.Models.Evento", "evento")
                         .WithMany()
@@ -489,13 +478,24 @@ namespace Proyecto_TixPro.Data.Migrations
 
                     b.HasOne("Proyecto_TixPro.Models.Usuario", "usuario")
                         .WithOne("Ticket")
-                        .HasForeignKey("Ticket", "usuarioId")
+                        .HasForeignKey("Proyecto_TixPro.Models.Ticket", "usuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("evento");
 
                     b.Navigation("usuario");
+                });
+
+            modelBuilder.Entity("Proyecto_TixPro.Models.Usuario", b =>
+                {
+                    b.HasOne("Proyecto_TixPro.Models.Tarjeta", "tarjeta")
+                        .WithOne("usuario")
+                        .HasForeignKey("Proyecto_TixPro.Models.Usuario", "tarjetaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("tarjeta");
                 });
 
             modelBuilder.Entity("Proyecto_TixPro.Models.Tarjeta", b =>
