@@ -1,9 +1,11 @@
-﻿@page "/Carrito/Confirmar/{eventoId:int}"
+﻿@page "/Carrito/Confirmar/{eventoId:int}/{usuarioId:int}"
 @using Microsoft.AspNetCore.Authorization
 @inject NavigationManager NavigationManager
 @inject TarjetaService tarjetaService
 @inject EventosService eventosService
+@inject UsuariosService usuariosService
 
+<PageTitle>TixPro - Confirmacion de compra</PageTitle>
 <style>
     .login-container {
         display: flex;
@@ -83,7 +85,6 @@
         }
 </style>
 
-<PageTitle>TixPro - Confirmar Evento</PageTitle>
 <div class="login-container">
     <div class="card">
         @if (evento != null)
@@ -108,12 +109,14 @@
     [Parameter]
     public int eventoId { get; set; }
     public Evento evento { get; set; } = new Evento();
-    public int usiarioId { get; set; }
+    [Parameter]
+    public int usuarioId { get; set; }
     public Usuario usuario { get; set; } = new Usuario();
 
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
+        usuario = await usuariosService.Buscar(usuarioId);
     }
 
     public string ObtenerNumero()
@@ -123,13 +126,15 @@
     }
     public string ObtenerMensaje()
     {
-        DateTime fechaActual = DateTime.Now;
-        string fecha = fechaActual.ToString("dd/MM/yyyy");
 
-        DateTime horaActual = DateTime.Now;
-        string hora = horaActual.ToString("hh:mm:ss tt");
+        string horaFormateada = DateTime.TryParse(evento.hora, out DateTime horaValida)
+            ? horaValida.ToString("hh:mm tt")
+            : "Hora inválida";
 
-        string Mensaje = $"¡Gracias por su compra! Su ticket para el evento '{evento.nombre}' ha sido confirmado. El evento se llevará a cabo el {evento.fecha.ToString("dd 'de' MMMM 'de' yyyy")} en {evento.lugar}, a las {evento.fecha.ToString("HH:mm")}. El monto total de su compra es RD${evento.precio:N2}. ¡Nos vemos pronto!";
+        string Mensaje = $"¡Gracias por su compra! {usuario.nombre}, su ticket para el evento '{evento.nombre}' ha sido generado. " +
+                         $"El evento se llevará a cabo el dia {evento.fecha.ToString("dd/MM/yyyy")} en {evento.lugar}, a las {horaFormateada}. " +
+                         $"El monto total de su compra es RD${usuario.Ticket?.monto:N2}. Los códigos de sus tickets son: {usuario.Ticket?.codigosTickets}. ¡Nos vemos pronto!";
+
 
 
         return Mensaje;
