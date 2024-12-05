@@ -1,5 +1,5 @@
 ﻿@page "/Ventas/Index/"
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 @inject UsuariosService usuariosService
 @inject EventosService eventosService
 @rendermode InteractiveServer
@@ -39,6 +39,9 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="btn-group">
+                                <button class="btn btn-custom btn-black bi bi-box-arrow-left" @onclick="Volver">Volver</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,6 +54,7 @@
             <tr>
                 <th>Imagen del evento</th>
                 <th style="width: 650px;">Nombre</th>
+                <th>Total</th>
                 <th>Ver</th>
                 <th>Eliminar</th>
             </tr>
@@ -94,6 +98,37 @@
             color: black !important;
         }
 
+    .btn-custom {
+        border: none;
+        padding: 1rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: white;
+        transition: background-color 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-black {
+        background-color: black;
+    }
+
+        .btn-black:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+        }
+
+    .bi {
+        margin-right: 0.5rem;
+    }
+
 </style>
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
@@ -128,4 +163,8 @@
         }
     }
 
+    public void Volver()
+    {
+        navigationManager.NavigateTo("Account/Logout");
+    }
 }

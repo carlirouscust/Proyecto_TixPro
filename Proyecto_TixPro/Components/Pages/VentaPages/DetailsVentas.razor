@@ -33,6 +33,10 @@
                         </p>
                         <p><strong>Tickets vendidos:</strong> @totalTickets</p>
                         <p><strong>Dinero recaudado:</strong> RD$ @totalRevenue</p>
+
+                        <div class="btn-group">
+                            <button class="btn btn-custom btn-black bi bi-box-arrow-left" @onclick="Volver">Volver</button>
+                        </div>
                    
                     </div>
                 </div>
@@ -44,6 +48,39 @@
         <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
     </footer>
 </EditForm>
+
+<style>
+    .btn-custom {
+        border: none;
+        padding: 1rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: white;
+        transition: background-color 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-black {
+        background-color: black; 
+    }
+
+        .btn-black:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+        }
+
+    .bi {
+        margin-right: 0.5rem;
+    }
+</style>
 
 
 @code {
@@ -58,7 +95,6 @@
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
-        // Obtener el total de tickets vendidos y dinero recaudado
         totalTickets = await ticketService.GetTotalTicketsSold(eventoId);
         totalRevenue = await ticketService.GetTotalRevenue(eventoId);
         UpdateTotalPrice();
@@ -73,5 +109,10 @@
     private void NavigateToCart()
     {
         navigationManager.NavigateTo($"/Ticket/Carrito/{evento.eventoId}&{cantidad}&{monto}");
+    }
+
+    public void Volver()
+    {
+        navigationManager.NavigateTo("/Ventas/Index/");
     }
 }
