@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using Proyecto_TixPro.Models;
 using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Proyecto_TixPro.Models;
+using System.ComponentModel.DataAnnotations;
 
 public class Ticket
 {
-    private static readonly Random random = new Random();
-
     [Key]
     public int ticketId { get; set; }
 
@@ -26,17 +21,21 @@ public class Ticket
 
     public int cantidad { get; set; }
 
-    [NotMapped] // Indica que esta propiedad no será mapeada en la base de datos
-    public List<int> codigosTickets { get; set; } = new List<int>();
+    // Nueva propiedad para almacenar los códigos como texto separado por comas
+    public string? codigosTickets { get; set; }
 
-    // Constructor o método para generar los códigos
+    // Método para generar códigos y guardarlos como una cadena
     public void GenerarCodigos()
     {
-        codigosTickets.Clear(); // Asegúrate de limpiar la lista antes de generar nuevos códigos
+        var random = new Random();
+        var codigos = new List<int>();
+
         for (int i = 0; i < cantidad; i++)
         {
-            codigosTickets.Add(random.Next(1000, 10000)); // Genera códigos aleatorios
+            codigos.Add(random.Next(1000, 10000));
         }
+
+        // Almacenar los códigos como una cadena separada por comas
+        codigosTickets = string.Join(" - ", codigos);
     }
 }
-
