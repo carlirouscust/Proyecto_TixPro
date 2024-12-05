@@ -16,9 +16,10 @@ public class Usuario
     [Required(ErrorMessage = "El Whatsapp es obligatorio")]
     public string? whatsapp { get; set; }
 
-    public Tarjeta? tarjeta { get; set; } = new Tarjeta();
+    public Tarjeta? tarjeta { get; set; } 
     [ForeignKey("tarjeta")]
     public int tarjetaId { get; set; }
 
-    public  ICollection<Ticket>? Ticket { get; set; } = new List<Ticket>();
+    public Ticket? Ticket { get; set; }
+
 }
