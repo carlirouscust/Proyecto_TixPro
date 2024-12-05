@@ -24,7 +24,13 @@
                             <span class="text-dark fw-bold">RD$ @evento.precio</span>
                         </p>
                         <p><i class="bi bi-calendar4-week"></i> @evento.lugar</p>
-                        <p><i class="bi bi-geo-alt"></i> @evento.fecha</p>
+                        <p><i class="bi bi-geo-alt"></i> @evento.fecha.ToString("dd/MM/yyyy")</p>
+                        <p>
+                            <i class="bi bi-alarm"></i>
+                            @(DateTime.TryParse(evento.hora, out var horaEvento)
+                                ? $"{horaEvento:hh:mm tt}"
+                                : "Hora inválida")
+                        </p>
                         <p><strong>Tickets vendidos:</strong> @totalTickets</p>
                         <p><strong>Dinero recaudado:</strong> RD$ @totalRevenue</p>
                    

@@ -68,6 +68,12 @@
                         </p>
                         <p><i class="bi bi-calendar4-week"></i> @evento.lugar</p>
                         <p><i class="bi bi-geo-alt"></i> @evento.fecha</p>
+                        <p>
+                            <i class="bi bi-alarm"></i>
+                            @(DateTime.TryParse(evento.hora, out var horaEvento)
+                                ? $"{horaEvento:hh:mm tt}"
+                                : "Hora inválida")
+                        </p>
 
                         <div class="btn-group">
                             <a href="/Delete/Confirmar/@evento.eventoId" class="btn btn-custom btn-danger">

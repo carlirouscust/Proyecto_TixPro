@@ -148,10 +148,17 @@
                                     <p class="mb-0">RD$ @evento.precio</p>
                                     <!-- Nombre del Técnico -->
                                     <h5 class="fw-bolder">@evento.nombre</h5>
-                                    <p class="mb-0 bi bi-alarm">@evento.hora</p>
+                                
                                     <!-- Información adicional -->
                                     <p class="mb-0 bi bi-geo-alt">  @evento.lugar</p>
                                     <p class="mb-0 bi bi-calendar4-week"> @evento.fecha.ToString("dd/MM/yyyy")</p>
+                                    <p>
+                                        <i class="bi bi-alarm"></i>
+                                        @(DateTime.TryParse(evento.hora, out var horaEvento)
+                                            ? $"{horaEvento:hh:mm tt}"
+                                            : "Hora inválida")
+                                    </p>
+
                                 </div>
                                 @* Botón Ticket *@
                                 <div class="text-center">
