@@ -17,7 +17,7 @@ public class UsuariosService(IDbContextFactory<ApplicationDbContext> DbFactory)
     public async Task<bool> Insertar(Usuario _usuario)
     {
         await using var _context = await DbFactory.CreateDbContextAsync();
-        _context.Usuario.Add(_usuario);
+         _context.Usuario.Add(_usuario);
         return await _context.SaveChangesAsync() > 0;
     }
 
