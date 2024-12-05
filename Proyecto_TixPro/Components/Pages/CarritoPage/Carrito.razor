@@ -160,32 +160,47 @@
 
     public async Task Guardar()
     {
-       
-        // Guarda primero el Usuario
-        var usuarioGuardado = await usuarioService.Guardar(usuario);
-
-        if (usuarioGuardado)
+        try
         {
-            // Asocia la tarjeta al usuario
-            tarjeta.usuario = usuario;
             var tarjetaGuardada = await tarjetaService.Guardar(tarjeta);
 
-            if (tarjetaGuardada)
+            if (!tarjetaGuardada)
             {
-                // Luego guarda el ticket asociado
-                ticket.eventoId = eventoId;
-                ticket.usuarioId = usuario.usuarioId;
-                ticket.cantidad = cantidad;
-
-                var ticketGuardado = await ticketSercive.Guardar(ticket);
-
-                if (ticketGuardado)
-                {
-                    navigationManager.NavigateTo($"/Carrito/Confirmar/{evento.eventoId}");
-                }
+                Console.WriteLine("Error al guardar la tarjeta.");
+                return;
             }
+
+            usuario.tarjetaId = tarjeta.tarjetaId;
+
+            var usuarioGuardado = await usuarioService.Guardar(usuario);
+
+            if (!usuarioGuardado)
+            {
+                Console.WriteLine("Error al guardar el usuario.");
+                return;
+            }
+
+            ticket.usuarioId = usuario.usuarioId;
+            ticket.eventoId = eventoId;
+            ticket.cantidad = cantidad;
+            ticket.GenerarCodigos();    
+
+            ticket.monto = (evento.precio * cantidad) + (cargo * cantidad);
+
+
+            var ticketGuardado = await ticketSercive.Guardar(ticket);
+
+            if (!ticketGuardado)
+            {
+                Console.WriteLine("Error al guardar el ticket.");
+                return;
+            }
+
+            navigationManager.NavigateTo($"/Carrito/Confirmar/{evento.eventoId}/{usuario.usuarioId}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
-
-
 }
