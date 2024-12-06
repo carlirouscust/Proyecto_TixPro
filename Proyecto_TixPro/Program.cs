@@ -48,6 +48,7 @@ namespace Proyecto_TixPro
             builder.Services.AddScoped<CobrosService>();
             builder.Services.AddScoped<TarjetaService>();
             builder.Services.AddScoped<ContactoService>();
+            builder.Services.AddScoped<CarruselService>();
 
             var app = builder.Build();
 
