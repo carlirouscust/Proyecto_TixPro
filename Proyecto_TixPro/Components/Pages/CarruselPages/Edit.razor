@@ -1,0 +1,218 @@
+﻿@page "/Carrusel/Edit/{carruselId:int}"
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager NavigationManager
+@inject CarruselService carruselService
+@rendermode InteractiveServer
+
+<PageTitle>TixPro - Edit Carrusel</PageTitle>
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: calc(100vh - 100px); 
+        background-color: #fff;
+        padding: 50px; 
+        box-sizing: border-box;
+    }
+
+    .card {
+        border-radius: 1rem; 
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1); 
+        background-color: #fff;
+        width: 100%;
+        max-width: 1000px; 
+        padding: 1.5rem; 
+    }
+
+    .form-floating input {
+        border-radius: 1.5rem; 
+        padding: 0.75rem; 
+        font-size: 1.2rem; 
+    }
+
+    .btn-primary {
+        background-color: #000;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 1rem;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+
+    .text-center p a {
+        color: black;
+        text-decoration: none;
+    }
+
+        .text-center p a:hover {
+            text-decoration: underline;
+        }
+
+    .preview-image {
+        max-width: 150px; 
+        max-height: 150px; 
+        margin-top: 20px;
+        object-fit: cover;
+    }
+
+    h1 {
+        margin-bottom: 0.3rem; 
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+
+    }
+</style>
+
+<div class="login-container">
+    <div class="card">
+        <section>
+            <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Editar Carrusel</h1>
+
+            <!-- Formulario con un FormName único -->
+            <EditForm Model="carrusel" FormName="carruselForm">
+                <DataAnnotationsValidator />
+                <!-- Imagen 1 -->
+                <div class="form-floating mb-3">
+                    @if (!string.IsNullOrWhiteSpace(carrusel.imagen1))
+                    {
+                        <img src="@carrusel.imagen1" alt="Imagen 1" class="preview-image" />
+                    }
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen1))" class="form-control" />
+                    <label for="imagen1" style="font-size: 1rem;">Imagen 1</label>
+                    <ValidationMessage For="@(() => carrusel.imagen1)" class="text-danger" />
+                </div>
+
+                <!-- Imagen 2 -->
+                <div class="form-floating mb-3">
+                    @if (!string.IsNullOrWhiteSpace(carrusel.imagen2))
+                    {
+                        <img src="@carrusel.imagen2" alt="Imagen 2" class="preview-image" />
+                    }
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen2))" class="form-control" />
+                    <label for="imagen2" style="font-size: 1rem;">Imagen 2</label>
+                    <ValidationMessage For="@(() => carrusel.imagen2)" class="text-danger" />
+                </div>
+
+                <!-- Imagen 3 -->
+                <div class="form-floating mb-3">
+                    @if (!string.IsNullOrWhiteSpace(carrusel.imagen3))
+                    {
+                        <img src="@carrusel.imagen3" alt="Imagen 3" class="preview-image" />
+                    }
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen3))" class="form-control" />
+                    <label for="imagen3" style="font-size: 1rem;">Imagen 3</label>
+                    <ValidationMessage For="@(() => carrusel.imagen3)" class="text-danger" />
+                </div>
+
+                <!-- Imagen 4 -->
+                <div class="form-floating mb-3">
+                    @if (!string.IsNullOrWhiteSpace(carrusel.imagen4))
+                    {
+                        <img src="@carrusel.imagen4" alt="Imagen 4" class="preview-image" />
+                    }
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen4))" class="form-control" />
+                    <label for="imagen4" style="font-size: 1rem;">Imagen 4</label>
+                    <ValidationMessage For="@(() => carrusel.imagen4)" class="text-danger" />
+                </div>
+
+                <!-- Imagen 5 -->
+                <div class="form-floating mb-3">
+                    @if (!string.IsNullOrWhiteSpace(carrusel.imagen5))
+                    {
+                        <img src="@carrusel.imagen5" alt="Imagen 5" class="preview-image" />
+                    }
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen5))" class="form-control" />
+                    <label for="imagen5" style="font-size: 1rem;">Imagen 5</label>
+                    <ValidationMessage For="@(() => carrusel.imagen5)" class="text-danger" />
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="alert alert-danger mt-3">@errorMessage</div>
+                }
+
+                <div>
+                    <button type="button" @onclick="Guardar" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Editar Carrusel</button>
+                </div>
+            </EditForm>
+        </section>
+    </div>
+</div>
+
+<!-- Footer-->
+<footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px; padding-top: 100px; margin-top: 125px;">
+    <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
+</footer>
+
+
+@code {
+    [Parameter]
+    public int carruselId { get; set; }
+    public Carrusel carrusel { get; set; } = new Carrusel();
+    public bool Existe { get; set; } = false;
+    public List<Carrusel> ListaCarrusel { get; set; } = new List<Carrusel>();
+    private string? errorMessage;
+    private string? imagenPreview;
+
+    protected override async Task OnInitializedAsync()
+    {
+        carrusel = await carruselService.ObtenerPorId(carruselId);
+    }
+
+    private async Task OnImageChange(InputFileChangeEventArgs e, string imagenKey)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream();
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var base64Image = Convert.ToBase64String(memoryStream.ToArray());
+            var imageData = $"data:{file.ContentType};base64,{base64Image}";
+
+            switch (imagenKey)
+            {
+                case nameof(carrusel.imagen1):
+                    carrusel.imagen1 = imageData;
+                    break;
+                case nameof(carrusel.imagen2):
+                    carrusel.imagen2 = imageData;
+                    break;
+                case nameof(carrusel.imagen3):
+                    carrusel.imagen3 = imageData;
+                    break;
+                case nameof(carrusel.imagen4):
+                    carrusel.imagen4 = imageData;
+                    break;
+                case nameof(carrusel.imagen5):
+                    carrusel.imagen5 = imageData;
+                    break;
+            }
+
+            imagenPreview = imageData;
+            StateHasChanged();
+        }
+    }
+
+    public async Task Guardar()
+    {
+        try
+        {
+            await carruselService.Guardar(carrusel);
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Hubo un error al guardar el carrusel: " + ex.Message;
+        }
+    }
+}
