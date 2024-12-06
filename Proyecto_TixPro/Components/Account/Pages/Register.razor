@@ -174,12 +174,12 @@
 
     private sealed class InputModel
     {
-        [Required]
+        [Required(ErrorMessage = "El campo Email no puede estar vacio")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = "";
 
-        [Required]
+        [Required(ErrorMessage = "El campo Contraseña no puede estar vacio")]
         [StringLength(100, ErrorMessage = "El {0} debe tener al menos {2} y como máximo {1} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
