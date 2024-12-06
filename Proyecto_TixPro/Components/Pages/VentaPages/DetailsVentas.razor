@@ -4,7 +4,9 @@
 @inject TicketService ticketService
 @inject EventosService eventosService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
 
+@attribute [Authorize(Roles = "Admin")]
 
 <PageTitle>TixPro - Ventas</PageTitle>
 
