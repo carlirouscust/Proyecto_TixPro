@@ -22,23 +22,23 @@
 
     .tarjetas-container {
         display: flex;
-        gap: 1rem; /* Espacio entre los elementos */
-        flex-wrap: nowrap; /* Evita que los elementos se apilen */
+        gap: 1rem; 
+        flex-wrap: nowrap; 
     }
 
         .tarjetas-container .form-floating {
-            flex: 1; /* Asegura que ambas columnas tengan el mismo ancho */
-            min-width: 0; /* Previene problemas de ajuste en caso de contenido extenso */
+            flex: 1; 
+            min-width: 0; 
         }
 
     .tight-hr {
-        margin-top: 0.3rem; /* Reducir espacio superior de la línea */
-        margin-bottom: 0; /* Espacio inferior mínimo */
-        border-color: #ddd; /* Opcional: ajusta el color de la línea */
+        margin-top: 0.3rem; 
+        margin-bottom: 0; 
+        border-color: #ddd; 
     }
 
     .card-body p {
-        margin-bottom: 0.2rem; /* Reducir espacio inferior de los párrafos */
+        margin-bottom: 0.2rem; 
     }
 
 
@@ -73,6 +73,11 @@
                 <div class="card border-success mb-4">
                         <div class="card-header">
                              <h5 class="mb-0">Pago seguro con Tarjeta</h5>
+
+                             <div class="align-content-end">
+                                <img src="https://i.pinimg.com/736x/2d/8f/2d/2d8f2d0c852509c079562c441baeec2d.jpg" alt="Visa" style="height: 40px;" />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/450px-MasterCard_Logo.svg.png" alt="Mastercard" style="height: 30px;" />
+                             </div>                                                         
                         </div>
 
                     <div class="card-body mt-3">
@@ -100,9 +105,12 @@
                                 <InputText @bind-Value="@tarjeta.codigoSeguridad" class="form-control" placeholder="Código de seguridad" />
                                 <label for="codigoSeguridad" class="form-label">Código de seguridad (CVV)</label>
                                 <ValidationMessage For="@(() => tarjeta.codigoSeguridad)" />
-                            </div>
+                            </div>                           
                         </div>
-
+                        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                        {
+                            <div class="alert alert-danger mt-3">@ErrorMessage</div>
+                        }
                     </div>
                 </div>
 
@@ -184,6 +192,8 @@
     public decimal cargo = 10;
     public decimal montoTemporal;
 
+    private string? ErrorMessage { get; set; } // Mensaje de error dinámico
+
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
@@ -197,15 +207,55 @@
         ticket.monto = (evento.precio * cantidad) + (cargo * cantidad);
     }
 
+    private bool ValidarDatos()
+    {
+        ErrorMessage = null; // Reiniciar el mensaje de error
+
+        // Validar WhatsApp
+        if (string.IsNullOrWhiteSpace(usuario.whatsapp))
+        {
+            return false; // Campo vacío, no mostrar mensaje de error
+        }
+
+        if (usuario.whatsapp.Length != 10 || !usuario.whatsapp.All(char.IsDigit))
+        {
+            ErrorMessage = "El número de WhatsApp no es valido. Formato sin (-)";
+            return false;
+        }
+
+
+        // Validar Número de Tarjeta
+        if (string.IsNullOrWhiteSpace(tarjeta.numeroTarjeta) || tarjeta.numeroTarjeta.Length < 13 || tarjeta.numeroTarjeta.Length > 18 || !tarjeta.numeroTarjeta.All(char.IsDigit))
+        {
+            ErrorMessage = "El número de tarjeta no es valido";
+            return false;
+        }
+
+        // Validar Código de Seguridad (CVV)
+        if (string.IsNullOrWhiteSpace(tarjeta.codigoSeguridad) || tarjeta.codigoSeguridad.Length < 3 || tarjeta.codigoSeguridad.Length > 4 || !tarjeta.codigoSeguridad.All(char.IsDigit))
+        {
+            ErrorMessage = "El código de seguridad (CVV) no es valido";
+            return false;
+        }
+
+        return true; // Todos los datos son válidos
+    }
+
     public async Task Guardar()
     {
         try
         {
+            // Validar los datos antes de proceder
+            if (!ValidarDatos())
+            {
+                return; // No continuar si los datos son inválidos
+            }
+
             var tarjetaGuardada = await tarjetaService.Guardar(tarjeta);
 
             if (!tarjetaGuardada)
             {
-                Console.WriteLine("Error al guardar la tarjeta.");
+                ErrorMessage = "Error al guardar la tarjeta. Por favor, intente de nuevo.";
                 return;
             }
 
@@ -215,23 +265,22 @@
 
             if (!usuarioGuardado)
             {
-                Console.WriteLine("Error al guardar el usuario.");
+                ErrorMessage = "Error al guardar el usuario. Por favor, intente de nuevo.";
                 return;
             }
 
             ticket.usuarioId = usuario.usuarioId;
             ticket.eventoId = eventoId;
             ticket.cantidad = cantidad;
-            ticket.GenerarCodigos();    
+            ticket.GenerarCodigos();
 
             ticket.monto = (evento.precio * cantidad) + (cargo * cantidad);
-
 
             var ticketGuardado = await ticketSercive.Guardar(ticket);
 
             if (!ticketGuardado)
             {
-                Console.WriteLine("Error al guardar el ticket.");
+                ErrorMessage = "Error al guardar el ticket. Por favor, intente de nuevo.";
                 return;
             }
 
@@ -239,7 +288,8 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            ErrorMessage = $"Error inesperado: {ex.Message}";
         }
     }
+
 }
