@@ -1,0 +1,177 @@
+﻿@page "/Carrusel/Create"
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager NavigationManager
+@inject CarruselService carruselService
+@rendermode InteractiveServer
+
+<PageTitle>TixPro - Crear Carrusel</PageTitle>
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 20px);
+        background-color: #fff;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .card {
+        border-radius: 1.5rem;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        width: 100%;
+        max-width: 900px;
+        padding: 4rem;
+    }
+
+    .form-floating input {
+        border-radius: 2rem;
+        padding: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .btn-primary {
+        background-color: #000;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 1rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+        .btn-primary:hover {
+            background-color: #1e40af;
+        }
+
+    .text-center p a {
+        color: black;
+        text-decoration: none;
+    }
+
+        .text-center p a:hover {
+            text-decoration: underline;
+        }
+
+
+
+
+    .preview-image {
+        max-width: 100%;
+        max-height: 300px;
+        margin-top: 20px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="login-container">
+    <div class="card">
+        <section>
+            <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Carrusel</h1>
+
+            <!-- Formulario con un FormName único -->
+            <EditForm Model="carrusel" OnValidSubmit="Guardar" FormName="carruselForm">
+                <DataAnnotationsValidator />
+
+                <div class="form-floating mb-3">
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen1))" class="form-control" />
+                    <label for="imagen1" style="font-size: 1rem;">Imagen 1</label>
+                    <ValidationMessage For="@(() => carrusel.imagen1)" class="text-danger" />
+                </div>
+                <div class="form-floating mb-3">
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen2))" class="form-control" />
+                    <label for="imagen2" style="font-size: 1rem;">Imagen 2</label>
+                    <ValidationMessage For="@(() => carrusel.imagen2)" class="text-danger" />
+                </div>
+                <div class="form-floating mb-3">
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen3))" class="form-control" />
+                    <label for="imagen3" style="font-size: 1rem;">Imagen 3</label>
+                    <ValidationMessage For="@(() => carrusel.imagen3)" class="text-danger" />
+                </div>
+                <div class="form-floating mb-3">
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen4))" class="form-control" />
+                    <label for="imagen4" style="font-size: 1rem;">Imagen 4</label>
+                    <ValidationMessage For="@(() => carrusel.imagen4)" class="text-danger" />
+                </div>
+                <div class="form-floating mb-3">
+                    <InputFile OnChange="(e) => OnImageChange(e, nameof(carrusel.imagen5))" class="form-control" />
+                    <label for="imagen5" style="font-size: 1rem;">Imagen 5</label>
+                    <ValidationMessage For="@(() => carrusel.imagen5)" class="text-danger" />
+                </div>
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="alert alert-danger mt-3">@errorMessage</div>
+                }
+
+                <div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Registrar Carrusel</button>
+                </div>
+            </EditForm>
+        </section>
+    </div>
+</div>
+<!-- Footer-->
+<footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+    <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
+</footer>
+
+@code {
+    [Parameter]
+    public int carruselId { get; set; }
+    public Carrusel carrusel { get; set; } = new Carrusel();
+    private string? errorMessage;
+    private string? imagenPreview;
+
+    private async Task OnImageChange(InputFileChangeEventArgs e, string imagenKey)
+    {
+        var file = e.File;
+        if (file != null)
+        {
+            using var stream = file.OpenReadStream();
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            var base64Image = Convert.ToBase64String(memoryStream.ToArray());
+            var imageData = $"data:{file.ContentType};base64,{base64Image}";
+
+            switch (imagenKey)
+            {
+                case nameof(carrusel.imagen1):
+                    carrusel.imagen1 = imageData;
+                    break;
+                case nameof(carrusel.imagen2):
+                    carrusel.imagen2 = imageData;
+                    break;
+                case nameof(carrusel.imagen3):
+                    carrusel.imagen3 = imageData;
+                    break;
+                case nameof(carrusel.imagen4):
+                    carrusel.imagen4 = imageData;
+                    break;
+                case nameof(carrusel.imagen5):
+                    carrusel.imagen5 = imageData;
+                    break;
+            }
+
+            imagenPreview = imageData;
+            StateHasChanged();
+        }
+    }
+
+
+    public async Task Guardar()
+    {
+
+        var resultado = await carruselService.Guardar(carrusel);
+        if (resultado)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            errorMessage = "Error al registrar el carrusel.";
+            StateHasChanged();
+        }
+    }
+
+}
