@@ -40,10 +40,17 @@
         </NavLink>
     </li>
     <li class="nav-item">
-        <NavLink class="nav-link" href="/Ventas/Index/">
+        <NavLink class="nav-link" href="/Ventas/Index/">      @* temporal para poder trabajar *@
             <i class="bi bi-cash-coin"></i> Ventas de eventos
         </NavLink>
     </li>
+    <AuthorizeView Roles="Admin">
+        <li class="nav-item">
+            <NavLink class="nav-link" href="/Ventas/Index/">
+                <i class="bi bi-cash-coin"></i> Ventas de eventos
+            </NavLink>
+        </li>
+    </AuthorizeView>    
     <li>
         <AuthorizeView>
             <Authorized>
