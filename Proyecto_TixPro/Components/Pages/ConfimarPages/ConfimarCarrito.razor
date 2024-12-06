@@ -139,14 +139,21 @@
             : "Hora inválida";
 
             string Mensaje =
-        $"¡Gracias por su compra, {usuario.nombre}!\n\n" +
-        $"                                      *Evento:* {evento.nombre}\n" +
-        $"                   *Fecha:* {evento.fecha:dd/MM/yyyy}\n" +
-        $"                   *Lugar:* {evento.lugar}\n" +
-        $"                   *Hora:* {horaFormateada}\n\n" +
-        $"                   *Monto total:* RD${usuario.Ticket?.monto:N2}\n" +
-        $"                   *Códigos de tickets:* {usuario.Ticket?.codigosTickets}\n\n" +
-        $"                   ¡Nos vemos pronto y disfrute del evento!";
+        $" *¡Gracias por su compra,* {usuario.nombre}!\n\n" +
+        $"                                                                          " +
+        $" *Evento:* {evento.nombre}\n" +
+        $"                                                                          " +
+        $" *Fecha:* {evento.fecha:dd/MM/yyyy}\n" +
+        $"                                                                          " +
+        $" *Lugar:* {evento.lugar}\n" +
+        $"                                                                          " +
+        $" *Hora:* {horaFormateada}\n\n" +
+        $"                                                                          " +
+        $" *Monto total:* RD${usuario.Ticket?.monto:N2}\n" +
+        $"                                                                          " +
+        $" *Códigos de tickets:* {usuario.Ticket?.codigosTickets}\n\n" +
+        $"                                                                          " +
+        $" *¡Nos vemos pronto y disfrute del evento!* ";
 
 
 
