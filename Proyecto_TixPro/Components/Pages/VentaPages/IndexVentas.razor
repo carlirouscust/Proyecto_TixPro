@@ -3,6 +3,9 @@
 @inject UsuariosService usuariosService
 @inject EventosService eventosService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
 
 <PageTitle>TixPro - Consulta de Ventas</PageTitle>
 
