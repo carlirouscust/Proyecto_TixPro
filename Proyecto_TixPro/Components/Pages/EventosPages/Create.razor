@@ -4,7 +4,7 @@
 @inject EventosService EventosService
 @rendermode InteractiveServer
 
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin")]
 
 <PageTitle>TixPro - Crear Evento</PageTitle>
 
