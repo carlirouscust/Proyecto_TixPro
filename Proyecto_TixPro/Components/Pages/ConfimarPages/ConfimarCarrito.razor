@@ -89,9 +89,16 @@
     <div class="card">
         @if (evento != null)
         {
-            <h1>Gracias por su Compra: @evento.nombre</h1>
+            <h1>Gracias por tu Compra: @usuario.nombre </h1>
+            <p>Evento: <strong>@evento.nombre</strong></p>
             <p>Lugar del evento: <strong>@evento.lugar</strong></p>
-            <p>Hora del evento: <strong>@evento.hora</strong></p>
+            <p>Hora del evento:
+                <strong> 
+                @(DateTime.TryParse(evento.hora, out var horaEvento)
+                    ? $"{horaEvento:hh:mm tt}"
+                    : "Hora inválida")
+                </strong>
+            </p>
             <p>Fecha del evento: <strong>@evento.fecha.ToString("dd/MM/yyyy")</strong></p>
         }
         else
@@ -99,7 +106,7 @@
             <h1>Cargando evento...</h1>
         }
 
-        <a href=@($"https://wa.me/1{ObtenerNumero()}?text={ObtenerMensaje()}") class="btn btn-outline-dark rounded-pill" type="button" target="_blank" rel="noopener noreferrer">
+        <a href=@($"https://wa.me/1{ObtenerNumero()}?text={ObtenerMensaje()}") class="btn btn-outline-success rounded-pill" type="button" target="_blank" rel="noopener noreferrer">
             <span class="bi bi-whatsapp"></span> Obtener Ticket
         </a>
     </div>
@@ -131,9 +138,16 @@
             ? horaValida.ToString("hh:mm tt")
             : "Hora inválida";
 
-        string Mensaje = $"¡Gracias por su compra! {usuario.nombre}, su ticket para el evento '{evento.nombre}' ha sido generado. " +
-                         $"El evento se llevará a cabo el dia {evento.fecha.ToString("dd/MM/yyyy")} en {evento.lugar}, a las {horaFormateada}. " +
-                         $"El monto total de su compra es RD${usuario.Ticket?.monto:N2}. Los códigos de sus tickets son: {usuario.Ticket?.codigosTickets}. ¡Nos vemos pronto!";
+            string Mensaje =
+        $"¡Gracias por su compra, {usuario.nombre}!\n\n" +
+        $"                                      *Evento:* {evento.nombre}\n" +
+        $"                   *Fecha:* {evento.fecha:dd/MM/yyyy}\n" +
+        $"                   *Lugar:* {evento.lugar}\n" +
+        $"                   *Hora:* {horaFormateada}\n\n" +
+        $"                   *Monto total:* RD${usuario.Ticket?.monto:N2}\n" +
+        $"                   *Códigos de tickets:* {usuario.Ticket?.codigosTickets}\n\n" +
+        $"                   ¡Nos vemos pronto y disfrute del evento!";
+
 
 
 
