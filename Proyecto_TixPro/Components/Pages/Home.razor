@@ -1,51 +1,28 @@
 ﻿@page "/"
 @inject TicketService ticketService
 @inject EventosService eventosService
+@inject CarruselService carruselService
 @rendermode InteractiveServer
 
 <EditForm Model="ListaEvento">
-    <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>TixPro</title>
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-</head>
-    <!-- Header-->
     <div class="d-flex justify-content-center align-items-center">
         <header class="bg-transparent py-5" style="width: 80%; height: auto; margin: 0; padding: 0; border-radius: 20px; overflow: hidden; padding-left: 50px; padding-right: 50px;">
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="border-radius: 20px; overflow: hidden;">
                 <!-- Indicadores -->
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                    @for (int i = 0; i < carruselImages.Count; i++)
+                    {
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-label="Slide @(i + 1)"></button>
+                    }
                 </div>
                 <!-- Contenido del carrusel -->
                 <div class="carousel-inner" style="border-radius: 20px; overflow: hidden;">
-                    <div class="carousel-item active">
-                        <img src="https://tix-events.s3.amazonaws.com/tix_main_cover_Desktop_Banner_TIX_1_266_x_560_18_1_6bc00702ce.png" class="d-block w-100" alt="Imagen 1" style="width: 1500px; height: 450px; object-fit: cover;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://tix-events.s3.amazonaws.com/tix_main_cover_1266x560_BFF_2024_3_c03ada7b85.png" class="d-block w-100" alt="Imagen 2" style="width: 1500px; height: 450px; object-fit: cover;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://i0.wp.com/ticketmax.com.do/wp-content/uploads/IMG_8969-1.jpg?w=1500&ssl=1" class="d-block w-100" alt="Imagen 3" style="width: 1500px; height: 450px; object-fit: cover;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://i0.wp.com/ticketmax.com.do/wp-content/uploads/IMG_8755.png?resize=1536%2C461&ssl=1" class="d-block w-100" alt="Imagen 4" style="width: 1500px; height: 450px; object-fit: cover;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="https://i0.wp.com/ticketmax.com.do/wp-content/uploads/IMG_8786.jpg?w=1500&ssl=1" class="d-block w-100" alt="Imagen 5" style="width: 1500px; height: 450px; object-fit: cover;">
-                    </div>
+                    @foreach (var (image, index) in carruselImages.Select((image, index) => (image, index)))
+                    {
+                        <div class="carousel-item @(index == 0 ? "active" : "")">
+                            <img src="@image" class="d-block w-100" alt="Imagen @(index + 1)" style="width: 1500px; height: 450px; object-fit: cover;">
+                        </div>
+                    }
                 </div>
                 <!-- Controles de navegación -->
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -139,14 +116,11 @@
                 {
                     <div class="col mb-5">
                         <div class="card shadow h-100">
-                            <!-- Imagen del Técnico (puedes agregarla si es necesario) -->
                             <!-- Imagen del Evento -->
                             <img class="card-img-top" src="@evento.imagen" alt="Imagen del Evento" />
-                            <!-- Detalles del Técnico -->
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <p class="mb-0">RD$ @evento.precio</p>
-                                    <!-- Nombre del Técnico -->
                                     <h5 class="fw-bolder">@evento.nombre</h5>
                                 
                                     <!-- Información adicional -->
@@ -226,6 +200,7 @@
 @code {
     public Evento evento { get; set; } = new Evento();
     public List<Evento> ListaEvento = new List<Evento>();
+    private List<string> carruselImages = new List<string>();
     private string valorFiltro = "";
     private string filtro = "Id";
     public DateTime? Desde { get; set; }
@@ -235,6 +210,18 @@
     protected override async Task OnInitializedAsync()
     {
         ListaEvento = await eventosService.Listar(c => true);
+        var carrusel = await carruselService.ObtenerUltimoCarruselAsync();
+        if (carrusel != null)
+        {
+            carruselImages.AddRange(new[]
+            {
+                carrusel.imagen1,
+                carrusel.imagen2,
+                carrusel.imagen3,
+                carrusel.imagen4,
+                carrusel.imagen5
+            });
+        }
     }
 
     public async Task Buscar()
