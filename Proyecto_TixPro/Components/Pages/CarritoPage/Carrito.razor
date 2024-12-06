@@ -19,6 +19,33 @@
         padding: 1rem;
         font-size: 1.5rem;
     }
+
+    .tarjetas-container {
+        display: flex;
+        gap: 1rem; /* Espacio entre los elementos */
+        flex-wrap: nowrap; /* Evita que los elementos se apilen */
+    }
+
+        .tarjetas-container .form-floating {
+            flex: 1; /* Asegura que ambas columnas tengan el mismo ancho */
+            min-width: 0; /* Previene problemas de ajuste en caso de contenido extenso */
+        }
+
+    .tight-hr {
+        margin-top: 0.3rem; /* Reducir espacio superior de la línea */
+        margin-bottom: 0; /* Espacio inferior mínimo */
+        border-color: #ddd; /* Opcional: ajusta el color de la línea */
+    }
+
+    .card-body p {
+        margin-bottom: 0.2rem; /* Reducir espacio inferior de los párrafos */
+    }
+
+
+   
+
+
+
 </style>
 
 <EditForm Model="usuario"  >
@@ -61,22 +88,21 @@
                             <ValidationMessage For="@(() => tarjeta.numeroTarjeta)" />
                         </div>
 
-                        <div class="row g-3">
-                            <div class="col-mb-6 col-12">
-                                <div class="form-floating mb-2">
-                                    <InputText @bind-Value="@tarjeta.fechaExpiracion" class="form-control" placeholder="Fecha de expiración" />
-                                    <label for="fechaExpiracion" class="form-label">Fecha de expiración (MM/AA)</label>
-                                    <ValidationMessage For="@(() => tarjeta.fechaExpiracion)" />
-                                </div>
+                        <div class="row g-3 tarjetas-container">
+                            <!-- Columna de Fecha de Expiración -->
+                            <div class="form-floating mb-2">
+                                <InputText @bind-Value="@tarjeta.fechaExpiracion" class="form-control" placeholder="Fecha de expiración" />
+                                <label for="fechaExpiracion" class="form-label">Fecha de expiración (MM/AA)</label>
+                                <ValidationMessage For="@(() => tarjeta.fechaExpiracion)" />
                             </div>
-                            <div class="col-mb-6 col-12">
-                                <div class="form-floating mb-2">
-                                    <InputText @bind-Value="@tarjeta.codigoSeguridad" class="form-control" placeholder="Código de seguridad" />
-                                    <label for="codigoSeguridad" class="form-label">Código de seguridad (CVV)</label>
-                                    <ValidationMessage For="@(() => tarjeta.codigoSeguridad)" />
-                                </div>
+                            <!-- Columna de Código de Seguridad -->
+                            <div class="form-floating mb-2">
+                                <InputText @bind-Value="@tarjeta.codigoSeguridad" class="form-control" placeholder="Código de seguridad" />
+                                <label for="codigoSeguridad" class="form-label">Código de seguridad (CVV)</label>
+                                <ValidationMessage For="@(() => tarjeta.codigoSeguridad)" />
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -101,20 +127,33 @@
                             <div class="card-body">
                                 <h5 class="fw-bold">@evento.nombre</h5>
                             <p><i class="bi bi-geo-alt"></i> @evento.lugar</p>
-                            <p><i class="bi bi-calendar4-week"></i> @evento.fecha</p>
-                            </div>
-                            <hr />
+                            <p class="mb-0 bi bi-calendar4-week"> @evento.fecha.ToString("dd/MM/yyyy")</p>
+                            <p>
+                                <i class="bi bi-alarm"></i>
+                                @(DateTime.TryParse(evento.hora, out var horaEvento)
+                                    ? $"{horaEvento:hh:mm tt}"
+                                    : "Hora inválida")
+                            </p>
+                                <hr class="tight-hr" />
                                 <p class="text-muted">
-                                    <span class="text-dark fw-bold">Precio: RD$ @evento.precio</span>                           
-                                </p>
+                                <span class="text-dark fw-bold">Precio:</span> RD$ @evento.precio
+                            </p>
                                 <p class="text-muted">
-                                    <span class="text-dark fw-bold">Cantidad: @cantidad</span>
+                                <span class="text-dark fw-bold">Cantidad:</span> @cantidad
                                 </p>                       
                             <hr />
-                                <h6>Sub Total: RD$ @monto</h6>
-                            <h6>Cargo de Servicio: RD$ @(cargo * cantidad)</h6>
+                            <p class="text-muted">
+                                <span class="text-dark fw-bold">Sub Total:</span> RD$ @monto
+                            </p>
+                            <p class="text-muted">
+                                <span class="text-dark fw-bold">Cargo de Servicio:</span> RD$ @(cargo * cantidad)
+                            </p>
+                            <p class="text-muted">
+                                <span class="text-dark fw-bold">Total a Pagar:</span> RD$ @ticket.monto
+                            </p>
+                          
                             <hr />
-                                <h6>Total a Pagar: RD$ @ticket.monto </h6>
+                        </div>
                         </div>
                     </div>
                 </div>
