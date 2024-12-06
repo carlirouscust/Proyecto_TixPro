@@ -62,6 +62,13 @@ public class CarruselService(IDbContextFactory<ApplicationDbContext> DbFactory)
             .ToList();
     }
 
+    public async Task<Carrusel?> ObtenerPorId(int id)
+    {
+        await using var _carrusel = await DbFactory.CreateDbContextAsync();
+        return await _carrusel.Carrusel.FindAsync(id);
+    }
+
+
     public async Task<Carrusel?> ObtenerUltimoCarruselAsync()
     {
         await using var _carrusel = await DbFactory.CreateDbContextAsync();
