@@ -39,6 +39,7 @@
                                     </button>
                                 </div>
                             </div>
+                            <!--Boton volver-->
                             <div class="btn-group">
                                 <button class="btn btn-custom btn-black bi bi-box-arrow-left" @onclick="Volver">Volver</button>
                             </div>
@@ -164,6 +165,6 @@
 
     public void Volver()
     {
-        navigationManager.NavigateTo("Account/Logout");
+        navigationManager.NavigateTo("/Account/Manage");
     }
 }
