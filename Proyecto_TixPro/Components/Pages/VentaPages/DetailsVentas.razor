@@ -6,7 +6,7 @@
 @rendermode InteractiveServer
 
 
-<PageTitle>TixPro - Compra de ticket</PageTitle>
+<PageTitle>TixPro - Ventas</PageTitle>
 
 <EditForm Model="evento">
     <section class="py-5">
@@ -89,26 +89,12 @@
     public Evento evento { get; set; } = new Evento();
     private int totalTickets { get; set; } = 0;
     private decimal totalRevenue { get; set; } = 0;
-    private int cantidad { get; set; } = 0;
-    private decimal monto { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
         totalTickets = await ticketService.GetTotalTicketsSold(eventoId);
         totalRevenue = await ticketService.GetTotalRevenue(eventoId);
-        UpdateTotalPrice();
-    }
-
-
-    private void UpdateTotalPrice()
-    {
-        monto = cantidad * evento.precio;
-    }
-
-    private void NavigateToCart()
-    {
-        navigationManager.NavigateTo($"/Ticket/Carrito/{evento.eventoId}&{cantidad}&{monto}");
     }
 
     public void Volver()
