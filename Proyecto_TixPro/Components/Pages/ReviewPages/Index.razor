@@ -8,7 +8,7 @@
 
 <EditForm Model="ListaReview" class="border shadow-lg p-3 rounded">
     <div class="card-header bg-black text-white text-center py-2 rounded-3">
-        <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Consulta de Contacto</h3>
+        <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Consulta de Reseñas</h3>
     </div>
     <div class="container mt-4">
         <div class="row justify-content-center">
@@ -26,6 +26,8 @@
                                 <label for="Filtro" class="form-label fw-bold me-3">Filtrar:</label>
                                 <select @bind="filtro" class="form-select form-select-lg">
                                     <option value="nombre">Nombre</option>
+                                    <option value="rating">Rating</option>
+                                    <option value="fecha">Fecha</option>
                                 </select>
                             </div>
                             <!-- Barra de Búsqueda -->
@@ -36,7 +38,32 @@
                                         <span class="bi bi-search"></span> Buscar
                                     </button>
                                 </div>
+                                <!-- Restablecer -->
+                                <div class="col-md-2 d-flex align-items-center  ms-3">
+                                    <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" @onclick="Restablecer">
+                                        <span class="bi bi-arrow-counterclockwise"></span>
+                                    </button>
+                                </div>
                             </div>
+                            <!-- FiltroFecha - Mostrar solo si se selecciona "fecha" en el filtro -->
+                            @if (filtro == "fecha")
+                            {
+                                <div class="row mt-3">
+                                    <!-- Desde -->
+                                    <div class="col-3">
+                                        <label class="col-form-label"><strong>Desde</strong></label>
+                                        <InputDate class="form-control" @bind-Value="Desde"></InputDate>
+                                    </div>
+
+                                    <!-- Hasta -->
+                                    <div class="col-3">
+                                        <label class="col-form-label"><strong>Hasta</strong></label>
+                                        <div class="input-group">
+                                            <InputDate class="form-control" @bind-Value="Hasta"></InputDate>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -101,9 +128,13 @@
 </footer>
 
 @code {
+    [Parameter]
+    public int reviewId { get; set; }
     public List<Review> ListaReview { get; set; } = new List<Review>();
     private string valorFiltro = "";
     private string filtro = "id";
+    public DateTime? Desde { get; set; }
+    public DateTime? Hasta { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -118,10 +149,31 @@
             {
                 ListaReview = await reviewService.Listar(u => u.usuarioNombre != null && u.usuarioNombre.Contains(valorFiltro));
             }
+            else if (filtro == "fecha" && DateTime.TryParse(valorFiltro, out DateTime fecha))
+            {
+                ListaReview = await reviewService.Listar(t => t.fechaReview == fecha);
+            }
+            else if (filtro == "ratingUso" && int.TryParse(valorFiltro, out int rating))
+            {
+                ListaReview = await reviewService.Listar(t => t.ratingUso == rating);
+            }
+        }
+        else if (filtro == "fecha" && Desde.HasValue && Hasta.HasValue)
+        {
+            ListaReview = await reviewService.Listar(t => t.fechaReview >= Desde.Value && t.fechaReview <= Hasta.Value);
         }
         else
         {
             ListaReview = await reviewService.Listar(u => true);
         }
+    }
+
+    private async Task Restablecer()
+    {
+        ListaReview = await reviewService.Listar(t => t.reviewId > 0);
+        filtro = string.Empty;
+        valorFiltro = string.Empty;
+        Desde = null;
+        Hasta = null;
     }
 }
