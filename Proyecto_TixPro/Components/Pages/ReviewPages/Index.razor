@@ -26,7 +26,7 @@
                                 <label for="Filtro" class="form-label fw-bold me-3">Filtrar:</label>
                                 <select @bind="filtro" class="form-select form-select-lg">
                                     <option value="nombre">Nombre</option>
-                                    <option value="rating">Rating</option>
+                                    <option value="ratingUso">Rating</option>
                                     <option value="fecha">Fecha</option>
                                 </select>
                             </div>
@@ -88,7 +88,14 @@
                 <tr>
                     <td class="text-black">@review.usuarioNombre</td>
                     <td class="text-black">@review.ratingUso</td>
-                    <td class="text-black">@review.recomendarias</td>
+                    @if (review.recomendarias)
+                    {
+                        <td class="text-black">Si</td>
+                    }
+                    else
+                    {
+                        <td class="text-black">No</td>
+                    }
                     <td class="text-black">@review.fechaReview.ToString("dd/MM/yyyy")</td>
                     <td>
                         <a href="/Review/Details/@review.reviewId" class="btn btn-info btn-sm">
