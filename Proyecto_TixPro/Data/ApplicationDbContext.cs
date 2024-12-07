@@ -13,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Tarjeta> Tarjeta { get; set; }
     public DbSet<Contacto> Contacto { get; set; }
     public DbSet<Carrusel> Carrusel { get; set; }
+    public DbSet<Review> Review { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
