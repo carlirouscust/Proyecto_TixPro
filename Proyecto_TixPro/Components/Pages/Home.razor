@@ -2,6 +2,7 @@
 @inject TicketService ticketService
 @inject EventosService eventosService
 @inject CarruselService carruselService
+@inject NavigationManager navigationManager
 @rendermode InteractiveServer
 
 <PageTitle>TixPro</PageTitle>
@@ -194,6 +195,7 @@
      <!-- Footer-->
     <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
         <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
+        <button class="btn btn-success" @onclick="Resenas" >Reseñas</button>
     </footer>
 
 </EditForm>
@@ -207,6 +209,10 @@
     public DateTime? Desde { get; set; }
     public DateTime? Hasta { get; set; }
 
+    public void Resenas()
+    {
+        navigationManager.NavigateTo("/Review/Create");
+    }
 
     protected override async Task OnInitializedAsync()
     {
