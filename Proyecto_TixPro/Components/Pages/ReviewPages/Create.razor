@@ -1,4 +1,4 @@
-﻿@page "/Review/Create"
+﻿@page "/Review/Create/{nombreUser}"
 @inject NavigationManager navigationManager
 @inject ReviewService reviewService
 @rendermode InteractiveServer
@@ -73,8 +73,8 @@
                 <!--Nombre-->
                 <h4 style="font-size: 1.5rem; color: #333;">Datos de Reseña</h4>
                 <div class="form-floating mb-4">
-                    <InputText @bind-Value="review.usuarioNombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" />
-                    <label for="nombre" style="font-size: 1rem;">Nombre</label>
+                    <InputText @bind-Value="review.usuarioNombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" disabled />
+                    <label for="nombre" style="font-size: 1rem;">Nombre</label>  
                     <ValidationMessage For="@(() => review.usuarioNombre)" class="text-danger" />
                 </div>
 
@@ -114,13 +114,6 @@
                 <div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Enviar</button>
                 </div>
-                <AuthorizeView Roles="Admin">
-                    <ChildContent Context="adminContext">
-                        <div style="margin-top: 20px;">
-                            <a href="/Review/Index" class="w-100 btn btn-lg btn-success rounded-pill" style="font-size: 1.1rem;">Ver Reseñas</a>
-                        </div>
-                    </ChildContent>
-                </AuthorizeView>
 
             </EditForm>
             @if (isSuccessMessageVisible)
@@ -134,13 +127,20 @@
 </div>
 
 @code {
+    [Parameter]
+    public string? nombreUser { get; set; }
     public Review review { get; set; } = new Review();
     private bool isSuccessMessageVisible { get; set; } = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        review.usuarioNombre = nombreUser;
+    }
 
     private async Task HandleSubmit()
     {
         isSuccessMessageVisible = true;
+
         var resultado = await reviewService.Guardar(review);
         if (resultado)
         {
