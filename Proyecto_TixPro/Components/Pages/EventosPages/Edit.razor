@@ -176,10 +176,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (eventoId != 0)
-        {
-            await Buscar();
-        }
+        evento = await eventosService.Buscar(eventoId);
     }
 
     private async Task OnImageChange(InputFileChangeEventArgs e)
@@ -216,20 +213,6 @@
         }
     }
 
-    public async Task Buscar()
-    {
-        Existe = false;
-        var encontro = await eventosService.Buscar(eventoId);
-
-        if (encontro != null)
-        {
-            evento = encontro;
-        }
-        else
-        {
-            Nuevo();
-        }
-    }
     public void Nuevo()
     {
         evento = new Evento();
