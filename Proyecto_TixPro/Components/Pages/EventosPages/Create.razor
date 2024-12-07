@@ -155,9 +155,6 @@
 
     public async Task Guardar()
     {
-        Console.WriteLine("Se llamó al método Guardar");
-        Console.WriteLine($"Nombre: {evento.nombre}, Fecha: {evento.fecha}, Lugar: {evento.lugar}, Precio: {evento.precio}, Imagen: {evento.imagen}");
-
         var resultado = await EventosService.Guardar(evento);
         if (resultado)
         {
