@@ -3,6 +3,7 @@
 @inject EventosService eventosService
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.Authorization
+
 @attribute [Authorize(Roles = "Admin")]
 
 <PageTitle>TixPro - Editar Evento</PageTitle>
@@ -159,6 +160,7 @@
         </section>
     </div>
 </div>
+
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
     <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
