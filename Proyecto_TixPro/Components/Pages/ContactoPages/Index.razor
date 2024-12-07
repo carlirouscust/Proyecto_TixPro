@@ -2,6 +2,9 @@
 @inject NavigationManager NavigationManager
 @inject ContactoService contactoService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
 
 
 <PageTitle>TixPro - Consulta de Contacto</PageTitle>

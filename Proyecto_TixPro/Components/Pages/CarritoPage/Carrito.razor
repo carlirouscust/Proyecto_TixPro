@@ -145,7 +145,7 @@
                         <div class="card-body">
                             <h5 class="fw-bold">@evento.nombre</h5>
                             <p><i class="bi bi-geo-alt"></i> @evento.lugar</p>
-                            <p class="mb-0 bi bi-calendar4-week"> @evento.fecha.ToString("dd/MM/yyyy")</p>
+                            <p class="mb-0 bi bi-calendar4-week"> @evento.fecha.ToString(" dd/MM/yyyy")</p>
                             <p>
                                 <i class="bi bi-alarm"></i>
                                 @(DateTime.TryParse(evento.hora, out var horaEvento)

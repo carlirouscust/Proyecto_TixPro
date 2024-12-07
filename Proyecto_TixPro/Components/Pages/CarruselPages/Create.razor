@@ -1,8 +1,10 @@
 ﻿@page "/Carrusel/Create"
-@using Microsoft.AspNetCore.Authorization
 @inject NavigationManager NavigationManager
 @inject CarruselService carruselService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize (Roles = "Admin")]
 
 <PageTitle>TixPro - Crear Carrusel</PageTitle>
 

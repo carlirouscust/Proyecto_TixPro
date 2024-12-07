@@ -2,6 +2,9 @@
 @inject NavigationManager navigationManager
 @inject ReviewService reviewService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
 
 <PageTitle>TixPro - Delete Review</PageTitle>
 
@@ -16,8 +19,8 @@
 
         <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
             <div style="background-color: #f8f9fa; border-radius: 20px; padding: 30px; width: 100%; max-width: 600px; margin: 50px auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-                <div style="text-align: center; margin-bottom: 20px; font-size: 1.5rem; font-weight: bold; color: #2c3e50;">
-                    Detalle de reseña
+                <div style="text-align: center; margin-bottom: 20px; font-size: 1.5rem; font-weight: bold; color: red;">
+                        ¿Desea eliminar esta reseña?
                 </div>
                 <div>
                     <h4 style="font-size: 1.1rem;">Nombre: <span>@review.usuarioNombre</span></h4>
