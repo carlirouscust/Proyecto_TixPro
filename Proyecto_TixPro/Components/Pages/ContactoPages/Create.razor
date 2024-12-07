@@ -12,7 +12,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: calc(100vh - 20px); /* Altura casi completa, dejando 20px de margen arriba y abajo */
+        height: calc(100vh - 20px); 
         background-color: #f4f4f4;
         padding: 20px;
         box-sizing: border-box;
@@ -68,17 +68,16 @@
     <div class="card">
         <section>
             <h1 class="text-center mb-10" style="font-size: 2rem; font-weight: bold; color: #333;">CONTACTO</h1>
-
-            <!-- Formulario con un FormName único -->
             <EditForm Model="contacto" FormName="submit" OnValidSubmit="HandleSubmit">
                 <DataAnnotationsValidator />
                 <h4 style="font-size: 1.5rem; color: #333;">Datos del Contacto</h4>
+                <!-- Nombre -->
                 <div class="form-floating mb-4">
                     <InputText @bind-Value="contacto.nombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" />
                     <label for="nombre" style="font-size: 1rem;">Nombre</label>
                     <ValidationMessage For="@(() => contacto.nombre)" class="text-danger" />
                 </div>
-
+                <!-- Whatsapp -->
                 <div class="form-floating mb-3">
                     <InputText @bind-Value="contacto.whatsapp" class="form-control" placeholder="Número de WhatsApp" style="font-size: 1.1rem;" />
                     <label for="whatsapp" style="font-size: 1rem;">WhatsApp</label>
@@ -87,7 +86,7 @@
 
                 <hr />
                 <h4>Mensaje</h4>
-
+                <!-- Asunto -->
                 <div class="form-floating mb-3">
                     <InputText @bind-Value="contacto.asunto" class="form-control" placeholder="Asunto" style="font-size: 1.1rem;" />
                     <label for="asunto" style="font-size: 1rem;">Asunto</label>

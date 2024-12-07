@@ -17,7 +17,6 @@
                 Detalle de reseña
             </div>
             <div>
-                <!-- Interpolación de las variables correctamente -->
                 <h4 style="font-size: 1.1rem;">Nombre: <span>@review.usuarioNombre</span></h4>
                 <p>
                     <span style="font-size: 1.1rem;">Rating: </span>@review.ratingUso
@@ -67,13 +66,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Aquí se obtiene el objeto review usando el servicio
         review = await reviewService.Buscar(reviewId);
     }
 
     public void Volver()
     {
-        // Redirigir a la página principal de reseñas
         navigationManager.NavigateTo("/Review/Index");
     }
 }

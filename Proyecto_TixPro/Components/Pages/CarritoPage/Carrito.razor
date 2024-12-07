@@ -43,17 +43,17 @@
 
     .payment-container {
         display: flex;
-        align-items: center; /* Centra verticalmente el texto e imágenes */
-        gap: 600px; /* Espaciado entre el texto y las imágenes */
+        align-items: center; 
+        gap: 600px; 
     }
 
     .payment-images {
         display: flex;
-        gap: 10px; /* Espaciado entre las imágenes */
+        gap: 10px; 
     }
 
     .payment-logo {
-        height: 30px; /* Ajusta la altura según el diseño */
+        height: 30px; 
         width: auto;
     }
 
@@ -138,8 +138,7 @@
                     
              </div>            
                 <!-- Contenedor Derecho: Carrito de Compras -->
-                <div class="right-container col-md-6 mx-auto d-flex flex-column justify-content-center align-items-center">
-                    <!-- Fila (row) para contener la imagen y el contenido de texto -->
+                <div class="right-container col-md-6 mx-auto d-flex flex-column justify-content-center align-items-center">             
                     <div class="row align-items-center w-100">
                         <!-- Columna para la imagen -->
                         <div class="col-md-6 d-flex justify-content-center">
@@ -212,7 +211,7 @@
     public decimal cargo = 10;
     public decimal montoTemporal;
 
-    private string? ErrorMessage { get; set; } // Mensaje de error dinámico
+    private string? ErrorMessage { get; set; } 
 
     protected override async Task OnInitializedAsync()
     {
@@ -229,12 +228,12 @@
 
     private bool ValidarDatos()
     {
-        ErrorMessage = null; // Reiniciar el mensaje de error
+        ErrorMessage = null; 
 
-        // Validar WhatsApp
+      
         if (string.IsNullOrWhiteSpace(usuario.whatsapp))
         {
-            return false; // Campo vacío, no mostrar mensaje de error
+            return false; 
         }
 
         if (usuario.whatsapp.Length != 10 || !usuario.whatsapp.All(char.IsDigit))
@@ -242,33 +241,30 @@
             ErrorMessage = "El número de WhatsApp no es valido. Formato sin (-)";
             return false;
         }
-
-
-        // Validar Número de Tarjeta
+      
         if (string.IsNullOrWhiteSpace(tarjeta.numeroTarjeta) || tarjeta.numeroTarjeta.Length < 13 || tarjeta.numeroTarjeta.Length > 18 || !tarjeta.numeroTarjeta.All(char.IsDigit))
         {
             ErrorMessage = "El número de tarjeta no es valido";
             return false;
         }
 
-        // Validar Código de Seguridad (CVV)
         if (string.IsNullOrWhiteSpace(tarjeta.codigoSeguridad) || tarjeta.codigoSeguridad.Length < 3 || tarjeta.codigoSeguridad.Length > 4 || !tarjeta.codigoSeguridad.All(char.IsDigit))
         {
             ErrorMessage = "El código de seguridad (CVV) no es valido";
             return false;
         }
 
-        return true; // Todos los datos son válidos
+        return true; 
     }
 
     public async Task Guardar()
     {
         try
         {
-            // Validar los datos antes de proceder
+            
             if (!ValidarDatos())
             {
-                return; // No continuar si los datos son inválidos
+                return; 
             }
 
             var tarjetaGuardada = await tarjetaService.Guardar(tarjeta);
