@@ -4,6 +4,7 @@
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles = "Admin")]
+
 <PageTitle>TixPro - Editar Evento</PageTitle>
 
 <style>
@@ -104,8 +105,6 @@
     <div class="card">
         <section>
             <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Editar Evento</h1>
-
-            <!-- Formulario con un FormName único -->
             <EditForm Model="evento" OnValidSubmit="Guardar" FormName="eventoForm">
                 <DataAnnotationsValidator />
 

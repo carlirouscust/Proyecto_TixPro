@@ -8,7 +8,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Detalle de Reseña</title>
+        <title>TixPro - Detalle de Reseña</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     </head>
     <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
@@ -17,7 +17,6 @@
                 Detalle de reseña
             </div>
             <div>
-                <!-- Interpolación de las variables correctamente -->
                 <h4 style="font-size: 1.1rem;">Nombre: <span>@review.usuarioNombre</span></h4>
                 <p>
                     <span style="font-size: 1.1rem;">Rating: </span>@review.ratingUso
@@ -67,13 +66,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Aquí se obtiene el objeto review usando el servicio
         review = await reviewService.Buscar(reviewId);
     }
 
     public void Volver()
     {
-        // Redirigir a la página principal de reseñas
         navigationManager.NavigateTo("/Review/Index");
     }
 }
