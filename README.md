@@ -20,12 +20,12 @@ Colaboración: Estamos desarrollando este proyecto como parte de un trabajo fina
    
 ## Los Roles
 Administrador
-Email: Admin@gmail.com
-Password: Admin-123
+  Email: Admin@gmail.com
+  Password: Admin-123
 
 Usuario
-Email: User@gmail.com
-Password: User-123
+  Email: User@gmail.com
+  Password: User-123
 
 ## Link de azure 
 <span style="color:red">Ojo: El proyecto funciona un poco lento debido a la complejidad del mismo y las limitaciones de azure gratis.</span>
