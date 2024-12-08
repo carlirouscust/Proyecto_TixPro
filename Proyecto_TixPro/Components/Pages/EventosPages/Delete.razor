@@ -6,9 +6,10 @@
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles = "Admin")]
 
+<PageTitle>TixPro - Delete Evento</PageTitle>
+
 <EditForm Model="evento">
     <style>
-        /* Estilo común para los botones */
         .btn-custom {
             border: none;
             padding: 1rem 1.5rem;
@@ -22,36 +23,34 @@
             justify-content: center;
         }
 
-        /* Estilo para el botón Eliminar (rojo) */
         .btn-danger {
-            background-color: red; /* Color rojo */
+            background-color: red; 
         }
 
         .btn-danger:hover {
-            background-color: darkred; /* Color más oscuro cuando pasa el mouse */
+            background-color: darkred; 
             transform: translateY(-2px);
         }
-        /* Alineación de botones uno al lado del otro */
+
         .btn-group {
             display: flex;
-            gap: 1rem; /* Espacio entre los botones */
+            gap: 1rem; 
         }
-        /* Estilo para el botón Volver (negro) */
+
         .btn-black {
-            background-color: black; /* Color negro */
+            background-color: black; 
         }
 
         .btn-black:hover {
-            background-color: #1e40af; /* Color más oscuro cuando pasa el mouse */
+            background-color: #1e40af; 
             transform: translateY(-2px);
         }
 
-        /* Iconos en los botones */
         .bi {
             margin-right: 0.5rem;
         }
-
     </style>
+
     <section class="py-5 ">
         <div class="container px-4 px-lg-5 mt-5 shadow rounded-pill">
             <div class="row align-items-center">
@@ -87,6 +86,7 @@
         </div>
     </section>
 </EditForm>
+
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
     <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>

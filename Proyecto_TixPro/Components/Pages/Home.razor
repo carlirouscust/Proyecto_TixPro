@@ -3,9 +3,12 @@
 @inject EventosService eventosService
 @inject CarruselService carruselService
 @inject NavigationManager navigationManager
+@inject IJSRuntime JSRuntime
+
 @rendermode InteractiveServer
 
 <PageTitle>TixPro</PageTitle>
+
 <EditForm Model="ListaEvento">
     <div class="d-flex justify-content-center align-items-center">
         <header class="bg-transparent py-5" style="width: 80%; height: auto; margin: 0; padding: 0; border-radius: 20px; overflow: hidden; padding-left: 50px; padding-right: 50px;">
@@ -174,20 +177,8 @@
         </div>
     </section>
 
-
-    <script type="text/javascript">
-        (function (d, t) {
-            var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-            v.onload = function () {
-                window.voiceflow.chat.load({
-                    verify: { projectID: '674be8b5da1cb2ab8ae80293' },
-                    url: 'https://general-runtime.voiceflow.com',
-                    versionID: 'production'
-                });
-            }
-            v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-        })(document, 'script');
-    </script>
+    <!-- Contenedor del chatbot Voiceflow -->
+    <div id="voiceflow-widget"></div>
 
     <div class="card-footer text-start">
         <p>Total de Evento: @ListaEvento.Count</p>
@@ -212,6 +203,28 @@
     private string filtro = "Id";
     public DateTime? Desde { get; set; }
     public DateTime? Hasta { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("eval", @"
+                (function (d, t) {
+                    var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                    v.onload = function () {
+                        window.voiceflow.chat.load({
+                            verify: { projectID: '674be8b5da1cb2ab8ae80293' },
+                            url: 'https://general-runtime.voiceflow.com',
+                            versionID: 'production'
+                        });
+                    };
+                    v.src = 'https://cdn.voiceflow.com/widget/bundle.mjs'; 
+                    v.type = 'text/javascript'; 
+                    s.parentNode.insertBefore(v, s);
+                })(document, 'script');
+            ");
+        }
+    }
 
     public void Resenas()
     {

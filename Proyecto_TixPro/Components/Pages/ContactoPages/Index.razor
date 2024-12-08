@@ -1,13 +1,15 @@
 ﻿@page "/Contacto/Index"
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 @inject ContactoService contactoService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
 
 
 <PageTitle>TixPro - Consulta de Contacto</PageTitle>
 
 <EditForm Model="ListaContacto" class="border shadow-lg p-3 rounded">
-    <!-- Encabezado -->
     <div class="card-header bg-black text-white text-center py-2 rounded-3">
         <h3 style="font-weight: bold;" class="mb-0 font-weight-bold">Consulta de Contacto</h3>
     </div>
@@ -20,14 +22,13 @@
                             <!-- Icono de Usuario -->
                             <div class="col-md-3 text-center text-md-end mb-3 mb-md-0">
                                 <label class="d-inline-block fs-4 fw-bold text-black">
-                                    Buscar Usuario 
+                                    Buscar Contacto 
                                 </label>
                             </div>
                             <!-- Filtro -->
                             <div class="col-md-4 d-flex align-items-center mb-3 mb-md-0">
                                 <label for="Filtro" class="form-label fw-bold me-3">Filtrar:</label>
                                 <select @bind="filtro" class="form-select form-select-lg">
-                                    <option value="id">ID</option>
                                     <option value="nombre">Nombre</option>
                                     <option value="whatsapp">WhatsApp</option>
                                     <option value="asunto">Asunto</option>
@@ -39,6 +40,15 @@
                                     <input @bind="valorFiltro" class="form-control" placeholder="Buscar..." />
                                     <button @onclick="Buscar" class="btn btn-primary" type="button">
                                         <span class="bi bi-search"></span> Buscar
+                                    </button>
+                                </div>
+                                <!-- Restablecer -->
+                                <div class="col-md-2 d-flex align-items-center  ms-3">
+                                    <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" @onclick="Restablecer">
+                                        <span class="bi bi-arrow-counterclockwise"></span>
+                                    </button>
+                                    <button class="btn btn-custom btn-black d-flex align-items-center bi bi-box-arrow-left  ms-5" @onclick="Volver">
+                                        Volver
                                     </button>
                                 </div>
                             </div>
@@ -97,13 +107,46 @@
         color: black !important;
     }
 
+
+    .btn-custom {
+        border: none;
+        padding: 1rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: white;
+        transition: background-color 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-black {
+        background-color: black;
+    }
+
+        .btn-black:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+        }
+
+    .bi {
+        margin-right: 0.5rem;
+    }
+
 </style>
+
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
     <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
     <div style="text-align: center;">
         <a href="/About/Index">
-            <button class="btn-custom bi bi-github"> Quienes somos </button>
+            <button class="btn-custom2 bi bi-github"> Quienes somos </button>
         </a>
     </div>
 </footer>
@@ -139,5 +182,17 @@
         {
             ListaContacto = await contactoService.Listar(u => true);
         }
+    }
+
+    public void Volver()
+    {
+        navigationManager.NavigateTo("/");
+    }
+
+    private async Task Restablecer()
+    {
+        ListaContacto = await contactoService.Listar(t => t.contactoId > 0);
+        filtro = string.Empty;
+        valorFiltro = string.Empty;
     }
 }

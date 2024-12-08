@@ -71,8 +71,6 @@
     <div class="card">
         <section>
             <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Evento</h1>
-
-            <!-- Formulario con un FormName único -->
             <EditForm Model="evento" OnValidSubmit="Guardar" FormName="eventoForm">
                 <DataAnnotationsValidator />
 
@@ -112,7 +110,6 @@
                     <label for="imagen" style="font-size: 1rem;">Imagen del Evento</label>
                     <ValidationMessage For="@(() => evento.imagen)" class="text-danger" />
                 </div>
-
 
                 <div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Registrar Evento</button>
@@ -158,9 +155,6 @@
 
     public async Task Guardar()
     {
-        Console.WriteLine("Se llamó al método Guardar");
-        Console.WriteLine($"Nombre: {evento.nombre}, Fecha: {evento.fecha}, Lugar: {evento.lugar}, Precio: {evento.precio}, Imagen: {evento.imagen}");
-
         var resultado = await EventosService.Guardar(evento);
         if (resultado)
         {

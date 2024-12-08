@@ -2,52 +2,57 @@
 @inject NavigationManager navigationManager
 @inject ReviewService reviewService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
+
+<PageTitle>TixPro - Delete Review</PageTitle>
 
 <EditForm Model="review">
     <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Detalle de review</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    </head>
-    <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
-        <div style="background-color: #f8f9fa; border-radius: 20px; padding: 30px; width: 100%; max-width: 600px; margin: 50px auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-            <div style="text-align: center; margin-bottom: 20px; font-size: 1.5rem; font-weight: bold; color: #2c3e50;">
-                Detalle de reseña
-            </div>
-            <div>
-                <!-- Interpolación de las variables correctamente -->
-                <h4 style="font-size: 1.1rem;">Nombre: <span>@review.usuarioNombre</span></h4>
-                <p>
-                    <span style="font-size: 1.1rem;">Rating: </span>@review.ratingUso
-                </p>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Detalle de review</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        </head>
 
-                @if (review.recomendarias)
-                {
-                    <p style="font-size: 1.1rem;">Recomendarías: <span>Sí</span></p>
-                }
-                else
-                {
-                    <p style="font-size: 1.1rem;">Recomendarías: <span>No</span></p>
-                }
+        <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
+            <div style="background-color: #f8f9fa; border-radius: 20px; padding: 30px; width: 100%; max-width: 600px; margin: 50px auto; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+                <div style="text-align: center; margin-bottom: 20px; font-size: 1.5rem; font-weight: bold; color: red;">
+                        ¿Desea eliminar esta reseña?
+                </div>
+                <div>
+                    <h4 style="font-size: 1.1rem;">Nombre: <span>@review.usuarioNombre</span></h4>
+                    <p>
+                        <span style="font-size: 1.1rem;">Rating: </span>@review.ratingUso
+                    </p>
 
-                <p style="font-size: 1.1rem;">Cosas a mejorar: <span style="font-style: italic;">@review.cosasMejorar</span></p>
+                    @if (review.recomendarias)
+                    {
+                        <p style="font-size: 1.1rem;">Recomendarías: <span>Sí</span></p>
+                    }
+                    else
+                    {
+                        <p style="font-size: 1.1rem;">Recomendarías: <span>No</span></p>
+                    }
 
-                <p style="font-size: 1.1rem;">Fecha de Reseña: <span style="font-style: italic;">@review.fechaReview.ToString("dd/MM/yyyy")</span></p>
+                    <p style="font-size: 1.1rem;">Cosas a mejorar: <span style="font-style: italic;">@review.cosasMejorar</span></p>
 
-                <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
-                    <button style="background-color: red; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-weight: bold; cursor: pointer;" @onclick="Eliminar">
-                        <i class="bi bi-trash"></i> Eliminar
-                    </button>
-                    <button style="background-color: black; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-weight: bold; cursor: pointer;" @onclick="Volver">
-                        <i class="bi bi-arrow-left-circle"></i> Volver
-                    </button>
+                    <p style="font-size: 1.1rem;">Fecha de Reseña: <span style="font-style: italic;">@review.fechaReview.ToString("dd/MM/yyyy")</span></p>
+
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
+                        <button style="background-color: red; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-weight: bold; cursor: pointer;" @onclick="Eliminar">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </button>
+                        <button style="background-color: black; color: white; border: none; border-radius: 20px; padding: 10px 20px; font-weight: bold; cursor: pointer;" @onclick="Volver">
+                            <i class="bi bi-arrow-left-circle"></i> Volver
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </body>
-</html>
+        </body>
+    </html>
 </EditForm>
 
 <div style="height: 280px;"></div>
@@ -83,10 +88,6 @@
         if (eliminado)
         {
             navigationManager.NavigateTo("/Review/Index");
-        }
-        else
-        {
-            Console.WriteLine("Error al eliminar el usuario.");
         }
     }
 }

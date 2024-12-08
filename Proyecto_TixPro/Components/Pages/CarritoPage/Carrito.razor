@@ -1,13 +1,13 @@
 ﻿@page "/Ticket/Carrito/{eventoId:int}&{cantidad:int}&{monto:decimal}"
-
 @using Microsoft.AspNetCore.Authorization
 
 @inject EventosService eventosService
 @inject UsuariosService usuarioService
 @inject TicketService ticketSercive
 @inject TarjetaService tarjetaService
-@rendermode InteractiveServer
 @inject NavigationManager navigationManager
+
+@rendermode InteractiveServer
 
 @attribute [Authorize]
 
@@ -26,10 +26,10 @@
         flex-wrap: nowrap; 
     }
 
-        .tarjetas-container .form-floating {
-            flex: 1; 
-            min-width: 0; 
-        }
+    .tarjetas-container .form-floating {
+        flex: 1; 
+        min-width: 0; 
+    }
 
     .tight-hr {
         margin-top: 0.3rem; 
@@ -43,24 +43,19 @@
 
     .payment-container {
         display: flex;
-        align-items: center; /* Centra verticalmente el texto e imágenes */
-        gap: 600px; /* Espaciado entre el texto y las imágenes */
+        align-items: center; 
+        gap: 600px; 
     }
 
     .payment-images {
         display: flex;
-        gap: 10px; /* Espaciado entre las imágenes */
+        gap: 10px; 
     }
 
     .payment-logo {
-        height: 30px; /* Ajusta la altura según el diseño */
+        height: 30px; 
         width: auto;
     }
-
-   
-
-
-
 </style>
 
 <EditForm Model="usuario"  >
@@ -68,32 +63,31 @@
 
     <div class="main-container">
         <div class="row">
-        <!-- Contenedor Izquierdo: Detalles del Evento -->
-                <div class="left-container col-md-6">
-                    <h4 class="fw-bold">Datos de contacto</h4>
+            <!-- Contenedor Izquierdo: Detalles del Evento -->
+            <div class="left-container col-md-6">
+                <h4 class="fw-bold">Datos de contacto</h4>
 
-                    <div class="form-floating mb-2">                        
-                        <InputText @bind-Value="@usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
-                        <label for="Nombre" class="form-label">Nombre completo:</label>
-                        <ValidationMessage For="@(() => usuario.nombre)" />
-                    </div>
+                <div class="form-floating mb-2">                        
+                    <InputText @bind-Value="@usuario.nombre" class="form-control col-md-6" placeholder="Nombre completo:" style="font-size: 1.1rem;" />
+                    <label for="Nombre" class="form-label">Nombre completo:</label>
+                    <ValidationMessage For="@(() => usuario.nombre)" />
+                </div>
 
-                    <div class="form-floating mb-2">                        
-                        <InputText @bind-Value="@usuario.whatsapp" class="form-control col-md-6" placeholder="Whatsapp:" style="font-size: 1.1rem;" />
-                        <label for="Whatsapp" class="form-label">Whatsapp:</label>
-                        <ValidationMessage For="@(() => usuario.whatsapp)" />
-                    </div>
-                    <!--Informacion de pago-->
+                <div class="form-floating mb-2">                        
+                    <InputText @bind-Value="@usuario.whatsapp" class="form-control col-md-6" placeholder="Whatsapp:" style="font-size: 1.1rem;" />
+                    <label for="Whatsapp" class="form-label">Whatsapp:</label>
+                    <ValidationMessage For="@(() => usuario.whatsapp)" />
+                </div>
+                <!--Informacion de pago-->
                 <h4 class ="fw-bold"> Información de pago</h4>
                 <div class="card border-success mb-4">
-                        <div class="payment-container card-header">
-                             <h5 class="mb-0">Pago seguro con Tarjeta</h5>
-
-                              <div class="payment-images">
-                                <img src="https://i.pinimg.com/736x/2d/8f/2d/2d8f2d0c852509c079562c441baeec2d.jpg" alt="Visa" style="height: 40px;" />
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/450px-MasterCard_Logo.svg.png" alt="Mastercard" style="height: 30px;" />
-                             </div>                                                         
-                        </div>
+                    <div class="payment-container card-header">
+                        <h5 class="mb-0">Pago seguro con Tarjeta</h5>
+                        <div class="payment-images">
+                            <img src="https://i.pinimg.com/736x/2d/8f/2d/2d8f2d0c852509c079562c441baeec2d.jpg" alt="Visa" style="height: 40px;" />
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/MasterCard_Logo.svg/450px-MasterCard_Logo.svg.png" alt="Mastercard" style="height: 30px;" />
+                        </div>                                                         
+                    </div>
 
                     <div class="card-body mt-3">
                         <div class="form-floating mb-2">
@@ -122,10 +116,12 @@
                                 <ValidationMessage For="@(() => tarjeta.codigoSeguridad)" />
                             </div>                           
                         </div>
+
                         @if (!string.IsNullOrWhiteSpace(ErrorMessage))
                         {
                             <div class="alert alert-danger mt-3">@ErrorMessage</div>
                         }
+
                     </div>
                 </div>
 
@@ -136,34 +132,33 @@
 
 
                     
-             </div>            
-                <!-- Contenedor Derecho: Carrito de Compras -->
-                <div class="right-container col-md-6 mx-auto d-flex flex-column justify-content-center align-items-center">
-                    <!-- Fila (row) para contener la imagen y el contenido de texto -->
-                    <div class="row align-items-center w-100">
-                        <!-- Columna para la imagen -->
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <img class="card-img" src="@evento.imagen" alt="Imagen del Evento" style="height: 300px; width: auto;">
-                        </div>
-                        <!-- Columna para el contenido de texto -->
-                        <div class="col-md-6">
-                            <div class="card-body">
-                                <h5 class="fw-bold">@evento.nombre</h5>
+            </div>            
+            <!-- Contenedor Derecho: Carrito de Compras -->
+            <div class="right-container col-md-6 mx-auto d-flex flex-column justify-content-center align-items-center">             
+                <div class="row align-items-center w-100">
+                    <!-- Columna para la imagen -->
+                    <div class="col-md-6 d-flex justify-content-center">
+                        <img class="card-img" src="@evento.imagen" alt="Imagen del Evento" style="height: 300px; width: auto;">
+                    </div>
+                    <!-- Columna para el contenido de texto -->
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h5 class="fw-bold">@evento.nombre</h5>
                             <p><i class="bi bi-geo-alt"></i> @evento.lugar</p>
-                            <p class="mb-0 bi bi-calendar4-week"> @evento.fecha.ToString("dd/MM/yyyy")</p>
+                            <p class="mb-0 bi bi-calendar4-week"> @evento.fecha.ToString(" dd/MM/yyyy")</p>
                             <p>
                                 <i class="bi bi-alarm"></i>
                                 @(DateTime.TryParse(evento.hora, out var horaEvento)
                                     ? $"{horaEvento:hh:mm tt}"
                                     : "Hora inválida")
                             </p>
-                                <hr class="tight-hr" />
-                                <p class="text-muted">
+                            <hr class="tight-hr" />
+                            <p class="text-muted">
                                 <span class="text-dark fw-bold">Precio:</span> RD$ @evento.precio
                             </p>
-                                <p class="text-muted">
+                            <p class="text-muted">
                                 <span class="text-dark fw-bold">Cantidad:</span> @cantidad
-                                </p>                       
+                            </p>                       
                             <hr />
                             <p class="text-muted">
                                 <span class="text-dark fw-bold">Sub Total:</span> RD$ @monto
@@ -177,22 +172,24 @@
                           
                             <hr />
                         </div>
-                        </div>
                     </div>
                 </div>
+            </div>
         </div>
+
         <div style="height: 190px;"></div>
+
     </div>
 
-<!-- Footer-->
-<footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
-    <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
-        <div style="text-align: center;">
-            <a href="/About/Index">
-                <button class="btn-custom bi bi-github"> Quienes somos </button>
-            </a>
-        </div>
-</footer>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
+        <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
+            <div style="text-align: center;">
+                <a href="/About/Index">
+                    <button class="btn-custom bi bi-github"> Quienes somos </button>
+                </a>
+            </div>
+    </footer>
 </EditForm>
 
 @code {
@@ -210,17 +207,14 @@
     [Parameter]
     public decimal monto { get; set; }
     public decimal cargo = 10;
-    public decimal montoTemporal;
 
-    private string? ErrorMessage { get; set; } // Mensaje de error dinámico
+    private string? ErrorMessage { get; set; } 
 
     protected override async Task OnInitializedAsync()
     {
         evento = await eventosService.Buscar(eventoId);
         CalcularTotal();
     }
-
-
 
     private void CalcularTotal()
     {   
@@ -229,12 +223,12 @@
 
     private bool ValidarDatos()
     {
-        ErrorMessage = null; // Reiniciar el mensaje de error
+        ErrorMessage = null; 
 
-        // Validar WhatsApp
+      
         if (string.IsNullOrWhiteSpace(usuario.whatsapp))
         {
-            return false; // Campo vacío, no mostrar mensaje de error
+            return false; 
         }
 
         if (usuario.whatsapp.Length != 10 || !usuario.whatsapp.All(char.IsDigit))
@@ -242,33 +236,30 @@
             ErrorMessage = "El número de WhatsApp no es valido. Formato sin (-)";
             return false;
         }
-
-
-        // Validar Número de Tarjeta
+      
         if (string.IsNullOrWhiteSpace(tarjeta.numeroTarjeta) || tarjeta.numeroTarjeta.Length < 13 || tarjeta.numeroTarjeta.Length > 18 || !tarjeta.numeroTarjeta.All(char.IsDigit))
         {
             ErrorMessage = "El número de tarjeta no es valido";
             return false;
         }
 
-        // Validar Código de Seguridad (CVV)
         if (string.IsNullOrWhiteSpace(tarjeta.codigoSeguridad) || tarjeta.codigoSeguridad.Length < 3 || tarjeta.codigoSeguridad.Length > 4 || !tarjeta.codigoSeguridad.All(char.IsDigit))
         {
             ErrorMessage = "El código de seguridad (CVV) no es valido";
             return false;
         }
 
-        return true; // Todos los datos son válidos
+        return true; 
     }
 
     public async Task Guardar()
     {
         try
         {
-            // Validar los datos antes de proceder
+            
             if (!ValidarDatos())
             {
-                return; // No continuar si los datos son inválidos
+                return; 
             }
 
             var tarjetaGuardada = await tarjetaService.Guardar(tarjeta);

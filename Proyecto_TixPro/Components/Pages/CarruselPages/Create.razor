@@ -1,8 +1,10 @@
 ﻿@page "/Carrusel/Create"
-@using Microsoft.AspNetCore.Authorization
 @inject NavigationManager NavigationManager
 @inject CarruselService carruselService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize (Roles = "Admin")]
 
 <PageTitle>TixPro - Crear Carrusel</PageTitle>
 
@@ -54,9 +56,6 @@
             text-decoration: underline;
         }
 
-
-
-
     .preview-image {
         max-width: 100%;
         max-height: 300px;
@@ -69,7 +68,6 @@
     <div class="card">
         <section>
             <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Registrar Carrusel</h1>
-
             <!-- Formulario con un FormName único -->
             <EditForm Model="carrusel"  FormName="carruselForm">
                 <DataAnnotationsValidator />
@@ -99,11 +97,10 @@
                     <label for="imagen5" style="font-size: 1rem;">Imagen 5</label>
                     <ValidationMessage For="@(() => carrusel.imagen5)" class="text-danger" />
                 </div>
-                @if (!string.IsNullOrWhiteSpace(errorMessage))
-                {
-                    <div class="alert alert-danger mt-3">@errorMessage</div>
-                }
-
+                    @if (!string.IsNullOrWhiteSpace(errorMessage))
+                    {
+                        <div class="alert alert-danger mt-3">@errorMessage</div>
+                    }
                 <div>
                     <button type="button"  @onclick="Guardar" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Registrar Carrusel</button>
                 </div>

@@ -1,8 +1,11 @@
 ﻿@page "/Delete/Confirmar/{eventoId:int}"
-@using Microsoft.AspNetCore.Authorization
 @inject NavigationManager navigationManager
 @inject TarjetaService tarjetaService
 @inject EventosService eventosService
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
 
 <style>
     .login-container {
@@ -83,13 +86,13 @@
         }
 
     .btn-custom {
-        font-size: 1.5rem; /* Ajusta el tamaño del texto */
-        padding: 1rem 2rem; /* Ajusta el espacio interno */
+        font-size: 1.5rem; 
+        padding: 1rem 2rem; 
     }
-
 </style>
 
 <PageTitle>TixPro - Eliminar Evento</PageTitle>
+
 <div class="login-container">
     <div class="card rouded-pill shadow">
         @if (evento != null)

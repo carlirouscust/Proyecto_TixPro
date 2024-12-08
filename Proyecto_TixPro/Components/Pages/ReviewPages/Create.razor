@@ -1,4 +1,4 @@
-﻿@page "/Review/Create"
+﻿@page "/Review/Create/{nombreUser}"
 @inject NavigationManager navigationManager
 @inject ReviewService reviewService
 @rendermode InteractiveServer
@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.Authorization
 
 <PageTitle>TixPro - Reseñas</PageTitle>
+
 <style>
     .login-container {
         display: flex;
@@ -73,13 +74,13 @@
                 <!--Nombre-->
                 <h4 style="font-size: 1.5rem; color: #333;">Datos de Reseña</h4>
                 <div class="form-floating mb-4">
-                    <InputText @bind-Value="review.usuarioNombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" />
-                    <label for="nombre" style="font-size: 1rem;">Nombre</label>
+                    <InputText @bind-Value="review.usuarioNombre" class="form-control" placeholder="Nombre del contacto" style="font-size: 1.1rem;" disabled />
+                    <label for="nombre" style="font-size: 1rem;">Nombre</label>  
                     <ValidationMessage For="@(() => review.usuarioNombre)" class="text-danger" />
                 </div>
 
                 <!--Rating-->
-                <h4>Que tan facil fue usar TixPro?</h4>
+                <h4>¿Que tan facil fue usar TixPro?</h4>
                 <div class="form-floating mb-3">
                     <label for="customRange2" style="font-size: 1rem;"></label>
                     <div class="d-flex justify-content-between align-items-center">
@@ -104,7 +105,7 @@
                 
 
                 <!-- Comentario (cuadro más grande) -->
-                <h4>Que cosas deberiamos mejorar?</h4>
+                <h4>¿Que cosas deberiamos mejorar?</h4>
                 <div class="form-floating mb-4">
                     <InputTextArea @bind-Value="review.cosasMejorar" class="form-control" rows="5" placeholder="Comentario" style="font-size: 1.1rem;  height: 150px;" />
                     <label for="comentario" style="font-size: 1rem;">Comentario</label>
@@ -114,13 +115,6 @@
                 <div>
                     <button type="submit" class="w-100 btn btn-lg btn-primary" style="font-size: 1.1rem;">Enviar</button>
                 </div>
-                <AuthorizeView Roles="Admin">
-                    <ChildContent Context="adminContext">
-                        <div style="margin-top: 20px;">
-                            <a href="/Review/Index" class="w-100 btn btn-lg btn-success rounded-pill" style="font-size: 1.1rem;">Ver Reseñas</a>
-                        </div>
-                    </ChildContent>
-                </AuthorizeView>
 
             </EditForm>
             @if (isSuccessMessageVisible)
@@ -134,13 +128,20 @@
 </div>
 
 @code {
+    [Parameter]
+    public string? nombreUser { get; set; }
     public Review review { get; set; } = new Review();
     private bool isSuccessMessageVisible { get; set; } = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        review.usuarioNombre = nombreUser;
+    }
 
     private async Task HandleSubmit()
     {
         isSuccessMessageVisible = true;
+
         var resultado = await reviewService.Guardar(review);
         if (resultado)
         {

@@ -1,189 +1,186 @@
 ﻿@page "/About/Index"
 
-<!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TixPro - About Us</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TixPro - About Us</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        .rounded-pill-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px; /* Espacio entre los rounded-pill */
-            margin-bottom: 40px; /* Agregar espacio debajo de los perfiles */
-        }
-        .rounded-pill-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px; /* Espacio entre los rounded-pill */
-        }
-
-        /* Estilo para los contenedores rounded-pill */
-        .profile-rounded-pill {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f8f9fa;
-            border-radius: 20px; /* Menos redondeado para que sea más cuadrado */
-            padding: 20px;
-            width: 450px; /* Ancho fijo */
-            height: 450px; /* Alto fijo para hacer el diseño más cuadrado */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-            .profile-rounded-pill img {
-                border-radius: 50%;
-                width: 200px;
-                height: 200px;
-                margin-bottom: 15px;
-            }
-
-            .profile-rounded-pill h5 {
-                margin-bottom: 50px;
-            }
-
-        .social-icons {
-            display: flex;
-            gap: 10px;
-        }
-
-            .social-icons a {
-                display: inline-block;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                background-color: #007bff;
+        <style>
+            .rounded-pill-container {
                 display: flex;
-                align-items: center;
                 justify-content: center;
-                color: white;
-                text-decoration: none;
-                font-size: 18px;
+                gap: 20px;
+                margin-bottom: 40px; 
+            }
+            .rounded-pill-container {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
             }
 
-                .social-icons a:hover {
-                    background-color: #0056b3;
+       
+            .profile-rounded-pill {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background-color: #f8f9fa;
+                border-radius: 20px; 
+                padding: 20px;
+                width: 450px; 
+                height: 450px; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+                .profile-rounded-pill img {
+                    border-radius: 50%;
+                    width: 200px;
+                    height: 200px;
+                    margin-bottom: 15px;
                 }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px; /* Opcional, para agregar espacio debajo del título */
-        }
+                .profile-rounded-pill h5 {
+                    margin-bottom: 50px;
+                }
 
-        /* Estilo para el botón que no se vea afectado */
-        .btn-custom {
-            border-radius: 50px; /* Mantiene el estilo de rounded-pill para el botón */
-        }
-
-        .about-para {
-            margin-top: 40px;
-            text-align: center; /* Centra el contenido */
-            font-weight: bold; /* Hace el texto en negritas */
-            margin: 0 auto; /* Centra el bloque si tiene un ancho fijo */
-            padding: 20px; /* Agrega un poco de espacio alrededor del texto */
-        }
-
-            .about-para p {
-                margin-bottom: 20px;
+            .social-icons {
+                display: flex;
+                gap: 10px;
             }
 
-        .btn-custom {
-            border-radius: 50px;
-            background-color: black;
-            color: white;
-            border: none;
-            font-size: 16px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+                .social-icons a {
+                    display: inline-block;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background-color: #007bff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    text-decoration: none;
+                    font-size: 18px;
+                }
 
-            .btn-custom:hover {
-                background-color: #0056b3; /* Azul al pasar el mouse */
+                    .social-icons a:hover {
+                        background-color: #0056b3;
+                    }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 20px; 
             }
 
-            .btn-custom:active {
-                background-color: #003366; /* Azul más oscuro al hacer clic */
+        
+            .btn-custom {
+                border-radius: 50px; 
             }
 
-    </style>
+            .about-para {
+                margin-top: 40px;
+                text-align: center; 
+                font-weight: bold; 
+                margin: 0 auto; 
+                padding: 20px; 
+            }
 
-</head>
-<body>
+                .about-para p {
+                    margin-bottom: 20px;
+                }
 
-    <div class="container mt-5">
-        <h1>Sobre Nosotros</h1>
-        <div class="rounded-pill-container">
-            <!-- Perfil Contenedor con estilo específico -->
-            <div class="profile-rounded-pill">
-                <img src="https://avatars.githubusercontent.com/u/136211841?v=4" alt="Imagen de Perfil">
-                <h2>Carlos Custodio</h2>
-                <hr style="width: 50%; margin: 10px auto; border: 1px solid #ccc;" />
-                <h5>Estudiante de Ing Sistema</h5>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/Carlirouscust" target="_blank" title="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://www.instagram.com/carlitoscustodio/" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://github.com/carlirouscust" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+            .btn-custom {
+                border-radius: 50px;
+                background-color: black;
+                color: white;
+                border: none;
+                font-size: 16px;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+
+                .btn-custom:hover {
+                    background-color: #0056b3; 
+                }
+
+                .btn-custom:active {
+                    background-color: #003366; 
+                }
+
+        </style>
+
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Sobre Nosotros</h1>
+            <div class="rounded-pill-container">
+                <!-- Perfil Contenedor con estilo específico -->
+                <div class="profile-rounded-pill">
+                    <img src="https://avatars.githubusercontent.com/u/136211841?v=4" alt="Imagen de Perfil">
+                    <h2>Carlos Custodio</h2>
+                    <hr style="width: 50%; margin: 10px auto; border: 1px solid #ccc;" />
+                    <h5>Estudiante de Ing Sistema</h5>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/Carlirouscust" target="_blank" title="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.instagram.com/carlitoscustodio/" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://github.com/carlirouscust" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+                    </div>
                 </div>
+
+                <!-- Segundo Rounded-Pill -->
+                <div class="profile-rounded-pill">
+                    <img src="https://avatars.githubusercontent.com/u/146694674?v=4" alt="Imagen de Usuario 2">
+                    <h2>Alma Bet. Rosa</h2>
+                    <hr style="width: 50%; margin: 10px auto; border: 1px solid #ccc;" />
+                    <h5>Estudiante de Ing Sistema</h5>
+                    <div class="social-icons">
+                    <a href="https://www.facebook.com/?locale=es_LA" title="Facebook" target="_blank"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.instagram.com/alma_ozoria/" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="https://github.com/AlmaOzoria" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-para">
+                <p>
+                    Somos dos estudiantes comprometidos trabajando en nuestro proyecto final de la materia de Aplicada 1. Hemos desarrollado este sitio web para ofrecer una
+                    experiencia sencilla y eficiente en la compra de tickets para eventos. Nuestro objetivo es combinar tecnología y diseño para crear una plataforma que conecte
+                    a las personas con experiencias inolvidables.
+                </p>
+                <p>
+                    Agradecemos tu apoyo y confianza mientras seguimos aprendiendo y creciendo en este emocionante viaje hacia el desarrollo de soluciones innovadoras.
+                </p>
             </div>
 
             <!-- Segundo Rounded-Pill -->
-            <div class="profile-rounded-pill">
-                <img src="https://avatars.githubusercontent.com/u/146694674?v=4" alt="Imagen de Usuario 2">
-                <h2>Alma Bet. Rosa</h2>
-                <hr style="width: 50%; margin: 10px auto; border: 1px solid #ccc;" />
-                <h5>Estudiante de Ing Sistema</h5>
-                <div class="social-icons">
-                    <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://www.instagram.com/alma_ozoria/" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://github.com/AlmaOzoria" target="_blank" title="GitHub"><i class="bi bi-github"></i></a>
-                </div>
+            <div style="text-align: center; padding: 20px;">
+                <h2>Nuestra Empresa</h2>
+                <a>
+                    <img src="images/ozcudistudios.png" alt="Logo" style="width: 450px; height: 350px; object-fit: cover;" />
+                </a>
+            
             </div>
         </div>
 
-        <div class="about-para">
+        <div class="about-para" style="text-align: center; max-width: 1000px; margin: 0 auto;">
             <p>
-                Somos dos estudiantes comprometidos trabajando en nuestro proyecto final de la materia de Aplicada 1. Hemos desarrollado este sitio web para ofrecer una
-                experiencia sencilla y eficiente en la compra de tickets para eventos. Nuestro objetivo es combinar tecnología y diseño para crear una plataforma que conecte
-                a las personas con experiencias inolvidables.
-            </p>
-            <p>
-                Agradecemos tu apoyo y confianza mientras seguimos aprendiendo y creciendo en este emocionante viaje hacia el desarrollo de soluciones innovadoras.
+                Ozcudi Studios es una empresa creada por dos estudiantes apasionados por la tecnología y el diseño. Con un enfoque fresco y dinámico, 
+                hemos desarrollado este sitio web para ofrecer una combinamos creatividad y técnica para crear productos que no solo cumplen con los estándares de calidad,
+                sino que también cuentan con un toque único que refleja la visión y valores de nuestros clientes.
             </p>
         </div>
 
-        <!-- Segundo Rounded-Pill -->
-        <div style="text-align: center; padding: 20px;">
-            <h2>Nuestra Empresa</h2>
-            <a>
-                <img src="images/ozcudistudios.png" alt="Logo" style="width: 450px; height: 350px; object-fit: cover;" />
-            </a>
-            
-        </div>
-    </div>
-
-    <div class="about-para" style="text-align: center; max-width: 1000px; margin: 0 auto;">
-        <p>
-            Ozcudi Studios es una empresa creada por dos estudiantes apasionados por la tecnología y el diseño. Con un enfoque fresco y dinámico, 
-            hemos desarrollado este sitio web para ofrecer una combinamos creatividad y técnica para crear productos que no solo cumplen con los estándares de calidad,
-            sino que también cuentan con un toque único que refleja la visión y valores de nuestros clientes.
-        </p>
-    </div>
-
-        <!-- Botón centrado -->
-        <div style="text-align: center;">
-            <a href="https://github.com/carlirouscust/Proyecto_TixPro.git" target="_blank">
-                <button class="btn-custom bi bi-github">Nuestro proyecto </button>
-            </a>
-        </div>
+            <!-- Botón centrado -->
+            <div style="text-align: center;">
+                <a href="https://github.com/carlirouscust/Proyecto_TixPro.git" target="_blank">
+                    <button class="btn-custom bi bi-github">Nuestro proyecto </button>
+                </a>
+            </div>
    
+        <!-- Agregar FontAwesome para los íconos de redes sociales -->
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
-    <!-- Agregar FontAwesome para los íconos de redes sociales -->
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
-</body>
+    </body>
 </html>

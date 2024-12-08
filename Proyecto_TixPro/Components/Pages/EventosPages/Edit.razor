@@ -3,7 +3,9 @@
 @inject EventosService eventosService
 @rendermode InteractiveServer
 @using Microsoft.AspNetCore.Authorization
+
 @attribute [Authorize(Roles = "Admin")]
+
 <PageTitle>TixPro - Editar Evento</PageTitle>
 
 <style>
@@ -104,8 +106,6 @@
     <div class="card">
         <section>
             <h1 class="text-center mb-5" style="font-size: 2rem; font-weight: bold; color: #333;">Editar Evento</h1>
-
-            <!-- Formulario con un FormName único -->
             <EditForm Model="evento" OnValidSubmit="Guardar" FormName="eventoForm">
                 <DataAnnotationsValidator />
 
@@ -160,6 +160,7 @@
         </section>
     </div>
 </div>
+
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
     <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
@@ -203,9 +204,6 @@
 
     public async Task Guardar()
     {
-        Console.WriteLine("Se llamó al método Guardar");
-        Console.WriteLine($"Nombre: {evento.nombre}, Fecha: {evento.fecha}, Lugar: {evento.lugar}, Precio: {evento.precio}, Imagen: {evento.imagen}");
-
         var resultado = await eventosService.Guardar(evento);
         if (resultado)
         {
@@ -218,9 +216,4 @@
         }
     }
 
-    public void Nuevo()
-    {
-        evento = new Evento();
-        Existe = false;
-    }
 }

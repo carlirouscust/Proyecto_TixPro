@@ -2,6 +2,9 @@
 @inject NavigationManager navigationManager
 @inject ReviewService reviewService
 @rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
 
 
 <PageTitle>TixPro - Consulta de Reseñas</PageTitle>
@@ -42,6 +45,9 @@
                                 <div class="col-md-2 d-flex align-items-center  ms-3">
                                     <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2" @onclick="Restablecer">
                                         <span class="bi bi-arrow-counterclockwise"></span>
+                                    </button>
+                                    <button class="btn btn-custom btn-black d-flex align-items-center bi bi-box-arrow-left  ms-5" @onclick="Volver">
+                                        Volver
                                     </button>
                                 </div>
                             </div>
@@ -117,6 +123,7 @@
     </div>
     <div style="height: 415px;"></div>
 </EditForm>
+
 <!-- Estilo personalizado -->
 <style>
     .table th, .table td {
@@ -124,11 +131,44 @@
     }
 
 
-    .table td.text-black {
-        color: black !important;
+        .table td.text-black {
+            color: black !important;
+        }
+
+    .btn-custom {
+        border: none;
+        padding: 1rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: white;
+        transition: background-color 0.3s, transform 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-black {
+        background-color: black;
+    }
+
+        .btn-black:hover {
+            background-color: #1e40af;
+            transform: translateY(-2px);
+        }
+
+    .bi {
+        margin-right: 0.5rem;
     }
 
 </style>
+
+
 <!-- Footer-->
 <footer class="py-5 bg-dark" style="border-top-left-radius: 20px; border-top-right-radius: 20px;">
     <div class="container"><p class="m-0 text-center text-white">Copyright  &copy; Ozcudi-Studios </p></div>
@@ -187,5 +227,10 @@
         valorFiltro = string.Empty;
         Desde = null;
         Hasta = null;
+    }
+
+    public void Volver()
+    {
+        navigationManager.NavigateTo("/Account/Manage");
     }
 }
