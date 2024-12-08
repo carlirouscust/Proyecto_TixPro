@@ -31,7 +31,7 @@ Usuario
 ## Link de azure 
 <span style="color:red">Ojo: El proyecto funciona un poco lento debido a la complejidad del mismo y las limitaciones de azure gratis.</span>
 
-[TixPro.com](https://tixpro.azurewebsites.net/)
+[www.TixPro.com](https://tixpro.azurewebsites.net/)
 
 
 
