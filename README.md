@@ -10,6 +10,7 @@ Diseño visual: Incluye una página web con un diseño de tarjetas para mostrar 
 Desarrollamos este proyecto como parte de un trabajo final de la materia Programacion Aplicada 1.
 
  El proyecto forma parte de la empresa emergente Ozcudi-Studios que estamos creando Carlos Custodio y Alma Bet. Rosa.
+ 
 ![ozcudistudios](https://github.com/user-attachments/assets/8cdaf05d-c72e-4d11-bee0-3983ca93f425)
 
 
@@ -18,7 +19,7 @@ Desarrollamos este proyecto como parte de un trabajo final de la materia Program
    ```bash
    git clone (https://github.com/carlirouscust/Proyecto_TixPro.git)
    
-## Los Roles
+## Roles para iniciar sesion 
 Administrador  
 - **Email:** Admin@gmail.com  
 - **Password:** Admin-123  
@@ -30,7 +31,7 @@ Usuario
 ## Link de azure 
 <span style="color:red">Ojo: El proyecto funciona un poco lento debido a la complejidad del mismo y las limitaciones de azure gratis.</span>
 
-[TixPro](https://tixpro.azurewebsites.net/)
+[TixPro.com](https://tixpro.azurewebsites.net/)
 
 
 
